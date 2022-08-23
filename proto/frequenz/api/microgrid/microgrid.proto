@@ -1,0 +1,387 @@
+// Contains the definitions for Microgrid gRPC API.
+//
+// Copyright:
+// Copyright 2022 Frequenz Energy-as-a-Service GmbH
+//
+// License:
+// MIT
+
+syntax = "proto3";
+
+package frequenz.api.microgrid;
+
+import "frequenz/api/microgrid/battery.proto";
+import "frequenz/api/microgrid/common.proto";
+import "frequenz/api/microgrid/ev_charger.proto";
+import "frequenz/api/microgrid/inverter.proto";
+import "frequenz/api/microgrid/meter.proto";
+import "frequenz/api/microgrid/sensor.proto";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service Microgrid {
+  // List components in the local microgrid, optionally filtered by a given list
+  // of component IDs and component categories.
+  //
+  // If provided, the filters for component IDs and categories have an `AND`
+  // relationship with one another, meaning that they are applied serially,
+  // but the elements within a single filter list have an `OR` relationship with
+  // each other.
+  // E.g., if `ids` = [1, 2, 3], and `categories` = [
+  //  `ComponentCategory::COMPONENT_CATEGORY_INVERTER`,
+  //  `ComponentCategory::COMPONENT_CATEGORY_BATTERY`],
+  // then the results will consist of elements that
+  // have the IDs 1, OR 2, OR 3,
+  // AND
+  // are of the categories `ComponentCategory::COMPONENT_CATEGORY_INVERTER` OR
+  // `ComponentCategory::COMPONENT_CATEGORY_BATTERY`.
+  //
+  // If a filter list is empty, then that filter is not applied.
+  rpc ListComponents(ComponentFilter) returns (ComponentList) {
+    option (google.api.http) = {
+      get : "/v1/components"
+    };
+  }
+
+  // Returns a list of the connections between components as `(start, end)`
+  // pairs of connection IDs, where the direction of individual connections
+  // is always away from the grid endpoint, i.e. aligned with the direction
+  // of positive current according to the passive sign convention:
+  // https://en.wikipedia.org/wiki/Passive_sign_convention
+  //
+  // The request may be filtered by `start`/`end` component(s) of individual
+  // connections.  If provided, the `start` and `end` filters have an `AND`
+  // relationship between each other, meaning that they are applied serially,
+  // but an `OR` relationship with other elements in the same list.
+  // For example, if `start` = `[1, 2, 3]`, and `end` = `[4, 5, 6]`, then the
+  // result should have all the connections where
+  // * each `start` component ID is either `1`, `2`, OR `3`,
+  //  AND
+  // * each `end` component ID is either `4`, `5`, OR `6`.
+  rpc ListConnections(ConnectionFilter) returns (ConnectionList) {
+    option (google.api.http) = {
+      get : "/v1/connections"
+    };
+  }
+
+  // Returns a stream containing data from a component with a given ID.
+  rpc GetComponentData(ComponentIdParam) returns (stream ComponentData) {
+    option (google.api.http) = {
+      get : "/v1/components/{id}/data"
+    };
+  }
+
+  // Returns whether the component with given ID can stream data.
+  rpc CanStreamData(ComponentIdParam) returns (google.protobuf.BoolValue) {
+    option (google.api.http) = {
+      get : "/v1/components/{id}/canStream"
+    };
+  }
+
+  // Sets the bounds for a given bounded metric of a given component.
+  rpc SetBounds(stream SetBoundsParam) returns (google.protobuf.Empty);
+
+  // Sets the charge power of a component with a given ID, provided the
+  // component supports it.
+  //
+  // Performs the following sequence actions for the following component
+  // categories:
+  //
+  // * Inverter: Sends the charge command to the inverter, making it consume AC
+  //  power.
+  rpc Charge(PowerLevelParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{component_id}/charge/{power_w}"
+    };
+  }
+
+  // Sets the discharge power of a component with a given ID, provided the
+  // component supports it.
+  //
+  // Performs the following sequence actions for the following component
+  // categories:
+  //
+  // * Inverter: Sends the discharge command to the inverter, making it deliver
+  //  AC power.
+  rpc Discharge(PowerLevelParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{component_id}/discharge/{power_w}"
+    };
+  }
+
+  // Starts the component, and brings it into a state where it is immediately
+  // operational.
+  //
+  // Performs the following sequence of actions for the following component
+  // categories:
+  //
+  // * Inverter:
+  //  * closes DC relays, if the feature is available
+  //  * closes AC relays
+  //  * sets power output to 0
+  //
+  // * Battery: Checks if DC relays are open, then
+  //  * closes DC relays
+  //
+  // If any of the above mentioned actions for a given component has already
+  // been performed, then this method call effectively skips that action.
+  //
+  // If a feature required to perform an action is missing, then that action is
+  // skipped.
+  rpc Start(ComponentIdParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{id}/start"
+    };
+  }
+
+  // Sets the given component into a hot-standby state, from which it can return
+  // into an operational state within at most 5 seconds.
+  //
+  // Performs the following sequence actions for the following component
+  // categories:
+  //
+  // * Inverter: Checks if AC and DC relays are closed, then
+  //  * sets power to 0
+  //
+  // If any of the checks mentioned above fails, then the method call returns an
+  // error.
+  //
+  // If any of the above mentioned actions for a given component has already
+  // been performed, then this method call effectively skips that action.
+  rpc HotStandby(ComponentIdParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{id}/hotStandby"
+    };
+  }
+
+  // Sets the given component into a cold-standby state, from which it can
+  // return into an operational state within at most 2 minutes.
+  //
+  // Performs the following sequence actions for the following component
+  // categories:
+  //
+  // * Inverter: Checks if AC and DC relays are closed, then
+  //  * sets power to 0, and
+  //  * opens AC relays
+  //
+  // If any of the checks mentioned above fails, then the method call returns an
+  // error.
+  //
+  // If any of the above mentioned actions for a given component has already
+  // been performed, then this method call efffectively skips that action.
+  rpc ColdStandby(ComponentIdParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{id}/coldStandby"
+    };
+  }
+
+  // Stops the component completely, potentially disengaging its power
+  // electronics controller(s).
+  //
+  // Performs the following sequence actions for the following component
+  // categories:
+  //
+  // * Inverter:
+  //  * Brings component to the cold-standby state
+  //  * opens DC relays
+  //
+  // * Battery: Checks if the power output is 0, then
+  //  * opens DC relays
+  //
+  // If any of the checks mentioned above fails, then the method call returns an
+  // error.
+  //
+  // If any of the above mentioned actions for a given component has already
+  // been performed, then this method call effectively skips that action.
+  //
+  // If a feature required to perform an action is missing, then that action is
+  // skipped.
+  rpc Stop(ComponentIdParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{id}/stop"
+    };
+  }
+
+  // Acknowledges any recoverable error reported by the component, and brings it
+  // back to the stopped or cold-standby state.
+  rpc ErrorAck(ComponentIdParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{id}/errorAck"
+    };
+  }
+}
+
+// Enumrated component categories.
+enum ComponentCategory {
+  // An unknown component categories, useful for error handling, and marking
+  // unknown components in a list of components with otherwise known categories.
+  COMPONENT_CATEGORY_UNSPECIFIED = 0;
+
+  // The point where the local microgrid is connected to the grid.
+  COMPONENT_CATEGORY_GRID = 1;
+
+  // A meter, for measuring electrical metrics, e.g., current, voltage, etc.
+  COMPONENT_CATEGORY_METER = 2;
+
+  // An electricity generator, with batteries or solar energy.
+  COMPONENT_CATEGORY_INVERTER = 3;
+
+  // A DC-DC converter.
+  COMPONENT_CATEGORY_CONVERTER = 4;
+
+  // A storage system for electrical energy, used by inverters.
+  COMPONENT_CATEGORY_BATTERY = 5;
+
+  // A station for charging electrical vehicles.
+  COMPONENT_CATEGORY_EV_CHARGER = 6;
+
+  // A sensor for measuring ambient metrics, e.g., temperature, humidity, etc.
+  COMPONENT_CATEGORY_SENSOR = 7;
+
+  // A crypto miner.
+  COMPONENT_CATEGORY_CRYPTO_MINER = 8;
+
+  // An electrolyzer for converting water into hydrogen and oxygen.
+  COMPONENT_CATEGORY_ELECTROLYZER = 9;
+
+  // A heat and power combustion plant (CHP stands for combined heat and power).
+  COMPONENT_CATEGORY_CHP = 10;
+
+  // An electrical load in the microgrid, consuming AC electricity.
+  // Note that this will be removed in the next release.
+  COMPONENT_CATEGORY_LOAD = 14;
+
+  // A node in the circuit, where all connections meet.
+  // Note that this will be removed in the next release.
+  COMPONENT_CATEGORY_JUNCTION = 15;
+}
+
+// Parameters for filtering the components.
+message ComponentFilter {
+  // Return components that have the specified IDs only.
+  repeated uint64 ids = 1;
+
+  // Return components that have the specified categories only.
+  repeated ComponentCategory categories = 2;
+}
+
+// Encapsulation of a component ID, intended to be used as a parameter for rpc
+// methods.
+message ComponentIdParam {
+  uint64 id = 1;
+}
+
+// Parameters for filtering the component connections
+message ConnectionFilter {
+  // Only return connections that start from the specified component ID(s):
+  // if empty, connections with any `start` will be returned
+  repeated uint64 starts = 1;
+
+  // Only return connections that end at the specified component ID(s):
+  // if empty, connections with any `end` will be returned
+  repeated uint64 ends = 2;
+}
+
+// Parameters for setting the charge/discharge power of an appropriate
+// component.
+message PowerLevelParam {
+  // The ID of the component to set the output power of.
+  uint64 component_id = 1;
+
+  // The output power level, in watts. This is always a +ve integer. The sign
+  // of the power level is controlled by the implementations of the `Charge`
+  // and `Discharge` RPC methods.
+  uint64 power_w = 2;
+}
+
+// Parameters for setting bounds of a given metric of a given component.
+message SetBoundsParam {
+  // An enumerated list of metrics whose bounds can be set.
+  enum TargetMetric {
+    TARGET_METRIC_UNSPECIFIED = 0;
+    TARGET_METRIC_POWER_ACTIVE = 1;
+  }
+
+  // The ID of the target component.
+  uint64 component_id = 1;
+
+  // The target metric whose bounds have to be set.
+  TargetMetric target_metric = 2;
+
+  // The bounds for the target metric.
+  common.Bounds bounds = 3;
+}
+
+// A generic message for components. It is used to represent any category of
+// component, with its static parameters.
+message Component {
+  // A unique identifier for the component.
+  uint64 id = 1;
+
+  // An optional name for the component.
+  string name = 2;
+
+  // The category of the component.
+  ComponentCategory category = 3;
+
+  // The component manufacturer.
+  string manufacturer = 4;
+
+  // The model name of the component.
+  string model_name = 5;
+
+  // The type of the component.
+  // E.g., if the `ComponentCategory` is `INVERTER`, then the inverter type
+  // (`UNSPECIFIED`, `BATTERY`, `SOLAR`, or `HYBRID`)
+  oneof type {
+    battery.Type battery = 6;
+    inverter.Type inverter = 7;
+    meter.Type meter = 8;
+    ev_charger.Type ev_charger = 9;
+    sensor.Type sensor = 10;
+  }
+}
+
+// A message containing a list of components, used as a return typ in certain
+// RPC methods.
+message ComponentList {
+  repeated Component components = 1;
+}
+
+// A generic container for data that can originate from any component type.
+message ComponentData {
+  // The timestamp of when the data was measured.
+  google.protobuf.Timestamp ts = 1;
+
+  // The component ID.
+  uint64 id = 2;
+
+  // The data object.
+  oneof data {
+    meter.Meter meter = 3;
+    inverter.Inverter inverter = 4;
+    battery.Battery battery = 5;
+    ev_charger.EVCharger ev_charger = 6;
+    sensor.Sensor sensor = 7;
+  }
+}
+
+// Describes a single connection between components of the microgrid,
+// with direction away from the grid endpoint, meaning it is aligned
+// with positive current according to the passive sign convention:
+// https://en.wikipedia.org/wiki/Passive_sign_convention
+message Connection {
+  // `id` of the component the connection starts from
+  uint64 start = 1;
+
+  // `id` of the component the connection points to
+  uint64 end = 2;
+}
+
+// List of connections between components
+message ConnectionList {
+  repeated Connection connections = 1;
+};

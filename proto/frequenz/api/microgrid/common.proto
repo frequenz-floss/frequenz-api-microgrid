@@ -1,0 +1,265 @@
+// Contains enums and messages reused throught the Microgrid API definitions.
+//
+// Copyright:
+// Copyright 2022 Frequenz Energy-as-a-Service GmbH
+//
+// License:
+// MIT
+
+syntax = "proto3";
+
+package frequenz.api.microgrid.common;
+
+// A set of lower and upper bounds for any metric.
+message Bounds {
+  // The lower bound.
+  float lower = 1;
+
+  // The upper bound.
+  float upper = 2;
+}
+
+// A metric's value, with optional limits.
+message Metric {
+  // The current value of the metric.
+  float value = 1;
+
+  // The manufacturer's rated bounds of the metric. This may differ from
+  // `system_bounds` as it does not take into account the current state of the
+  // overall system.
+  Bounds rated_bounds = 2;
+
+  // The current bounds of the metric, as imposed by the overall system.
+  Bounds system_bounds = 3;
+
+  // The current bounds of the metric, as imposed by the component this metric
+  // originates from.
+  Bounds component_bounds = 4;
+}
+
+// Metrics depicted as a collection of statistical summaries.
+//
+// Useful when a component has to report multiple values for the same metric.
+// E.g., a battery is a collection of several blocks, and each block has a
+// temperature sensor. The battery can report a summary of the values provided
+// by all these sensors, like, min, max, avg, etc., and if possible, the entire
+// array of temperature values.
+message MetricAggregation {
+  // The average value of the metric.
+  float avg = 1;
+
+  // The minimum value of the metric.
+  optional float min = 2;
+
+  // The maximum value of the metric.
+  optional float max = 3;
+
+  // The array of all the metric values.
+  repeated float raw_values = 12;
+
+  // The current bounds of the metric, as imposed by the overall system.
+  Bounds system_bounds = 13;
+
+  // The current bounds of the metric, as imposed by the component this metric
+  // originates from.
+  Bounds component_bounds = 14;
+
+  // The manufacturer's rated bounds of the metric. This may differ from
+  // `system_bounds` as it does not take into account the current state of the
+  // overall system.
+  Bounds rated_bounds = 15;
+}
+
+// Metrics of a DC electrical connection.
+message DC {
+  // The DC voltage across the component.
+  // In Volts (V).
+  Metric voltage = 1;
+
+  // The DC current flowing away from the grid connection.
+  // +ve current means consumption, away from the grid.
+  // -ve current means supply into the grid.
+  // In Amperes (A).
+  Metric current = 2;
+
+  // The DC power flowing away from the grid connection.
+  // +ve power means consumption, away from the grid.
+  // -ve power means supply into the grid.
+  // In Watts (W).
+  Metric power = 3;
+}
+
+// The current state and metrics of the electrical connections to the
+// inverter.
+message AC {
+  // The amount of active power the inverter is consuming or generating.
+  message ActiveEnergy {
+    // The sum of the consumed and delivered energy.
+    // This is a signed value. If more energy is consumed than delivered,
+    // this is a -ve number, otherwise +ve.
+    // In Watthours (Wh).
+    Metric energy = 1;
+
+    // The consumed energy.
+    // In Watthours (Wh).
+    Metric energy_consumed = 2;
+
+    // The delivered energy.
+    // In Watthours (Wh).
+    Metric energy_delivered = 3;
+  }
+
+  // The active power the inverter is consuming or generating.
+  message ReactiveEnergy {
+    // The sum of the capacitive and inductive energy.
+    // This is a signed value. If more energy is capacitive than inductive,
+    // this is a -ve number, otherwise +ve.
+    // In VAh.
+    Metric energy = 1;
+
+    // The capacitive energy.
+    // In VAh.
+    Metric energy_capacitive = 2;
+
+    // The inductive energy.
+    // In VAh.
+    Metric energy_inductive = 3;
+  }
+
+  // The harmonics of the fast Fourier transform of the instantaneous values
+  // and its total harmonic distortion.
+  message Harmonics {
+    float harmonic_1 = 1;
+    float harmonic_2 = 2;
+    float harmonic_3 = 3;
+    float harmonic_4 = 4;
+    float harmonic_5 = 5;
+    float harmonic_6 = 6;
+    float harmonic_7 = 7;
+    float harmonic_8 = 8;
+    float harmonic_9 = 9;
+    float harmonic_10 = 10;
+    float harmonic_11 = 11;
+  }
+
+  // AC metrics of a single phase.
+  message ACPhase {
+    // The AC voltage between the line and the neutral wire.
+    // In Volts (V).
+    Metric voltage = 1;
+
+    // AC current.
+    // +ve current means consumption, away from the grid.
+    // -ve current means supply into the grid.
+    // In Amperes (A).
+    Metric current = 2;
+
+    // AC active power.
+    // +ve power means consumption, away from the grid.
+    // -ve power means supply into the grid.
+    // In Watts (W).
+    Metric power_active = 3;
+
+    // AC reactive power.
+    // +ve power means inductive (leading).
+    // -ve power means capacitive (lagging).
+    // In VArh.
+    Metric power_reactive = 4;
+
+    // The total apparent energy. A Positive value represents the net apparent
+    // energy supplied to the grid connection, and vice versa.
+    // In VAh.
+    Metric energy_apparent = 5;
+
+    // The total active energy counters for the underlying component's
+    // consumption and supply.
+    // In Watthours (Wh).
+    ActiveEnergy energy_active = 6;
+
+    // The total reactive energy counters for the underlying component's
+    // capacitive and inductive energy values.
+    // In VArh.
+    ReactiveEnergy energy_reactive = 7;
+
+    // Harmonics of the instantaneous active power at the component.
+    Harmonics harmonics_power_active = 8;
+
+    // Total harmonic distortion
+    // of the instantaneous active power at the component.
+    float thd_power_active = 9;
+  }
+
+  // Overall AC metrics.
+
+  // The AC frequency.
+  // In Hz.
+  Metric frequency = 1;
+
+  // The apparent 3-phase AC current. Positive values represent apparent energy
+  // flowing towards the grid connection, and vice versa.
+  // In Amperes (A).
+  Metric current = 2;
+
+  // The apparent 3-phase AC power. Positive values represent apparent energy
+  // flowing towards the grid connection, and vice versa.
+  // In VA.
+  Metric power_apparent = 3;
+
+  // The total active 3-phase AC active power.
+  // +ve power means consumption, away from the grid.
+  // -ve power means supply into the grid.
+  // In Watts (W).
+  Metric power_active = 4;
+
+  // The reactive 3-phase AC power.
+  // +ve power means inductive (leading).
+  // -ve power means capacitive (lagging).
+  // In VAr.
+  Metric power_reactive = 5;
+
+  // The total 3-phase apparent energy. A positive value represents the net
+  // apparent energy supplied to the grid connection, and vice versa.
+  // In VAh.
+  Metric energy_apparent = 6;
+
+  // The total 3-phase active energy counters for the underlying component's
+  // consumption and supply.
+  // In Watthours (Wh).
+  ActiveEnergy energy_active = 7;
+
+  // The total 3-phase reactive energy counters for the underlying component's
+  // capacitive and inductive energy values.
+  // In VArh.
+  ReactiveEnergy energy_reactive = 8;
+
+  // The sums of the harmonics
+  // of the instantaneous active power at the component across all 3 phases.
+  Harmonics harmonics_power_active = 9;
+
+  // The sums of the total harmonic distortion
+  // of the instantaneous active power at the component across all 3 phases.
+  float thd_power_active = 10;
+
+  // AC metrics for phase/line 1.
+  ACPhase phase_1 = 11;
+
+  // AC metrics for phase/line 2.
+  ACPhase phase_2 = 12;
+
+  // AC metrics for phase/line 3.
+  ACPhase phase_3 = 13;
+}
+
+// Error levels definitions.
+enum ErrorLevel {
+  // Unspecified component error.
+  ERROR_LEVEL_UNSPECIFIED = 0;
+
+  // Action must be taken to prevent a severe error from occurring in the
+  // future.
+  ERROR_LEVEL_WARN = 1;
+
+  // A severe error that causes the component to fail. Immediate action must be
+  // taken.
+  ERROR_LEVEL_CRITICAL = 2;
+}

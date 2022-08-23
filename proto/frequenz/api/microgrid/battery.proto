@@ -1,0 +1,209 @@
+// Contains definitions specific to batteries.
+//
+// Copyright:
+// Copyright 2022 Frequenz Energy-as-a-Service GmbH
+//
+// License:
+// MIT
+
+syntax = "proto3";
+
+package frequenz.api.microgrid.battery;
+
+import "frequenz/api/microgrid/common.proto";
+
+// Enumerated battery types.
+enum Type {
+  // Unspecified.
+  TYPE_UNSPECIFIED = 0;
+
+  // Li-ion batteries.
+  TYPE_LI_ION = 1;
+
+  // Lithium-Iron-Phosphate batteries.
+  TYPE_LI_FE_PO = 2;
+
+  // Sodium-ion batteries
+  TYPE_NA_ION = 3;
+}
+
+enum ComponentState {
+  // Default value.
+  COMPONENT_STATE_UNSPECIFIED = 0;
+
+  // The battery is switched off.
+  COMPONENT_STATE_OFF = 1;
+
+  // The battery is idle.
+  COMPONENT_STATE_IDLE = 2;
+
+  // The battery is consuming electrical energy.
+  COMPONENT_STATE_CHARGING = 3;
+
+  // The battery is generating electrical energy.
+  COMPONENT_STATE_DISCHARGING = 4;
+
+  // The battery is in a faulty state.
+  COMPONENT_STATE_ERROR = 5;
+
+  // The battery is online, but currently unavailable, possibly due to
+  // a pre-scheduled maintenance, or waiting for a resource to be loaded.
+  COMPONENT_STATE_LOCKED = 6;
+}
+
+enum RelayState {
+  // Default value.
+  RELAY_STATE_UNSPECIFIED = 0;
+
+  // The relays are open, and the DC power line to the inverter is
+  // disconnected.
+  RELAY_STATE_OPENED = 1;
+
+  // The relays are closing, and the DC power line to the inverter is
+  // being connected.
+  RELAY_STATE_PRECHARGING = 2;
+
+  // The relays are closed, and the DC power line to the inverter is
+  // connected.
+  RELAY_STATE_CLOSED = 3;
+
+  // The relays are in an error state.
+  RELAY_STATE_ERROR = 4;
+
+  // The relays are locked, and should be available to accept commands
+  // shortly.
+  RELAY_STATE_LOCKED = 5;
+}
+
+// Enumerated Battery/BMS error codes.
+enum ErrorCode {
+  // Unspecified.
+  ERROR_CODE_UNSPECIFIED = 0;
+
+  // Charge current is too high.
+  ERROR_CODE_HIGH_CURRENT_CHARGE = 1;
+
+  // Discharge current is too high.
+  ERROR_CODE_HIGH_CURRENT_DISCHARGE = 2;
+
+  // Voltage is too high.
+  ERROR_CODE_HIGH_VOLTAGE = 3;
+
+  // Voltage is too low.
+  ERROR_CODE_LOW_VOLTAGE = 4;
+
+  // Temperature is too high.
+  ERROR_CODE_HIGH_TEMPERATURE = 5;
+
+  // Temperature is too low.
+  ERROR_CODE_LOW_TEMPERATURE = 6;
+
+  // Humidity is too high.
+  ERROR_CODE_HIGH_HUMIDITY = 7;
+
+  // Charge current has exceeded component bounds.
+  ERROR_CODE_EXCEEDED_SOP_CHARGE = 8;
+
+  // Discharge current has exceeded component bounds.
+  ERROR_CODE_EXCEEDED_SOP_DISCHARGE = 9;
+
+  // The battery blocks are not balanced with respect to each other.
+  ERROR_CODE_SYSTEM_IMBALANCE = 10;
+
+  // The State of health is low.
+  ERROR_CODE_LOW_SOH = 11;
+
+  // One or more battery blocks have failed.
+  ERROR_CODE_BLOCK_ERROR = 12;
+
+  // The battery controller has failed.
+  ERROR_CODE_CONTROLLER_ERROR = 13;
+
+  // The battery's DC relays have failed.
+  ERROR_CODE_RELAY_ERROR = 14;
+
+  // The battery's DC relays have been cycled for the maximum number of times
+  // mentioned in their lifetime specifications.
+  ERROR_CODE_RELAY_CYCLE_LIMIT_REACHED = 15;
+
+  // The battery's fuse has failed.
+  ERROR_CODE_FUSE_ERROR = 16;
+
+  // The eternal power switch has failed.
+  ERROR_CODE_EXTERNAL_POWER_SWITCH_ERROR = 17;
+
+  // The precharge operation has failed.
+  ERROR_CODE_PRECHARGE_ERROR = 18;
+
+  // System plausibility checks have failed.
+  ERROR_CODE_SYSTEM_PLAUSIBILITY_ERROR = 19;
+
+  // System shut down due to extremely low voltage.
+  ERROR_CODE_SYSTEM_UNDERVOLTAGE_SHUTDOWN = 20;
+
+  // The battery requires a calibration to reset its measurements.
+  ERROR_CODE_CALIBRATION_NEEDED = 21;
+}
+
+// State message.
+message State {
+  // The state of the overall component.
+  ComponentState component_state = 1;
+
+  // The state of the DC relays.
+  RelayState relay_state = 2;
+}
+
+// Error message.
+message Error {
+  // The error code.
+  ErrorCode code = 1;
+
+  // The error severity level.
+  common.ErrorLevel level = 2;
+
+  // The error message.
+  string msg = 3;
+}
+
+// Battery data.
+message Data {
+  // DC electricity metrics.
+  common.DC dc = 1;
+
+  // Battery's overall SoC.
+  // In percent (%).
+  common.MetricAggregation soc = 2;
+
+  // The aggregated values of all the temperature measurements of a battery.
+  // In Celsius (°C).
+  common.MetricAggregation temperature = 3;
+
+  // The aggregated values of all the humidity measurements of a battery.
+  // In %.
+  common.MetricAggregation humidity = 4;
+}
+
+// Battery properties.
+message Properties {
+  // The firmware version of the battery.
+  string firmware_ver = 1;
+
+  // The capacity of the battery.
+  float capacity = 2;
+}
+
+// Battery/BMS details
+message Battery {
+  // The component properties
+  Properties properties = 1;
+
+  // The battery state.
+  State state = 2;
+
+  // A list of errors encountered the component. An empty list implies no error.
+  repeated Error errors = 3;
+
+  // A Battery data object.
+  Data data = 4;
+}
