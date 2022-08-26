@@ -1,0 +1,35 @@
+# Configuration for the Labeler GitHub action, executed by
+# .github/workflows/labeler.yml.
+#
+# The basic syntax is [label]: [path patterns].
+#
+# For more details on the configuration please see:
+# https://github.com/marketplace/actions/labeler
+
+"part:docs": 
+  - "**/*.md"
+  - LICENSE
+
+"part:tests":
+  - "pytests/**"
+
+"part:tooling":
+  - ".git*"
+  - ".git*/**"
+  - "**/*.toml"
+  - "**/*.ini"
+  - CODEOWNERS
+  - MANIFEST.in
+  - build-py-proto
+  - "*requirements*.txt"
+  - setup.py
+  - "submodules/*"
+
+"part:python":
+  - "py/**"
+  - "pytests/**"
+  - "**/*.py"
+
+"part:protobuf":
+  - "proto/**"
+  - "**/*.proto"
