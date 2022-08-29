@@ -11,7 +11,21 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "frequenz-api-microgrid"
 description = "Frequenz gRPC API for monitoring and control of microgrids"
+readme = "README.md"
 license = { text = "MIT" }
+keywords = [ "frequenz", "api", "microgrid", "grpc" ]
+classifiers = [
+   "Development Status :: 3 - Alpha",
+   "Intended Audience :: Developers",
+   "License :: OSI Approved :: MIT License",
+   "Programming Language :: Python :: 3",
+   "Programming Language :: Python :: 3 :: Only",
+   "Programming Language :: Python :: 3.7",
+   "Programming Language :: Python :: 3.8",
+   "Programming Language :: Python :: 3.9",
+   "Programming Language :: Python :: 3.10",
+   "Topic :: Software Development :: Libraries",
+]
 requires-python = ">= 3.7, < 4"
 dependencies = [
     "googleapis-common-protos >= 1.56.2, < 2",
@@ -21,6 +35,13 @@ dynamic = [ "version" ]
 
 [[project.authors]]
 name ="Frequenz Energy-as-a-Service GmbH"
+email = "floss@frequenz.com"
+
+[project.urls]
+Changelog = "https://github.com/frequenz-floss/frequenz-api-microgrid-proto/blob/master/CHANGELOG.md"
+Repository = "https://github.com/frequenz-floss/frequenz-api-microgrid-proto"
+Issues = "https://github.com/frequenz-floss/frequenz-api-microgrid-proto/issues"
+Support = "https://github.com/frequenz-floss/frequenz-api-microgrid-proto/discussions/categories/support"
 
 [tool.setuptools.package-dir]
 "" = "py"
