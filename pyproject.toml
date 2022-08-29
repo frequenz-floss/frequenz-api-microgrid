@@ -7,3 +7,29 @@ requires = [
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "frequenz-api-microgrid"
+description = "Frequenz gRPC API for monitoring and control of microgrids"
+license = { text = "MIT" }
+requires-python = ">= 3.7, < 4"
+dependencies = [
+    "googleapis-common-protos >= 1.56.2, < 2",
+    "grpcio >= 1.47.0, < 2",
+]
+dynamic = [ "version" ]
+
+[[project.authors]]
+name ="Frequenz Energy-as-a-Service GmbH"
+
+[tool.setuptools.package-dir]
+"" = "py"
+
+[tool.setuptools.package-data]
+"frequenz.api.microgrid" = [ "py.typed", "*.pyi" ]
+
+[tools.setuptools.packages.find_namespace]
+where = "py"
+
+[tool.setuptools_scm]
+version_scheme = "post-release"

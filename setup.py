@@ -19,24 +19,11 @@ class BuildProto(build_py):
         build_py.run(self)
 
 
-setuptools.setup(
-    name="frequenz-api-microgrid",
-    author="Frequenz Energy-as-a-Service GmbH",
-    description="Frequenz gRPC API for monitoring and control of microgrids",
-    use_scm_version={"version_scheme": "post-release"},
-    cmdclass={"build_py": BuildProto},
-    install_requires=[
-        "googleapis-common-protos >= 1.56.2, < 2",
-        "grpcio >= 1.47.0, < 2",
-    ],
-    license="MIT",
-    package_dir={"": "py"},
-    package_data={
-        "frequenz.api.microgrid": [
-            "py.typed",
-            "*.pyi",
-        ],
-    },
-    packages=setuptools.find_namespace_packages(where="py"),
-    python_requires=">= 3.7, < 4",
-)
+if __name__ == "__main__":
+    # Compile the proto files to python files. This is done when building the
+    # wheel, the source distribution (sdist) contains the *.proto files only.
+    # Check the MANIFEST.in file to see which files are included in the sdist,
+    # and the tool.setuptools.package-dir, tool.setuptools.package-data, and
+    # tools.setuptools.packages configuration keys in pyproject.toml to see
+    # which files are included in the wheel package.
+    setuptools.setup(cmdclass={"build_py": BuildProto})
