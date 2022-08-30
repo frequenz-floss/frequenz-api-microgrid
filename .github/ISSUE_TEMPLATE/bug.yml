@@ -38,7 +38,7 @@ body:
       multiple: true
       options:
         - I don't know (version:❓)
-        - An older version (version:older)
+        - An older version (version:old)
         - v0.10.x (version:0.10.x)
     validations:
       required: true
