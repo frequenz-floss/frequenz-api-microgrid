@@ -1,6 +1,6 @@
 name: frequenz-api-microgrid
 
-on: [pull_request, push, release]
+on: [pull_request, push]
 
 jobs:
   protolint:
