@@ -27,12 +27,18 @@ You need to make sure you have the `git submodules` updated:
 git submodule update --init
 ```
 
-Sadly it seems like there is no way to install build dependencies from the
-`pyproject.toml` file, so if you want to run the `./build-py-proto` script
-manually, you need to install the dependencies manually too:
+If you want to manually compile the proto files you need to install the build
+dependencies manually (sadly it seems like there is no way to install build
+dependencies from the `pyproject.toml` file with a simple command):
 
 ```sh
 python -m pip install grpcio-tools mypy-protobuf setuptools setuptools_scm[toml] wheel
+```
+
+Then you can compile the proto files by running:
+
+```sh
+python setup.py compile_proto
 ```
 
 If you have any issues with these dependencies, please check the

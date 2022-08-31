@@ -20,7 +20,6 @@
   - "**/*.ini"
   - CODEOWNERS
   - MANIFEST.in
-  - build-py-proto
   - "*requirements*.txt"
   - setup.py
   - "submodules/*"
