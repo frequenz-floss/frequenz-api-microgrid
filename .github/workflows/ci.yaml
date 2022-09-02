@@ -80,7 +80,7 @@ jobs:
       - name: Upload dist files
         uses: actions/upload-artifact@v3
         with:
-          name: frequenz-api-microgrid-proto-dist
+          name: frequenz-api-microgrid-dist
           path: dist/
           if-no-files-found: error
 
@@ -93,7 +93,7 @@ jobs:
       - name: Download dist files
         uses: actions/download-artifact@v3
         with:
-          name: frequenz-api-microgrid-proto-dist
+          name: frequenz-api-microgrid-dist
 
       - name: Publish the Python distribution to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
