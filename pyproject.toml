@@ -38,7 +38,7 @@ name ="Frequenz Energy-as-a-Service GmbH"
 email = "floss@frequenz.com"
 
 [project.urls]
-Changelog = "https://github.com/frequenz-floss/frequenz-api-microgrid/blob/master/CHANGELOG.md"
+Changelog = "https://github.com/frequenz-floss/frequenz-api-microgrid/releases"
 Repository = "https://github.com/frequenz-floss/frequenz-api-microgrid"
 Issues = "https://github.com/frequenz-floss/frequenz-api-microgrid/issues"
 Support = "https://github.com/frequenz-floss/frequenz-api-microgrid/discussions/categories/support"
