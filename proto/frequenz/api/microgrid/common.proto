@@ -117,15 +117,15 @@ message AC {
     // The sum of the capacitive and inductive energy.
     // This is a signed value. If more energy is capacitive than inductive,
     // this is a -ve number, otherwise +ve.
-    // In Volt-Ampere-hour (VAh).
+    // In Volt-Ampere-hour (VArh).
     Metric energy = 1;
 
     // The capacitive energy.
-    // In Volt-Ampere-hour (VAh).
+    // In Volt-Ampere-hour (VArh).
     Metric energy_capacitive = 2;
 
     // The inductive energy.
-    // In Volt-Ampere-hour (VAh).
+    // In Volt-Ampere-hour (VArh).
     Metric energy_inductive = 3;
   }
 
@@ -167,7 +167,7 @@ message AC {
     // AC reactive power.
     // +ve power means inductive (leading).
     // -ve power means capacitive (lagging).
-    // In Volt-Ampere reactive hour (VArh).
+    // In Volt-Ampere reactive (VAr).
     Metric power_reactive = 4;
 
     // The total apparent energy. A Positive value represents the net apparent
