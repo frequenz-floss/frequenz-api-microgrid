@@ -11,6 +11,7 @@ syntax = "proto3";
 package frequenz.api.microgrid.common;
 
 // A set of lower and upper bounds for any metric.
+// The units of the bounds are always the same as the related metric.
 message Bounds {
   // The lower bound.
   float lower = 1;
@@ -73,61 +74,64 @@ message MetricAggregation {
 // Metrics of a DC electrical connection.
 message DC {
   // The DC voltage across the component.
-  // In Volts (V).
+  // In Volt (V).
   Metric voltage = 1;
 
   // The DC current flowing away from the grid connection.
+  // In passive sign convention:
   // +ve current means consumption, away from the grid.
   // -ve current means supply into the grid.
-  // In Amperes (A).
+  // In Ampere (A).
   Metric current = 2;
 
   // The DC power flowing away from the grid connection.
+  // In passive sign convention:
   // +ve power means consumption, away from the grid.
   // -ve power means supply into the grid.
-  // In Watts (W).
+  // In Watt (W).
   Metric power = 3;
 }
 
 // The current state and metrics of the electrical connections to the
 // inverter.
 message AC {
-  // The amount of active power the inverter is consuming or generating.
+  // The active energy the inverter is consuming or generating.
   message ActiveEnergy {
     // The sum of the consumed and delivered energy.
-    // This is a signed value. If more energy is consumed than delivered,
-    // this is a -ve number, otherwise +ve.
-    // In Watthours (Wh).
+    // This is a signed value in passive sign convention: if more energy is
+    // consumed than delivered, this is a -ve number, otherwise +ve.
+    // In Watt-hour (Wh).
     Metric energy = 1;
 
     // The consumed energy.
-    // In Watthours (Wh).
+    // In Watt-hour (Wh).
     Metric energy_consumed = 2;
 
     // The delivered energy.
-    // In Watthours (Wh).
+    // In Watt-hour (Wh).
     Metric energy_delivered = 3;
   }
 
-  // The active power the inverter is consuming or generating.
+  // The reactive energy the inverter is consuming or generating.
   message ReactiveEnergy {
     // The sum of the capacitive and inductive energy.
     // This is a signed value. If more energy is capacitive than inductive,
     // this is a -ve number, otherwise +ve.
-    // In VAh.
+    // In Volt-Ampere-hour (VAh).
     Metric energy = 1;
 
     // The capacitive energy.
-    // In VAh.
+    // In Volt-Ampere-hour (VAh).
     Metric energy_capacitive = 2;
 
     // The inductive energy.
-    // In VAh.
+    // In Volt-Ampere-hour (VAh).
     Metric energy_inductive = 3;
   }
 
   // The harmonics of the fast Fourier transform of the instantaneous values
   // and its total harmonic distortion.
+  // In percent (%).
   message Harmonics {
     float harmonic_1 = 1;
     float harmonic_2 = 2;
@@ -145,91 +149,94 @@ message AC {
   // AC metrics of a single phase.
   message ACPhase {
     // The AC voltage between the line and the neutral wire.
-    // In Volts (V).
+    // In Volt (V).
     Metric voltage = 1;
 
     // AC current.
     // +ve current means consumption, away from the grid.
     // -ve current means supply into the grid.
-    // In Amperes (A).
+    // In Ampere (A).
     Metric current = 2;
 
     // AC active power.
     // +ve power means consumption, away from the grid.
     // -ve power means supply into the grid.
-    // In Watts (W).
+    // In Watt (W).
     Metric power_active = 3;
 
     // AC reactive power.
     // +ve power means inductive (leading).
     // -ve power means capacitive (lagging).
-    // In VArh.
+    // In Volt-Ampere reactive hour (VArh).
     Metric power_reactive = 4;
 
     // The total apparent energy. A Positive value represents the net apparent
     // energy supplied to the grid connection, and vice versa.
-    // In VAh.
+    // In Volt-Ampere-hour (VAh).
     Metric energy_apparent = 5;
 
     // The total active energy counters for the underlying component's
     // consumption and supply.
-    // In Watthours (Wh).
+    // In Watt-hour (Wh).
     ActiveEnergy energy_active = 6;
 
     // The total reactive energy counters for the underlying component's
     // capacitive and inductive energy values.
-    // In VArh.
+    // In Volt-Ampere reactive hour (VArh).
     ReactiveEnergy energy_reactive = 7;
 
     // Harmonics of the instantaneous active power at the component.
+    // In percent (%).
     Harmonics harmonics_power_active = 8;
 
     // Total harmonic distortion
     // of the instantaneous active power at the component.
+    // In percent (%).
     float thd_power_active = 9;
   }
 
   // Overall AC metrics.
 
   // The AC frequency.
-  // In Hz.
+  // In Hertz (Hz).
   Metric frequency = 1;
 
   // The apparent 3-phase AC current. Positive values represent apparent energy
   // flowing towards the grid connection, and vice versa.
-  // In Amperes (A).
+  // In Ampere (A).
   Metric current = 2;
 
   // The apparent 3-phase AC power. Positive values represent apparent energy
   // flowing towards the grid connection, and vice versa.
-  // In VA.
+  // In Volt-Ampere (VA).
   Metric power_apparent = 3;
 
   // The total active 3-phase AC active power.
   // +ve power means consumption, away from the grid.
   // -ve power means supply into the grid.
-  // In Watts (W).
+  // In Watt (W).
   Metric power_active = 4;
 
   // The reactive 3-phase AC power.
   // +ve power means inductive (leading).
   // -ve power means capacitive (lagging).
-  // In VAr.
+  // In Volt-Ampere reactive (VAr).
   Metric power_reactive = 5;
 
   // The total 3-phase apparent energy. A positive value represents the net
   // apparent energy supplied to the grid connection, and vice versa.
-  // In VAh.
+  // In Volt-Ampere-hour (VAh).
   Metric energy_apparent = 6;
 
   // The total 3-phase active energy counters for the underlying component's
   // consumption and supply.
-  // In Watthours (Wh).
+  // In Watt-hour (Wh).
   ActiveEnergy energy_active = 7;
 
   // The total 3-phase reactive energy counters for the underlying component's
   // capacitive and inductive energy values.
-  // In VArh.
+  // In Volt-Ampere reactive hour (VArh).
+  // FIXME: ReactiveEnergy says Volt-Ampere-hour (VAh).
   ReactiveEnergy energy_reactive = 8;
 
   // The sums of the harmonics

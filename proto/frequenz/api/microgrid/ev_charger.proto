@@ -177,7 +177,7 @@ message Data {
   common.AC ac = 2;
 
   // The overall temperature of the EV charger.
-  // In Celsius (°C).
+  // In degree Celsius (°C).
   common.Metric temperature = 3;
 }
 
