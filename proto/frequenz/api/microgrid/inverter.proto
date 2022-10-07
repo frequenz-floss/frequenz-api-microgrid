@@ -91,7 +91,7 @@ message Data {
   common.AC ac = 2;
 
   // The verall temperature of the inverter.
-  // In Celsius (°C).
+  // In degree Celsius (°C).
   common.Metric temperature = 3;
 }
 

@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Fetch sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -26,6 +26,26 @@ jobs:
       - name: Run protolint
         run: protolint lint proto
 
+  gen-docs:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Fetch sources
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Generate documentation
+        run: |
+          docker run --rm -v $PWD:$PWD pseudomuto/protoc-gen-doc \
+            -I $PWD/proto \
+            -I $PWD/submodules/api-common-protos \
+            --doc_opt=markdown,gen-docs.md --doc_out=$PWD \
+            $(find $PWD/proto -name *.proto)
+
+      - name: Write summary
+        run: cat gen-docs.md > $GITHUB_STEP_SUMMARY
+
   tests:
     strategy:
       matrix:
@@ -39,12 +59,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Fetch sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: true
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -85,7 +105,7 @@ jobs:
           if-no-files-found: error
 
   create-github-release:
-    needs: ["protolint", "tests", "build-dist"]
+    needs: ["protolint", "gen-docs", "tests", "build-dist"]
     # Create a release only on tags creation
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
     permissions:

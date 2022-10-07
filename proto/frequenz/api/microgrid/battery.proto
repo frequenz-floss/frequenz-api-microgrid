@@ -176,11 +176,11 @@ message Data {
   common.MetricAggregation soc = 2;
 
   // The aggregated values of all the temperature measurements of a battery.
-  // In Celsius (°C).
+  // In degree Celsius (°C).
   common.MetricAggregation temperature = 3;
 
   // The aggregated values of all the humidity measurements of a battery.
-  // In %.
+  // In percent (%).
   common.MetricAggregation humidity = 4;
 }
 
@@ -190,6 +190,7 @@ message Properties {
   string firmware_ver = 1;
 
   // The capacity of the battery.
+  // In Watt-hour (Wh).
   float capacity = 2;
 }
 
