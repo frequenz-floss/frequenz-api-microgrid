@@ -2,7 +2,7 @@
 requires = [
     "grpcio-tools >= 1.47.0, < 2",
     "mypy-protobuf >= 3.0.0, < 4",
-    "setuptools >= 63.1.0, < 64",
+    "setuptools >= 65.4.1, < 66",
     "setuptools_scm[toml] >= 7.0.5, < 8",
     "wheel"
 ]
