@@ -10,7 +10,12 @@
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+* [Added new RPC to return the microgrid metadata](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/30).
+  The microgrid metadata consists of information about the overall microgrid,
+  as opposed to its components, e.g., the microgrid ID, location, etc.
+  This change adds a new RPC `GetMetadata()` that allows users to fetch
+  microgrid metadata. The returned value is an instance of the message
+  `Metadata`.
 
 ## Bug Fixes
 

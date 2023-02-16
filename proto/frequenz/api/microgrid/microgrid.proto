@@ -23,6 +23,16 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
 service Microgrid {
+  /// Returns the microgrid metadata
+  /// The metadata consists of information that describes the overall
+  /// microgrid, as opposed to its components,
+  /// e.g., the microgrid ID, location.
+  rpc GetMetadata(google.protobuf.Empty) returns (Metadata) {
+    option (google.api.http) = {
+      get : "v1/metadata"
+    };
+  }
+
   // List components in the local microgrid, optionally filtered by a given list
   // of component IDs and component categories.
   //
@@ -212,6 +222,25 @@ service Microgrid {
       get : "/v1/components/{id}/errorAck"
     };
   }
+}
+
+/// A pair of geographical co-ordinates, representing the location of a place.
+message Location {
+  /// The latitude of the place.
+  float latitude = 1;
+
+  /// The longitude of the place.
+  float longitude = 2;
+}
+
+/// Metadata that describes a microgrid.
+message Metadata {
+  /// The microgrid ID.
+  /// This is a natural number that uniquely identifies a given microgrid.
+  uint64 microgrid_id = 1;
+
+  /// The location of the microgrid, in geographical co-ordinates.
+  Location location = 2;
 }
 
 // Enumrated component categories.
