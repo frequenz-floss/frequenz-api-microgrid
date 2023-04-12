@@ -369,7 +369,7 @@ message SetPowerActiveParam {
 
   // The output active power level, in watts.
   // -ve values are for discharging, and +ve values are for charging.
-  int32 power = 2;
+  float power = 2;
 }
 
 // Parameters for setting bounds of a given metric of a given component.
