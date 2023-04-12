@@ -259,22 +259,22 @@ service Microgrid {
   }
 }
 
-/// A pair of geographical co-ordinates, representing the location of a place.
+// A pair of geographical co-ordinates, representing the location of a place.
 message Location {
-  /// The latitude of the place.
+  // The latitude of the place.
   float latitude = 1;
 
-  /// The longitude of the place.
+  // The longitude of the place.
   float longitude = 2;
 }
 
-/// Metadata that describes a microgrid.
+// Metadata that describes a microgrid.
 message Metadata {
-  /// The microgrid ID.
-  /// This is a natural number that uniquely identifies a given microgrid.
+  // The microgrid ID.
+  // This is a natural number that uniquely identifies a given microgrid.
   uint64 microgrid_id = 1;
 
-  /// The location of the microgrid, in geographical co-ordinates.
+  // The location of the microgrid, in geographical co-ordinates.
   Location location = 2;
 }
 
