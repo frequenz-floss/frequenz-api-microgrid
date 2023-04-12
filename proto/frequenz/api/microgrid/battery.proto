@@ -27,6 +27,12 @@ enum Type {
   TYPE_NA_ION = 3;
 }
 
+// The battery metadata.
+message Metadata {
+  // The battery type.
+  Type type = 1;
+}
+
 enum ComponentState {
   // Default value.
   COMPONENT_STATE_UNSPECIFIED = 0;

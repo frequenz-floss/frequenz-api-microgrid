@@ -29,6 +29,12 @@ enum Type {
   TYPE_PURCHASED = 4;
 }
 
+// The meter metadata.
+message Metadata {
+  // The meter type.
+  Type type = 1;
+}
+
 // Enumerated meter states.
 enum ComponentState {
   // Unspecified state.

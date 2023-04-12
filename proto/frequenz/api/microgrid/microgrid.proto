@@ -412,15 +412,13 @@ message Component {
   // The model name of the component.
   string model_name = 5;
 
-  // The type of the component.
-  // E.g., if the `ComponentCategory` is `INVERTER`, then the inverter type
-  // (`UNSPECIFIED`, `BATTERY`, `SOLAR`, or `HYBRID`)
-  oneof type {
-    battery.Type battery = 6;
-    inverter.Type inverter = 7;
-    meter.Type meter = 8;
-    ev_charger.Type ev_charger = 9;
-    sensor.Type sensor = 10;
+  // The metadata specific to the component category.
+  oneof metadata {
+    battery.Metadata battery = 11;
+    inverter.Metadata inverter = 12;
+    meter.Metadata meter = 13;
+    ev_charger.Metadata ev_charger = 14;
+    sensor.Metadata sensor = 15;
   }
 }
 

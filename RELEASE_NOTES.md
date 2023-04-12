@@ -28,6 +28,12 @@
   (-ve for production, and +ve for consumption). This new method allows setting
   active power values in the same convention, making the API more consistent.
 
+* [Introduced component category-specific metadata](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/36).
+  This metadata is returned in response to `ListComponents` calls,
+  in a new message variable `Component.metadata`.
+  This is a more general way of representing category-specific metadata,
+  like category-type, and removes `Component.type`.
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->
