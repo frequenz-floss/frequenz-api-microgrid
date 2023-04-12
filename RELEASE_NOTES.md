@@ -17,6 +17,13 @@
   microgrid metadata. The returned value is an instance of the message
   `Metadata`.
 
+* [Added enum variants for setting bounds on currents](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/33).
+  This will allow clients to set bounds on a components
+  1. DC electrical current,
+  2. total AC electrical current,
+  3. per-phase AC electrical currents.
+
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->

@@ -342,6 +342,10 @@ message SetBoundsParam {
   enum TargetMetric {
     TARGET_METRIC_UNSPECIFIED = 0;
     TARGET_METRIC_POWER_ACTIVE = 1;
+    TARGET_METRIC_CURRENT = 2;
+    TARGET_METRIC_CURRENT_PHASE_1 = 3;
+    TARGET_METRIC_CURRENT_PHASE_2 = 4;
+    TARGET_METRIC_CURRENT_PHASE_3 = 5;
   }
 
   // The ID of the target component.
