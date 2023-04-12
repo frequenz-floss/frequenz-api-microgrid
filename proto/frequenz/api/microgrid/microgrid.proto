@@ -97,6 +97,11 @@ service Microgrid {
   // Sets the charge power of a component with a given ID, provided the
   // component supports it.
   //
+  // Note that the target component may have a resolution of more than 1 W.
+  // E.g., an inverter may have a resolution of 88 W.
+  // In such cases, the charge power will be floored to the nearest multiple of
+  // the resolution.
+  //
   // Performs the following sequence actions for the following component
   // categories:
   //
@@ -110,6 +115,11 @@ service Microgrid {
 
   // Sets the discharge power of a component with a given ID, provided the
   // component supports it.
+  //
+  // Note that the target component may have a resolution of more than 1 W.
+  // E.g., an inverter may have a resolution of 88 W.
+  // In such cases, the discharge power will be floored to the nearest multiple
+  // of the resolution.
   //
   // Performs the following sequence actions for the following component
   // categories:
