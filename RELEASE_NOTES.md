@@ -23,6 +23,10 @@
   2. total AC electrical current,
   3. per-phase AC electrical currents.
 
+* [Add RPC to set active power using a signed integer](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/35).
+  While reading power values, the passive sign convention is followed
+  (-ve for production, and +ve for consumption). This new method allows setting
+  active power values in the same convention, making the API more consistent.
 
 ## Bug Fixes
 
