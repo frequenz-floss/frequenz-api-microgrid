@@ -107,7 +107,10 @@ service Microgrid {
   //
   // * Inverter: Sends the charge command to the inverter, making it consume AC
   //  power.
+  //
+  // Deprecated: use `SetPowerActive` instead.
   rpc Charge(PowerLevelParam) returns (google.protobuf.Empty) {
+    option deprecated = true;
     option (google.api.http) = {
       get : "/v1/components/{component_id}/charge/{power_w}"
     };
@@ -126,9 +129,31 @@ service Microgrid {
   //
   // * Inverter: Sends the discharge command to the inverter, making it deliver
   //  AC power.
+  //
+  // Deprecated: use `SetPowerActive` instead.
   rpc Discharge(PowerLevelParam) returns (google.protobuf.Empty) {
+    option deprecated = true;
     option (google.api.http) = {
       get : "/v1/components/{component_id}/discharge/{power_w}"
+    };
+  }
+
+  // Sets the power output of a component with a given ID, provided the
+  // component supports it.
+  //
+  // Note that the target component may have a resolution of more than 1 W.
+  // E.g., an inverter may have a resolution of 88 W.
+  // In such cases, the magnitude of power will be floored to the nearest
+  // multiple of the resolution.
+  //
+  // Performs the following sequence actions for the following component
+  // categories:
+  //
+  // * Inverter: Sends the discharge command to the inverter, making it deliver
+  //  AC power.
+  rpc SetPowerActive(SetPowerActiveParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{component_id}/setPowerActive/{power}"
     };
   }
 
@@ -334,6 +359,17 @@ message PowerLevelParam {
   // of the power level is controlled by the implementations of the `Charge`
   // and `Discharge` RPC methods.
   uint64 power_w = 2;
+}
+
+// Parameters for setting the active power of an appropriate component using the
+// `SetPowerActive` RPC.
+message SetPowerActiveParam {
+  // The ID of the component to set the output active power of.
+  uint64 component_id = 1;
+
+  // The output active power level, in watts.
+  // -ve values are for discharging, and +ve values are for charging.
+  int32 power = 2;
 }
 
 // Parameters for setting bounds of a given metric of a given component.
