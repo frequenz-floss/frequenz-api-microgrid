@@ -13,6 +13,7 @@ package frequenz.api.microgrid;
 import "frequenz/api/microgrid/battery.proto";
 import "frequenz/api/microgrid/common.proto";
 import "frequenz/api/microgrid/ev_charger.proto";
+import "frequenz/api/microgrid/grid.proto";
 import "frequenz/api/microgrid/inverter.proto";
 import "frequenz/api/microgrid/meter.proto";
 import "frequenz/api/microgrid/sensor.proto";
@@ -414,11 +415,12 @@ message Component {
 
   // The metadata specific to the component category.
   oneof metadata {
-    battery.Metadata battery = 11;
-    inverter.Metadata inverter = 12;
-    meter.Metadata meter = 13;
-    ev_charger.Metadata ev_charger = 14;
-    sensor.Metadata sensor = 15;
+    grid.Metadata grid = 11;
+    battery.Metadata battery = 12;
+    inverter.Metadata inverter = 13;
+    meter.Metadata meter = 14;
+    ev_charger.Metadata ev_charger = 15;
+    sensor.Metadata sensor = 16;
   }
 }
 
