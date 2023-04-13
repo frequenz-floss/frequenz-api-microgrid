@@ -67,6 +67,24 @@
   `----` values here are disallowed and wil be rejected, and
   `====` values here are allowed and will be accepted.
 
+  Two new simple RPCs for setting exclusion and inclusion bounds have been
+  added:
+  * `AddExclusionBounds`: adds a pair of exclusion bounds for a given component
+    and metric, and returns the UTC timestamp until when it will stay in effect.
+  * `AddInclusionBounds`: adds a pair of inclusion bounds for a given component
+    and metric, and returns the UTC timestamp until when it will stay in effect.
+
+  Exclusion bounds are a useful tool for enhancing the performance of a system.
+  They can be used to restrict the acceptance of commands that fall below a
+  certain threshold, which can help ensure the smooth functioning of the system.
+  E.g., exclusion bounds can be set to limit the minimum charging power to a
+  sufficiently high level, preventing a peak-shaver client from sending charge
+  powers that are too low when a DC heater client is executing a charge pulse.
+  This can significantly improve the overall performance of the DC heating
+  mechanism.
+
+  The RPC `SetBounds` has been deprecated.
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->
