@@ -30,12 +30,12 @@ message Metric {
   // overall system.
   Bounds rated_bounds = 2;
 
-  // The current bounds of the metric, as imposed by the overall system.
-  Bounds system_bounds = 3;
-
   // The current bounds of the metric, as imposed by the component this metric
   // originates from.
-  Bounds component_bounds = 4;
+  Bounds component_bounds = 3;
+
+  // The current bounds of the metric, as imposed by the overall system.
+  Bounds system_bounds = 4;
 }
 
 // Metrics depicted as a collection of statistical summaries.
@@ -58,17 +58,17 @@ message MetricAggregation {
   // The array of all the metric values.
   repeated float raw_values = 12;
 
-  // The current bounds of the metric, as imposed by the overall system.
-  Bounds system_bounds = 13;
+  // The manufacturer's rated bounds of the metric. This may differ from
+  // `system_bounds` as it does not take into account the current state of the
+  // overall system.
+  Bounds rated_bounds = 13;
 
   // The current bounds of the metric, as imposed by the component this metric
   // originates from.
   Bounds component_bounds = 14;
 
-  // The manufacturer's rated bounds of the metric. This may differ from
-  // `system_bounds` as it does not take into account the current state of the
-  // overall system.
-  Bounds rated_bounds = 15;
+  // The current bounds of the metric, as imposed by the overall system.
+  Bounds system_bounds = 15;
 }
 
 // Metrics of a DC electrical connection.
