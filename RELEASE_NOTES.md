@@ -43,6 +43,30 @@
   The current _i_ A at the grid connection point must comply with the
   following constraint: : `-rated_fuse_current <= i <= rated_fuse_current`
 
+* [Introduced exclusion bounds](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/39).
+  In the messages `common.Metric` and `common.MetricAggregation`,
+  `system_bounds` has now been replaced by `system_exclusion_bounds` and
+  `system_inclusion_bounds`. A metric's `value` now has to comply with the
+  following constraints:
+
+  * `value <= system_exclusion_bounds.lower` OR
+    `system_exclusion_bounds.upper <= value`
+
+  * `system_inclusion_bounds.lower <= value <= system_inclusion_bounds.upper`
+
+  `system_inclusion_bounds` behave in the same manner as the earlier
+  `system_bounds`.
+
+  The following diagram illustrates the relationship between the exclusion and
+  inclusion bounds.
+  ```
+    inclusion.lower                              inclusion.upper
+  <-------|============|------------------|============|--------->
+                 exclusion.lower    exclusion.upper
+  ```
+  `----` values here are disallowed and wil be rejected, and
+  `====` values here are allowed and will be accepted.
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->

@@ -34,8 +34,61 @@ message Metric {
   // originates from.
   Bounds component_bounds = 3;
 
-  // The current bounds of the metric, as imposed by the overall system.
-  Bounds system_bounds = 4;
+  // These bounds indicate the range of values that are disallowed for the
+  // metric.
+  // If these bounds for a metric are [`lower`, `upper`], then this metric's
+  // `value` needs to comply with the constraints
+  // `value <= lower` OR `upper <= value`.
+  //
+  // It is important to note that these bounds work together with
+  // `system_inclusion_bounds`.
+  //
+  // E.g., for the system to accept a charge command,
+  // clients need to request power values within the bounds
+  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
+  // This means that clients can only request charge commands with values that
+  // are within the `system_inclusion_bounds`, but not within
+  // `system_exclusion_bounds`.
+  // Similarly, for the system to accept a discharge command,
+  // clients need to request power values within the bounds
+  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
+  //
+  // The following diagram illustrates the relationship between the bounds.
+  // ```
+  //   inclusion.lower                              inclusion.upper
+  // <-------|============|------------------|============|--------->
+  //                exclusion.lower    exclusion.upper
+  // ```
+  // ---- values here are disallowed and wil be rejected
+  // ==== vales here are allowed and will be accepted
+  Bounds system_exclusion_bounds = 4;
+
+  // These bounds indicate the range of values that are allowed for the metric.
+  // If these bounds for a metric are [`lower`, `upper`], then this metric's
+  // `value` needs to comply with the constraint `lower <= value <= upper`
+  //
+  // It is important to note that these bounds work together with
+  // `system_exclusion_bounds`.
+  //
+  // E.g., for the system to accept a charge command,
+  // clients need to request power values within the bounds
+  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
+  // This means that clients can only request charge commands with values that
+  // are within the `system_inclusion_bounds`, but not within
+  // `system_exclusion_bounds`.
+  // Similarly, for the system to accept a discharge command,
+  // clients need to request power values within the bounds
+  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
+  //
+  // The following diagram illustrates the relationship between the bounds.
+  // ```
+  //   inclusion.lower                              inclusion.upper
+  // <-------|============|------------------|============|--------->
+  //                exclusion.lower    exclusion.upper
+  // ```
+  // ---- values here are disallowed and wil be rejected
+  // ==== vales here are allowed and will be accepted
+  Bounds system_inclusion_bounds = 5;
 }
 
 // Metrics depicted as a collection of statistical summaries.
@@ -67,8 +120,61 @@ message MetricAggregation {
   // originates from.
   Bounds component_bounds = 14;
 
-  // The current bounds of the metric, as imposed by the overall system.
-  Bounds system_bounds = 15;
+  // These bounds indicate the range of values that are disallowed for the
+  // metric.
+  // If these bounds for a metric are [`lower`, `upper`], then this metric's
+  // `value` needs to comply with the constraints
+  // `value <= lower` OR `upper <= value`.
+  //
+  // It is important to note that these bounds work together with
+  // `system_inclusion_bounds`.
+  //
+  // E.g., for the system to accept a charge command,
+  // clients need to request power values within the bounds
+  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
+  // This means that clients can only request charge commands with power values
+  // that are within the `system_inclusion_bounds`, but not within
+  // `system_exclusion_bounds`.
+  // Similarly, for the system to accept a discharge command,
+  // clients need to request power values within the bounds
+  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
+  //
+  // The following diagram illustrates the relationship between the bounds.
+  // ```
+  //   inclusion.lower                              inclusion.upper
+  // <-------|============|------------------|============|--------->
+  //                exclusion.lower    exclusion.upper
+  // ```
+  // ---- values here are disallowed and wil be rejected
+  // ==== vales here are allowed and will be accepted
+  Bounds system_exclusion_bounds = 4;
+
+  // These bounds indicate the range of values that are allowed for the metric.
+  // If these bounds for a metric are [`lower`, `upper`], then this metric's
+  // `value` needs to comply with the constraint `lower <= value <= upper`
+  //
+  // It is important to note that these bounds work together with
+  // `system_exclusion_bounds`.
+  //
+  // E.g., for the system to accept a charge command,
+  // clients need to request power values within the bounds
+  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
+  // This means that clients can only request charge commands with power values
+  // that are within the `system_inclusion_bounds`, but not within
+  // `system_exclusion_bounds`.
+  // Similarly, for the system to accept a discharge command,
+  // clients need to request power values within the bounds
+  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
+  //
+  // The following diagram illustrates the relationship between the bounds.
+  // ```
+  //   inclusion.lower                              inclusion.upper
+  // <-------|============|------------------|============|--------->
+  //                exclusion.lower    exclusion.upper
+  // ```
+  // ---- values here are disallowed and wil be rejected
+  // ==== vales here are allowed and will be accepted
+  Bounds system_inclusion_bounds = 5;
 }
 
 // Metrics of a DC electrical connection.
