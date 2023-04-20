@@ -28,6 +28,12 @@ enum Type {
   TYPE_HYBRID = 3;
 }
 
+// The EV charger metadata.
+message Metadata {
+  // The EV charger type.
+  Type type = 1;
+}
+
 // The possible states of an EV charging station.
 enum ComponentState {
   // Default state.

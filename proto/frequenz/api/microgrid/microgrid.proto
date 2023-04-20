@@ -13,6 +13,7 @@ package frequenz.api.microgrid;
 import "frequenz/api/microgrid/battery.proto";
 import "frequenz/api/microgrid/common.proto";
 import "frequenz/api/microgrid/ev_charger.proto";
+import "frequenz/api/microgrid/grid.proto";
 import "frequenz/api/microgrid/inverter.proto";
 import "frequenz/api/microgrid/meter.proto";
 import "frequenz/api/microgrid/sensor.proto";
@@ -412,15 +413,14 @@ message Component {
   // The model name of the component.
   string model_name = 5;
 
-  // The type of the component.
-  // E.g., if the `ComponentCategory` is `INVERTER`, then the inverter type
-  // (`UNSPECIFIED`, `BATTERY`, `SOLAR`, or `HYBRID`)
-  oneof type {
-    battery.Type battery = 6;
-    inverter.Type inverter = 7;
-    meter.Type meter = 8;
-    ev_charger.Type ev_charger = 9;
-    sensor.Type sensor = 10;
+  // The metadata specific to the component category.
+  oneof metadata {
+    grid.Metadata grid = 11;
+    battery.Metadata battery = 12;
+    inverter.Metadata inverter = 13;
+    meter.Metadata meter = 14;
+    ev_charger.Metadata ev_charger = 15;
+    sensor.Metadata sensor = 16;
   }
 }
 

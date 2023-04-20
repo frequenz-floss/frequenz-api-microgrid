@@ -36,6 +36,12 @@ enum Type {
   TYPE_ACCELEROMETER = 6;
 }
 
+// The sensor metadata.
+message Metadata {
+  // The sensor type.
+  Type type = 1;
+}
+
 // Enumerated sensor states.
 enum ComponentState {
   // Unspecified state.

@@ -20,6 +20,12 @@ enum Type {
   TYPE_HYBRID = 3;
 }
 
+// The inverter metadata.
+message Metadata {
+  // The inverter type.
+  Type type = 1;
+}
+
 // Enumerated inverter states.
 enum ComponentState {
   // Default value.

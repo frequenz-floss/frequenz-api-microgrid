@@ -28,6 +28,21 @@
   (-ve for production, and +ve for consumption). This new method allows setting
   active power values in the same convention, making the API more consistent.
 
+* [Introduced component category-specific metadata](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/36).
+  This metadata is returned in response to `ListComponents` calls,
+  in a new message variable `Component.metadata`.
+  This is a more general way of representing category-specific metadata,
+  like category-type, and removes `Component.type`.
+
+* [Introduced grid max-current](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/38).
+  This change introduces a `grid.Metadata` message, which contains the item
+  `rated_fuse_current`. This is the rating of the fuse at the grid connection
+  point.
+  This rating specifies the maximum amount of current, measured in amperes,
+  that can flow in or out of each of the 3 phases individually.
+  The current _i_ A at the grid connection point must comply with the
+  following constraint: : `-rated_fuse_current <= i <= rated_fuse_current`
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->
