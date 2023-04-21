@@ -85,6 +85,18 @@
 
   The RPC `SetBounds` has been deprecated.
 
+* [Removed deprecated code](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/44)
+  The following deprecated code has been removed:
+  * The `COMPONENT_CATEGORY_LOAD` variant from the `ComponentCategory` enum.
+  * The `COMPONENT_CATEGORY_JUNCTION` variant from the `ComponentCategory` enum.
+  * The RPCs `Charge` and `Discharge`, in favour of RPC `SetPowerActive`.
+  * The RPC `SetBounds`, in favour of RPCs `AddExclusiveBounds` and
+    `AddInclusiveBounds`.
+
+  This removal also includes code that has been deprecated after the last major
+  release. The reason to remove these deprecations now is to have a leaner API
+  earlier, since we are already on the way for a major release now.
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->

@@ -92,11 +92,6 @@ service Microgrid {
     };
   }
 
-  // Sets the bounds for a given bounded metric of a given component.
-  rpc SetBounds(stream SetBoundsParam) returns (google.protobuf.Empty) {
-    option deprecated = true;
-  }
-
   // Adds exclusion bounds for a given metric of a given component, and returns
   // the UTC timestamp until which the given exclusion bounds will stay in
   // effect.
@@ -181,50 +176,6 @@ service Microgrid {
   // ---- values here are disallowed and wil be rejected
   // ==== vales here are allowed and will be accepted
   rpc AddInclusionBounds(SetBoundsParam) returns (google.protobuf.Timestamp);
-
-  // Sets the charge power of a component with a given ID, provided the
-  // component supports it.
-  //
-  // Note that the target component may have a resolution of more than 1 W.
-  // E.g., an inverter may have a resolution of 88 W.
-  // In such cases, the charge power will be floored to the nearest multiple of
-  // the resolution.
-  //
-  // Performs the following sequence actions for the following component
-  // categories:
-  //
-  // * Inverter: Sends the charge command to the inverter, making it consume AC
-  //  power.
-  //
-  // Deprecated: use `SetPowerActive` instead.
-  rpc Charge(PowerLevelParam) returns (google.protobuf.Empty) {
-    option deprecated = true;
-    option (google.api.http) = {
-      get : "/v1/components/{component_id}/charge/{power_w}"
-    };
-  }
-
-  // Sets the discharge power of a component with a given ID, provided the
-  // component supports it.
-  //
-  // Note that the target component may have a resolution of more than 1 W.
-  // E.g., an inverter may have a resolution of 88 W.
-  // In such cases, the discharge power will be floored to the nearest multiple
-  // of the resolution.
-  //
-  // Performs the following sequence actions for the following component
-  // categories:
-  //
-  // * Inverter: Sends the discharge command to the inverter, making it deliver
-  //  AC power.
-  //
-  // Deprecated: use `SetPowerActive` instead.
-  rpc Discharge(PowerLevelParam) returns (google.protobuf.Empty) {
-    option deprecated = true;
-    option (google.api.http) = {
-      get : "/v1/components/{component_id}/discharge/{power_w}"
-    };
-  }
 
   // Sets the power output of a component with a given ID, provided the
   // component supports it.
@@ -401,14 +352,6 @@ enum ComponentCategory {
 
   // A heat and power combustion plant (CHP stands for combined heat and power).
   COMPONENT_CATEGORY_CHP = 10;
-
-  // An electrical load in the microgrid, consuming AC electricity.
-  // Note that this will be removed in the next release.
-  COMPONENT_CATEGORY_LOAD = 14;
-
-  // A node in the circuit, where all connections meet.
-  // Note that this will be removed in the next release.
-  COMPONENT_CATEGORY_JUNCTION = 15;
 }
 
 // Parameters for filtering the components.
