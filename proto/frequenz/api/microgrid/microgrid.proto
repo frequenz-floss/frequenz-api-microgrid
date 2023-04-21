@@ -93,7 +93,94 @@ service Microgrid {
   }
 
   // Sets the bounds for a given bounded metric of a given component.
-  rpc SetBounds(stream SetBoundsParam) returns (google.protobuf.Empty);
+  rpc SetBounds(stream SetBoundsParam) returns (google.protobuf.Empty) {
+    option deprecated = true;
+  }
+
+  // Adds exclusion bounds for a given metric of a given component, and returns
+  // the UTC timestamp until which the given exclusion bounds will stay in
+  // effect.
+  //
+  // Exclusion bounds refer to the range of values that are disallowed for the
+  // metric. If these bounds for a metric are [`lower`, `upper`], then this
+  // metric's `value` needs to comply with the constraints
+  // `value <= lower` OR `upper <= value`.
+  //
+  // Exclusion bounds are a useful tool for enhancing the performance of a
+  // system. They can be used to restrict the acceptance of commands that fall
+  // below a certain threshold, which can help ensure the smooth functioning of
+  // the system.
+  // E.g., exclusion bounds can be set to limit the minimum charging power to a
+  // sufficiently high level, preventing a peak-shaver client from sending
+  // charge powers that are too low when a DC heater client is executing a
+  // charge pulse. This can significantly improve the overall performance of the
+  // DC heating mechanism.
+  //
+  //
+  // If multiple exclusion bounds have been provided bor a metric, then the
+  // aggregated lower and upper exclusion bounds are calculated as follows:
+  // lower: the minimum of all lower exclusion bounds
+  // upper: the maximum of all upper exclusion bounds
+  //
+  // It is important to note that these bounds work together with
+  // `system_inclusion_bounds`.
+  //
+  // E.g., for the system to accept a charge command,
+  // clients need to request power values within the bounds
+  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
+  // This means that clients can only request charge commands with values that
+  // are within the `system_inclusion_bounds`, but not within
+  // `system_exclusion_bounds`.
+  // Similarly, for the system to accept a discharge command,
+  // clients need to request power values within the bounds
+  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
+  //
+  // The following diagram illustrates the relationship between the bounds.
+  // ```
+  //   inclusion.lower                              inclusion.upper
+  // <-------|============|------------------|============|--------->
+  //                exclusion.lower    exclusion.upper
+  // ```
+  // ---- values here are disallowed and wil be rejected
+  // ==== vales here are allowed and will be accepted
+  rpc AddExclusionBounds(SetBoundsParam) returns (google.protobuf.Timestamp);
+
+  // Adds inclusion bounds for a given metric of a given component, and returns
+  // the UTC timestamp until which the given inclusion bounds will stay in
+  // effect.
+  //
+  // Inclusion bounds refer to the range of values that are allowed for the
+  // metric. If these bounds for a metric are [`lower`, `upper`], then this
+  // metric's `value` needs to comply with the constraint
+  // `lower <= value <= upper`.
+  //
+  // If multiple inclusion bounds have been provided bor a metric, then the
+  // aggregated lower and upper inclusion bounds are calculated as follows:
+  // lower: the maximum of all lower inclusion bounds
+  // upper: the minimum of all upper inclusion bounds
+  //
+  // It is important to note that these bounds work together with
+  // `system_exclusion_bounds`.
+  //
+  // E.g., for the system to accept a charge command,
+  // clients need to request power values within the bounds
+  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
+  // This means that clients can only request charge commands with values that
+  // are within the `system_inclusion_bounds`, but not within
+  // `system_exclusion_bounds`.
+  // Similarly, for the system to accept a discharge command,
+  // clients need to request power values within the bounds
+  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
+  //
+  // The following diagram illustrates the relationship between the bounds.
+  // ```
+  //   inclusion.lower                              inclusion.upper
+  // <-------|============|------------------|============|--------->
+  //                exclusion.lower    exclusion.upper
+  // ```
+  // ---- values here are disallowed and wil be rejected
+  // ==== vales here are allowed and will be accepted
+  rpc AddInclusionBounds(SetBoundsParam) returns (google.protobuf.Timestamp);
 
   // Sets the charge power of a component with a given ID, provided the
   // component supports it.
