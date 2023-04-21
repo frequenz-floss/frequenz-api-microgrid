@@ -28,7 +28,7 @@ service Microgrid {
   /// The metadata consists of information that describes the overall
   /// microgrid, as opposed to its components,
   /// e.g., the microgrid ID, location.
-  rpc GetMicrogridMetadata(google.protobuf.Empty) returns (Metadata) {
+  rpc GetMicrogridMetadata(google.protobuf.Empty) returns (MicrogridMetadata) {
     option (google.api.http) = {
       get : "v1/metadata"
     };
@@ -308,7 +308,7 @@ message Location {
 }
 
 // Metadata that describes a microgrid.
-message Metadata {
+message MicrogridMetadata {
   // The microgrid ID.
   // This is a natural number that uniquely identifies a given microgrid.
   uint64 microgrid_id = 1;
