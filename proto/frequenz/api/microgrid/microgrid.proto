@@ -28,7 +28,7 @@ service Microgrid {
   /// The metadata consists of information that describes the overall
   /// microgrid, as opposed to its components,
   /// e.g., the microgrid ID, location.
-  rpc GetMetadata(google.protobuf.Empty) returns (Metadata) {
+  rpc GetMicrogridMetadata(google.protobuf.Empty) returns (Metadata) {
     option (google.api.http) = {
       get : "v1/metadata"
     };
@@ -79,7 +79,7 @@ service Microgrid {
   }
 
   // Returns a stream containing data from a component with a given ID.
-  rpc GetComponentData(ComponentIdParam) returns (stream ComponentData) {
+  rpc StreamComponentData(ComponentIdParam) returns (stream ComponentData) {
     option (google.api.http) = {
       get : "/v1/components/{id}/data"
     };

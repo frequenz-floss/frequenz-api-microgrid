@@ -13,9 +13,11 @@
 * [Added new RPC to return the microgrid metadata](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/30).
   The microgrid metadata consists of information about the overall microgrid,
   as opposed to its components, e.g., the microgrid ID, location, etc.
-  This change adds a new RPC `GetMetadata()` that allows users to fetch
+  This change adds a new RPC `GetMicrogridMetadata()` that allows users to fetch
   microgrid metadata. The returned value is an instance of the message
   `Metadata`.
+
+  Further changes were introduced to this addition in [this PR](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/43).
 
 * [Added enum variants for setting bounds on currents](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/33).
   This will allow clients to set bounds on a components
@@ -84,6 +86,11 @@
   mechanism.
 
   The RPC `SetBounds` has been deprecated.
+
+* [Renamed RPCs](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/43).
+  The following RPC has been renamed to make their objectives clearer:
+  * `GetMetadata` -> `GetMicrogridMetadata`
+  * `GetComponentData` -> `StreamComponentData`
 
 * [Removed deprecated code](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/44)
   The following deprecated code has been removed:
