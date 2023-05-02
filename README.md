@@ -13,4 +13,4 @@ Contributing
 
 If you want to know how to build this project and contribute to it, please
 check out the [Contributing
-Guide](https://github.com/frequenz-floss/frequenz-api-microgrid/CONTRIBUTING.md).
+Guide](https://github.com/frequenz-floss/frequenz-api-microgrid/blob/v0.x.x/CONTRIBUTING.md).
