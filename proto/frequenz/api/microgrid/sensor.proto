@@ -34,6 +34,9 @@ enum Type {
 
   // Accelerometers (acceleration sensor).
   TYPE_ACCELEROMETER = 6;
+
+  // General sensors, which do not fall in any of the above categories
+  TYPE_GENERAL = 7;
 }
 
 // The sensor metadata.

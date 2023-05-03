@@ -10,7 +10,12 @@
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+* [Added a general sensor type](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/49)
+
+  Some sensors can be a collection of several individual sensor modules. E.g.,
+  a sensor can have pyranometer and anemometer sensor modules, and report both
+  irradiance and wind velocity and direction. This new sensor type
+  `TYPE_GENERAL` supports such cases.
 
 ## Bug Fixes
 
