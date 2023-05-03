@@ -95,6 +95,12 @@ enum SensorMetric {
   // Metric to represent angles, for metrics like direction.
   // In angles with respect to the (magnetic) North (°).
   SENSOR_METRIC_ANGLE = 7;
+
+  // Dew point.
+  // The temperature at which the air becomes saturated with water vapor.
+  //
+  // In Celsius (°C).
+  SENSOR_METRIC_DEW_POINT = 8;
 }
 
 // State message.
