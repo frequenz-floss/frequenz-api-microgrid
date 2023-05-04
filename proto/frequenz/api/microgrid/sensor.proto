@@ -34,6 +34,9 @@ enum Type {
 
   // Accelerometers (acceleration sensor).
   TYPE_ACCELEROMETER = 6;
+
+  // General sensors, which do not fall in any of the above categories
+  TYPE_GENERAL = 7;
 }
 
 // The sensor metadata.
@@ -92,6 +95,12 @@ enum SensorMetric {
   // Metric to represent angles, for metrics like direction.
   // In angles with respect to the (magnetic) North (°).
   SENSOR_METRIC_ANGLE = 7;
+
+  // Dew point.
+  // The temperature at which the air becomes saturated with water vapor.
+  //
+  // In Celsius (°C).
+  SENSOR_METRIC_DEW_POINT = 8;
 }
 
 // State message.
