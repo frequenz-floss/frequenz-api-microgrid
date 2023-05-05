@@ -6,7 +6,15 @@
 
 ## Upgrading
 
-<!-- Here goes notes on how to upgrade from previous versions, including if there are any deprecations and what they should be replaced with -->
+* [Updated inverters' DC links to support hybrid and solar inverters](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/50)
+
+  The `Inverter` message has been updated to support hybrid and solar inverters.
+  The `dc` field has been renamed to `dc_battery`, and a new field `dc_solar`
+  has been added.
+  The `dc_battery` field is used to report the DC electricity flowing to/from
+  the linked battery, and is applicable to battery and hybrid inverters.
+  The `dc_solar` field is used to report the DC electricity flowing to/from the
+  linked solar panels, and is applicable to solar and hybrid inverters.
 
 ## New Features
 
