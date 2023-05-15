@@ -90,8 +90,13 @@ message Error {
 
 // Inverter data.
 message Data {
-  // DC metrics of the inverter.
-  common.DC dc = 1;
+  // DC metrics for the inverter-battery linkage.
+  // This is applicable to `BATTERY` and `HYBRID` inverters only.
+  common.DC dc_battery = 4;
+
+  // DC metrics for the inverter-PV linkage.
+  // This is applicable to `SOLAR` and `HYBRID` inverters only.
+  common.DC dc_solar = 5;
 
   // AC metrics of the inverter.
   common.AC ac = 2;
