@@ -11,12 +11,14 @@ syntax = "proto3";
 package frequenz.api.microgrid;
 
 import "frequenz/api/microgrid/battery.proto";
-import "frequenz/api/microgrid/common.proto";
 import "frequenz/api/microgrid/ev_charger.proto";
 import "frequenz/api/microgrid/grid.proto";
 import "frequenz/api/microgrid/inverter.proto";
 import "frequenz/api/microgrid/meter.proto";
 import "frequenz/api/microgrid/sensor.proto";
+
+import "frequenz/api/common/components.proto";
+import "frequenz/api/common/metrics.proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -317,50 +319,13 @@ message MicrogridMetadata {
   Location location = 2;
 }
 
-// Enumrated component categories.
-enum ComponentCategory {
-  // An unknown component categories, useful for error handling, and marking
-  // unknown components in a list of components with otherwise known categories.
-  COMPONENT_CATEGORY_UNSPECIFIED = 0;
-
-  // The point where the local microgrid is connected to the grid.
-  COMPONENT_CATEGORY_GRID = 1;
-
-  // A meter, for measuring electrical metrics, e.g., current, voltage, etc.
-  COMPONENT_CATEGORY_METER = 2;
-
-  // An electricity generator, with batteries or solar energy.
-  COMPONENT_CATEGORY_INVERTER = 3;
-
-  // A DC-DC converter.
-  COMPONENT_CATEGORY_CONVERTER = 4;
-
-  // A storage system for electrical energy, used by inverters.
-  COMPONENT_CATEGORY_BATTERY = 5;
-
-  // A station for charging electrical vehicles.
-  COMPONENT_CATEGORY_EV_CHARGER = 6;
-
-  // A sensor for measuring ambient metrics, e.g., temperature, humidity, etc.
-  COMPONENT_CATEGORY_SENSOR = 7;
-
-  // A crypto miner.
-  COMPONENT_CATEGORY_CRYPTO_MINER = 8;
-
-  // An electrolyzer for converting water into hydrogen and oxygen.
-  COMPONENT_CATEGORY_ELECTROLYZER = 9;
-
-  // A heat and power combustion plant (CHP stands for combined heat and power).
-  COMPONENT_CATEGORY_CHP = 10;
-}
-
 // Parameters for filtering the components.
 message ComponentFilter {
   // Return components that have the specified IDs only.
   repeated uint64 ids = 1;
 
   // Return components that have the specified categories only.
-  repeated ComponentCategory categories = 2;
+  repeated frequenz.api.common.components.ComponentCategory categories = 2;
 }
 
 // Encapsulation of a component ID, intended to be used as a parameter for rpc
@@ -423,7 +388,7 @@ message SetBoundsParam {
   TargetMetric target_metric = 2;
 
   // The bounds for the target metric.
-  common.Bounds bounds = 3;
+  frequenz.api.common.metrics.Bounds bounds = 3;
 }
 
 // A generic message for components. It is used to represent any category of
@@ -436,7 +401,7 @@ message Component {
   string name = 2;
 
   // The category of the component.
-  ComponentCategory category = 3;
+  frequenz.api.common.components.ComponentCategory category = 3;
 
   // The component manufacturer.
   string manufacturer = 4;

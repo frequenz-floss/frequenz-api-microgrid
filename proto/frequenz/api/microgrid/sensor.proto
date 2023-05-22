@@ -12,37 +12,12 @@ package frequenz.api.microgrid.sensor;
 
 import "frequenz/api/microgrid/common.proto";
 
-// Enumerated sensor types.
-enum Type {
-  // Unspecified
-  TYPE_UNSPECIFIED = 0;
-
-  // Thermometer (temperature sensor)
-  TYPE_THERMOMETER = 1;
-
-  // Hygrometer (humidity sensor)
-  TYPE_HYGROMETER = 2;
-
-  // Barometer (pressure sensor).
-  TYPE_BAROMETER = 3;
-
-  // Pyranometer (solar irradiance sensor).
-  TYPE_PYRANOMETER = 4;
-
-  // Anemometer (wind velocity and direction sensor).
-  TYPE_ANEMOMETER = 5;
-
-  // Accelerometers (acceleration sensor).
-  TYPE_ACCELEROMETER = 6;
-
-  // General sensors, which do not fall in any of the above categories
-  TYPE_GENERAL = 7;
-}
+import "frequenz/api/common/components.proto";
 
 // The sensor metadata.
 message Metadata {
   // The sensor type.
-  Type type = 1;
+  frequenz.api.common.components.SensorType type = 1;
 }
 
 // Enumerated sensor states.
