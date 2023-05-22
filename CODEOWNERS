@@ -4,7 +4,7 @@
 # Fallback owner.
 # These are the default owners for everything in the repo, unless a later match
 # takes precedence.
-* @frequenz-floss/microgrid-api-team
+* @frequenz-floss/api-team
 
 # Python bindings
-/py* @frequenz-floss/microgrid-api-team @frequenz-floss/python-sdk-team
+/py* @frequenz-floss/api-team @frequenz-floss/python-sdk-team
