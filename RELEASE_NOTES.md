@@ -6,7 +6,19 @@
 
 ## Upgrading
 
-<!-- Here goes notes on how to upgrade from previous versions, including if there are any deprecations and what they should be replaced with -->
+* [Using `frequenz-api-common` for common proto definitions](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/57)
+
+  The following proto definitions have been removed, and are being used from the
+  `frequenz-api-common` repository instead:
+  * `ComponentCategory` -> `frequenz.api.common.components.ComponentCategory`
+  * `battery.Type` -> `frequenz.api.common.components.BatteryType`
+  * `common.Bounds` -> `frequenz.api.common.metrics.Bounds`
+  * `common.Metric` -> `frequenz.api.common.metrics.Metric`
+  * `common.Ac` -> `frequenz.api.common.metrics.electrical.Ac`
+  * `common.Dc` -> `frequenz.api.common.metrics.electrical.Dc`
+  * `ev_charger.Type` -> `frequenz.api.common.components.EVChargerType`
+  * `inverter.Type` -> `frequenz.api.common.components.InverterType`
+  * `sensor.Type` -> `frequenz.api.common.components.SensorType`
 
 ## New Features
 
