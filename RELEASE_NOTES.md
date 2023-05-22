@@ -33,6 +33,9 @@
   This metric has now been added to the `SensorMetric` enum as
   `SENSOR_METRIC_DEW_POINT`.
 
+* [Added enum variant for setting bounds on AC reactive power](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/51)
+    This will allow clients to set bounds on a component's AC reactive power.
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->

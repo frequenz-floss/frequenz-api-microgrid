@@ -413,6 +413,7 @@ message SetBoundsParam {
     TARGET_METRIC_CURRENT_PHASE_1 = 3;
     TARGET_METRIC_CURRENT_PHASE_2 = 4;
     TARGET_METRIC_CURRENT_PHASE_3 = 5;
+    TARGET_METRIC_POWER_REACTIVE = 6;
   }
 
   // The ID of the target component.
