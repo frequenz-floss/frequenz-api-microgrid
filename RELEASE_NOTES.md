@@ -38,9 +38,13 @@
 * [Added new battery component states](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/59)
 
   Three new battery component states have been added:
-  * SwitchingOn
-  * SwitchingOff
-  * Unknown
+  * `SwitchingOn`
+  * `SwitchingOff`
+  * `Unknown`
+
+* [Added a new EV charger component state](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/59)
+
+  A new EV charger component states have been added: `Unknown`
 
 ## Bug Fixes
 

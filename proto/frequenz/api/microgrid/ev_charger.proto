@@ -25,6 +25,7 @@ message Metadata {
 // The possible states of an EV charging station.
 enum ComponentState {
   // Default state.
+  // This value is used only when the state information is not available.
   COMPONENT_STATE_UNSPECIFIED = 0;
 
   // The EV charging station is starting up.
@@ -51,6 +52,10 @@ enum ComponentState {
 
   // The EV charging process hes been temporarily interrupted.
   COMPONENT_STATE_INTERRUPTED = 8;
+
+  // The state is provided by the device, but it can not be parsed as any of the
+  // above (known) states.
+  COMPONENT_STATE_UNKNOWN = 9;
 }
 
 // The possible states of the cable connecting an EV charging station and an
