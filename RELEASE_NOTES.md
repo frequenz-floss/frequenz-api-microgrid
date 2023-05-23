@@ -2,7 +2,11 @@
 
 ## Summary
 
-<!-- Here goes a general summary of what this release is about -->
+This release adds a breaking change to improve the DC data reporting
+capabilities for inverters.
+
+This release also adds non-breaking changes to extend the API to support more
+sensor types, and to add support for adding bounds on AC reactive power.
 
 ## Upgrading
 
@@ -38,4 +42,4 @@
 
 ## Bug Fixes
 
-<!-- Here goes notable bug fixes that are worth a special mention or explanation -->
+None
