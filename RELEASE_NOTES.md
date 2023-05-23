@@ -2,7 +2,20 @@
 
 ## Summary
 
-<!-- Here goes a general summary of what this release is about -->
+In this release, the protobuf definitions here are being updated to use shared
+definitions from [`frequenz-api-common`](https://github.com/frequenz-floss/frequenz-api-common).
+The `frequenz-api-common` repository contains shared protobuf definitions that
+are common to all frequenz APIs.
+
+The `frequenz-api-microgrid` python library has also been updated to
+use the [`frequenz-api-common`](https://pypi.org/project/frequenz-api-common/)
+library as a dependency.
+
+This release upgrades the minimum required python version for the library
+`frequenz-api-microgrid` to 3.11.
+
+This release also extends the API by adding new component states, and a new RPC
+to set reactive power level of applicable components.
 
 ## Upgrading
 
@@ -58,4 +71,4 @@
 
 ## Bug Fixes
 
-<!-- Here goes notable bug fixes that are worth a special mention or explanation -->
+None
