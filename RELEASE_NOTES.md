@@ -20,6 +20,19 @@
   * `inverter.Type` -> `frequenz.api.common.components.InverterType`
   * `sensor.Type` -> `frequenz.api.common.components.SensorType`
 
+  The pypi package `frequenz-api-common` is being added as a dependency to the
+  python package definition, instead of generating the proto definitions using
+  `protoc`. This is required, otherwise each proto library depending on
+  `frequenz-api-common` will generate its own python modules for
+  `frequenz-api-common`, resulting in multiple definition of the common data
+  structures.
+
+* [Upgraded minimum required python version for the python library to 3.11](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/57)
+
+  The change to use the `frequenz-api-common` definitions forces the minimum
+  required python version of the `frequenz-api-microgrid` package to be 3.11,
+  as a transitive dependency inherited from the `frequenz-api-common` package.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
