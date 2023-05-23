@@ -1,5 +1,6 @@
 [build-system]
 requires = [
+    "frequenz-api-common == 0.2.0",
     "grpcio-tools >= 1.47.0, < 2",
     "mypy-protobuf >= 3.0.0, < 4",
     "setuptools >= 65.4.1, < 66",
@@ -26,10 +27,9 @@ classifiers = [
    "Programming Language :: Python :: 3.10",
    "Topic :: Software Development :: Libraries",
 ]
-requires-python = ">= 3.7, < 4"
+requires-python = ">= 3.11, < 4"
 dependencies = [
-    "googleapis-common-protos >= 1.56.2, < 2",
-    "grpcio >= 1.47.0, < 2",
+    "frequenz-api-common == 0.2.0"
 ]
 dynamic = [ "version" ]
 
