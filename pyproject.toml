@@ -20,14 +20,11 @@ classifiers = [
    "License :: OSI Approved :: MIT License",
    "Programming Language :: Python :: 3",
    "Programming Language :: Python :: 3 :: Only",
-   "Programming Language :: Python :: 3.7",
-   "Programming Language :: Python :: 3.8",
-   "Programming Language :: Python :: 3.9",
-   "Programming Language :: Python :: 3.10",
    "Topic :: Software Development :: Libraries",
 ]
-requires-python = ">= 3.7, < 4"
+requires-python = ">= 3.11, < 4"
 dependencies = [
+    "frequenz-api-common == 0.2.0",
     "googleapis-common-protos >= 1.56.2, < 2",
     "grpcio >= 1.47.0, < 2",
 ]

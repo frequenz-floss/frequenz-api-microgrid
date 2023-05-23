@@ -10,86 +10,7 @@ syntax = "proto3";
 
 package frequenz.api.microgrid.common;
 
-// A set of lower and upper bounds for any metric.
-// The units of the bounds are always the same as the related metric.
-message Bounds {
-  // The lower bound.
-  float lower = 1;
-
-  // The upper bound.
-  float upper = 2;
-}
-
-// A metric's value, with optional limits.
-message Metric {
-  // The current value of the metric.
-  float value = 1;
-
-  // The manufacturer's rated bounds of the metric. This may differ from
-  // `system_bounds` as it does not take into account the current state of the
-  // overall system.
-  Bounds rated_bounds = 2;
-
-  // The current bounds of the metric, as imposed by the component this metric
-  // originates from.
-  Bounds component_bounds = 3;
-
-  // These bounds indicate the range of values that are disallowed for the
-  // metric.
-  // If these bounds for a metric are [`lower`, `upper`], then this metric's
-  // `value` needs to comply with the constraints
-  // `value <= lower` OR `upper <= value`.
-  //
-  // It is important to note that these bounds work together with
-  // `system_inclusion_bounds`.
-  //
-  // E.g., for the system to accept a charge command,
-  // clients need to request power values within the bounds
-  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
-  // This means that clients can only request charge commands with values that
-  // are within the `system_inclusion_bounds`, but not within
-  // `system_exclusion_bounds`.
-  // Similarly, for the system to accept a discharge command,
-  // clients need to request power values within the bounds
-  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
-  //
-  // The following diagram illustrates the relationship between the bounds.
-  // ```
-  //   inclusion.lower                              inclusion.upper
-  // <-------|============|------------------|============|--------->
-  //                exclusion.lower    exclusion.upper
-  // ```
-  // ---- values here are disallowed and wil be rejected
-  // ==== vales here are allowed and will be accepted
-  Bounds system_exclusion_bounds = 4;
-
-  // These bounds indicate the range of values that are allowed for the metric.
-  // If these bounds for a metric are [`lower`, `upper`], then this metric's
-  // `value` needs to comply with the constraint `lower <= value <= upper`
-  //
-  // It is important to note that these bounds work together with
-  // `system_exclusion_bounds`.
-  //
-  // E.g., for the system to accept a charge command,
-  // clients need to request power values within the bounds
-  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
-  // This means that clients can only request charge commands with values that
-  // are within the `system_inclusion_bounds`, but not within
-  // `system_exclusion_bounds`.
-  // Similarly, for the system to accept a discharge command,
-  // clients need to request power values within the bounds
-  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
-  //
-  // The following diagram illustrates the relationship between the bounds.
-  // ```
-  //   inclusion.lower                              inclusion.upper
-  // <-------|============|------------------|============|--------->
-  //                exclusion.lower    exclusion.upper
-  // ```
-  // ---- values here are disallowed and wil be rejected
-  // ==== vales here are allowed and will be accepted
-  Bounds system_inclusion_bounds = 5;
-}
+import "frequenz/api/common/metrics.proto";
 
 // Metrics depicted as a collection of statistical summaries.
 //
@@ -114,11 +35,11 @@ message MetricAggregation {
   // The manufacturer's rated bounds of the metric. This may differ from
   // `system_bounds` as it does not take into account the current state of the
   // overall system.
-  Bounds rated_bounds = 13;
+  frequenz.api.common.metrics.Bounds rated_bounds = 13;
 
   // The current bounds of the metric, as imposed by the component this metric
   // originates from.
-  Bounds component_bounds = 14;
+  frequenz.api.common.metrics.Bounds component_bounds = 14;
 
   // These bounds indicate the range of values that are disallowed for the
   // metric.
@@ -147,7 +68,7 @@ message MetricAggregation {
   // ```
   // ---- values here are disallowed and wil be rejected
   // ==== vales here are allowed and will be accepted
-  Bounds system_exclusion_bounds = 4;
+  frequenz.api.common.metrics.Bounds system_exclusion_bounds = 4;
 
   // These bounds indicate the range of values that are allowed for the metric.
   // If these bounds for a metric are [`lower`, `upper`], then this metric's
@@ -174,193 +95,7 @@ message MetricAggregation {
   // ```
   // ---- values here are disallowed and wil be rejected
   // ==== vales here are allowed and will be accepted
-  Bounds system_inclusion_bounds = 5;
-}
-
-// Metrics of a DC electrical connection.
-message DC {
-  // The DC voltage across the component.
-  // In Volt (V).
-  Metric voltage = 1;
-
-  // The DC current flowing away from the grid connection.
-  // In passive sign convention:
-  // +ve current means consumption, away from the grid.
-  // -ve current means supply into the grid.
-  // In Ampere (A).
-  Metric current = 2;
-
-  // The DC power flowing away from the grid connection.
-  // In passive sign convention:
-  // +ve power means consumption, away from the grid.
-  // -ve power means supply into the grid.
-  // In Watt (W).
-  Metric power = 3;
-}
-
-// The current state and metrics of the electrical connections to the
-// inverter.
-message AC {
-  // The active energy the inverter is consuming or generating.
-  message ActiveEnergy {
-    // The sum of the consumed and delivered energy.
-    // This is a signed value in passive sign convention: if more energy is
-    // consumed than delivered, this is a -ve number, otherwise +ve.
-    // In Watt-hour (Wh).
-    Metric energy = 1;
-
-    // The consumed energy.
-    // In Watt-hour (Wh).
-    Metric energy_consumed = 2;
-
-    // The delivered energy.
-    // In Watt-hour (Wh).
-    Metric energy_delivered = 3;
-  }
-
-  // The reactive energy the inverter is consuming or generating.
-  message ReactiveEnergy {
-    // The sum of the capacitive and inductive energy.
-    // This is a signed value. If more energy is capacitive than inductive,
-    // this is a -ve number, otherwise +ve.
-    // In Volt-Ampere-hour (VArh).
-    Metric energy = 1;
-
-    // The capacitive energy.
-    // In Volt-Ampere-hour (VArh).
-    Metric energy_capacitive = 2;
-
-    // The inductive energy.
-    // In Volt-Ampere-hour (VArh).
-    Metric energy_inductive = 3;
-  }
-
-  // The harmonics of the fast Fourier transform of the instantaneous values
-  // and its total harmonic distortion.
-  // In percent (%).
-  message Harmonics {
-    float harmonic_1 = 1;
-    float harmonic_2 = 2;
-    float harmonic_3 = 3;
-    float harmonic_4 = 4;
-    float harmonic_5 = 5;
-    float harmonic_6 = 6;
-    float harmonic_7 = 7;
-    float harmonic_8 = 8;
-    float harmonic_9 = 9;
-    float harmonic_10 = 10;
-    float harmonic_11 = 11;
-  }
-
-  // AC metrics of a single phase.
-  message ACPhase {
-    // The AC voltage between the line and the neutral wire.
-    // In Volt (V).
-    Metric voltage = 1;
-
-    // AC current.
-    // +ve current means consumption, away from the grid.
-    // -ve current means supply into the grid.
-    // In Ampere (A).
-    Metric current = 2;
-
-    // AC active power.
-    // +ve power means consumption, away from the grid.
-    // -ve power means supply into the grid.
-    // In Watt (W).
-    Metric power_active = 3;
-
-    // AC reactive power.
-    // +ve power means inductive (leading).
-    // -ve power means capacitive (lagging).
-    // In Volt-Ampere reactive (VAr).
-    Metric power_reactive = 4;
-
-    // The total apparent energy. A Positive value represents the net apparent
-    // energy supplied to the grid connection, and vice versa.
-    // In Volt-Ampere-hour (VAh).
-    Metric energy_apparent = 5;
-
-    // The total active energy counters for the underlying component's
-    // consumption and supply.
-    // In Watt-hour (Wh).
-    ActiveEnergy energy_active = 6;
-
-    // The total reactive energy counters for the underlying component's
-    // capacitive and inductive energy values.
-    // In Volt-Ampere reactive hour (VArh).
-    ReactiveEnergy energy_reactive = 7;
-
-    // Harmonics of the instantaneous active power at the component.
-    // In percent (%).
-    Harmonics harmonics_power_active = 8;
-
-    // Total harmonic distortion
-    // of the instantaneous active power at the component.
-    // In percent (%).
-    float thd_power_active = 9;
-  }
-
-  // Overall AC metrics.
-
-  // The AC frequency.
-  // In Hertz (Hz).
-  Metric frequency = 1;
-
-  // The apparent 3-phase AC current. Positive values represent apparent energy
-  // flowing towards the grid connection, and vice versa.
-  // In Ampere (A).
-  Metric current = 2;
-
-  // The apparent 3-phase AC power. Positive values represent apparent energy
-  // flowing towards the grid connection, and vice versa.
-  // In Volt-Ampere (VA).
-  Metric power_apparent = 3;
-
-  // The total active 3-phase AC active power.
-  // +ve power means consumption, away from the grid.
-  // -ve power means supply into the grid.
-  // In Watt (W).
-  Metric power_active = 4;
-
-  // The reactive 3-phase AC power.
-  // +ve power means inductive (leading).
-  // -ve power means capacitive (lagging).
-  // In Volt-Ampere reactive (VAr).
-  Metric power_reactive = 5;
-
-  // The total 3-phase apparent energy. A positive value represents the net
-  // apparent energy supplied to the grid connection, and vice versa.
-  // In Volt-Ampere-hour (VAh).
-  Metric energy_apparent = 6;
-
-  // The total 3-phase active energy counters for the underlying component's
-  // consumption and supply.
-  // In Watt-hour (Wh).
-  ActiveEnergy energy_active = 7;
-
-  // The total 3-phase reactive energy counters for the underlying component's
-  // capacitive and inductive energy values.
-  // In Volt-Ampere reactive hour (VArh).
-  // FIXME: ReactiveEnergy says Volt-Ampere-hour (VAh).
-  ReactiveEnergy energy_reactive = 8;
-
-  // The sums of the harmonics
-  // of the instantaneous active power at the component across all 3 phases.
-  Harmonics harmonics_power_active = 9;
-
-  // The sums of the total harmonic distortion
-  // of the instantaneous active power at the component across all 3 phases.
-  float thd_power_active = 10;
-
-  // AC metrics for phase/line 1.
-  ACPhase phase_1 = 11;
-
-  // AC metrics for phase/line 2.
-  ACPhase phase_2 = 12;
-
-  // AC metrics for phase/line 3.
-  ACPhase phase_3 = 13;
+  frequenz.api.common.metrics.Bounds system_inclusion_bounds = 5;
 }
 
 // Error levels definitions.

@@ -39,6 +39,33 @@ If you have any issues with these dependencies, please check the
 `pyproject.toml` file and try installing the exact supported versions instead.
 
 
+Upgrading dependencies
+======================
+
+If you want to update the dependency `frequenz-api-common`, then you need to
+* update the submodule `frequenz-api-common`
+* update the version of the `frequenz-api-common` package in `pyproject.toml`
+* update the version of the `frequenz-api-common` package in
+`minimum-requirements-ci.txt`
+
+The version of `frequenz-api-common` used in all the three places mentioned
+above should be the same.
+
+Here is an example of upgrading the `frequenz-api-common` dependency to version
+`v0.2.0`:
+```sh
+ver="0.2.0"
+
+cd submodules/frequenz-api-common
+git remote update
+git checkout v${ver}
+cd ../..
+
+sed s/"frequenz-api-common == [0-9]\.[0-9]\.[0-9]"/"frequenz-api-common == ${ver}"/g -i pyproject.toml
+
+sed s/"frequenz-api-common == .*"/"frequenz-api-common == ${ver}"/g -i minimum-requirements-ci.txt
+```
+
 Releasing
 =========
 

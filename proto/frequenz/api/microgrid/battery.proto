@@ -12,25 +12,13 @@ package frequenz.api.microgrid.battery;
 
 import "frequenz/api/microgrid/common.proto";
 
-// Enumerated battery types.
-enum Type {
-  // Unspecified.
-  TYPE_UNSPECIFIED = 0;
-
-  // Li-ion batteries.
-  TYPE_LI_ION = 1;
-
-  // Lithium-Iron-Phosphate batteries.
-  TYPE_LI_FE_PO = 2;
-
-  // Sodium-ion batteries
-  TYPE_NA_ION = 3;
-}
+import "frequenz/api/common/components.proto";
+import "frequenz/api/common/metrics/electrical.proto";
 
 // The battery metadata.
 message Metadata {
   // The battery type.
-  Type type = 1;
+  frequenz.api.common.components.BatteryType type = 1;
 }
 
 enum ComponentState {
@@ -175,7 +163,7 @@ message Error {
 // Battery data.
 message Data {
   // DC electricity metrics.
-  common.DC dc = 1;
+  frequenz.api.common.metrics.electrical.DC dc = 1;
 
   // Battery's overall SoC.
   // In percent (%).

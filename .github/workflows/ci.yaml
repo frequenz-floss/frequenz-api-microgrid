@@ -40,6 +40,7 @@ jobs:
           docker run --rm -v $PWD:$PWD pseudomuto/protoc-gen-doc \
             -I $PWD/proto \
             -I $PWD/submodules/api-common-protos \
+            -I $PWD/submodules/frequenz-api-common/proto \
             --doc_opt=markdown,gen-docs.md --doc_out=$PWD \
             $(find $PWD/proto -name *.proto)
 
@@ -52,10 +53,6 @@ jobs:
         os:
           - ubuntu-20.04
         python-version:
-          - "3.7"
-          - "3.8"
-          - "3.9"
-          - "3.10"
           - "3.11"
     runs-on: ${{ matrix.os }}
     steps:
@@ -88,7 +85,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install build dependencies
         run: |
