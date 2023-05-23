@@ -46,6 +46,10 @@
 
   A new EV charger component states have been added: `Unknown`
 
+* [Added a new inverter component state](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/59)
+
+  A new inverter component states have been added: `Unknown`
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->

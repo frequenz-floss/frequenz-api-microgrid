@@ -66,6 +66,10 @@ enum ComponentState {
   // The inverter is online, but currently unavailable, possibly due to
   // a pre-scheduled maintenance.
   COMPONENT_STATE_UNAVAILABLE = 15;
+
+  // The state is provided by the device, but it can not be parsed as any of the
+  // above (known) states.
+  COMPONENT_STATE_UNKNOWN = 16;
 }
 
 // Enumerated inverter error codes.
