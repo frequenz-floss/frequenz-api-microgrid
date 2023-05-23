@@ -35,7 +35,12 @@
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+* [Added new battery component states](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/59)
+
+  Three new battery component states have been added:
+  * SwitchingOn
+  * SwitchingOff
+  * Unknown
 
 ## Bug Fixes
 

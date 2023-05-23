@@ -23,6 +23,7 @@ message Metadata {
 
 enum ComponentState {
   // Default value.
+  // This value is used only when the state information is not available.
   COMPONENT_STATE_UNSPECIFIED = 0;
 
   // The battery is switched off.
@@ -43,6 +44,16 @@ enum ComponentState {
   // The battery is online, but currently unavailable, possibly due to
   // a pre-scheduled maintenance, or waiting for a resource to be loaded.
   COMPONENT_STATE_LOCKED = 6;
+
+  // The battery is starting up and needs some time to become fully operational.
+  COMPONENT_STATE_SWITCHING_ON = 7;
+
+  // The battery is switching off and needs some time to fully shut down.
+  COMPONENT_STATE_SWITCHING_OFF = 8;
+
+  // The state is provided by the device, but it can not be parsed as any of the
+  // above (known) states.
+  COMPONENT_STATE_UNKNOWN = 9;
 }
 
 enum RelayState {
