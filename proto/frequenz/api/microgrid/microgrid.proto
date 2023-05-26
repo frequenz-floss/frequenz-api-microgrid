@@ -179,7 +179,7 @@ service Microgrid {
   // ==== vales here are allowed and will be accepted
   rpc AddInclusionBounds(SetBoundsParam) returns (google.protobuf.Timestamp);
 
-  // Sets the power output of a component with a given ID, provided the
+  // Sets the active power output of a component with a given ID, provided the
   // component supports it.
   //
   // Note that the target component may have a resolution of more than 1 W.
@@ -195,6 +195,19 @@ service Microgrid {
   rpc SetPowerActive(SetPowerActiveParam) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{component_id}/setPowerActive/{power}"
+    };
+  }
+
+  // Sets the reactive power output of a component with a given ID, provided the
+  // component supports it.
+  //
+  // Note that the target component may have a resolution of more than 1 VAr.
+  // E.g., an inverter may have a resolution of 88 VAr.
+  // In such cases, the magnitude of power will be floored to the nearest
+  // multiple of the resolution.
+  rpc SetPowerReactive(SetPowerReactiveParam) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{component_id}/setPowerReactive/{power}"
     };
   }
 
@@ -365,6 +378,18 @@ message SetPowerActiveParam {
 
   // The output active power level, in watts.
   // -ve values are for discharging, and +ve values are for charging.
+  float power = 2;
+}
+
+// Parameters for setting the reactive power of an appropriate component using
+// the `SetPowerReactive` RPC.
+message SetPowerReactiveParam {
+  // The ID of the component to set the output reactive power of.
+  uint64 component_id = 1;
+
+  // The output reactive power level, in VAr.
+  // -ve values are for inductive (lagging) power , and +ve values are for
+  //  capacitive (leading) power.
   float power = 2;
 }
 

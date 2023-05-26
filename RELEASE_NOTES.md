@@ -50,6 +50,12 @@
 
   A new inverter component states have been added: `Unknown`
 
+* [Added RPC to set reactive power](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/60)
+
+  A new RPC, named `SetPowerReactive` has been added to set reactive power for
+  inverters, and other components that support it. Also, the parameters to the
+  RPC can be sent using the message `SetPowerReactiveParam`.
+
 ## Bug Fixes
 
 <!-- Here goes notable bug fixes that are worth a special mention or explanation -->
