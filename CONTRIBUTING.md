@@ -84,7 +84,7 @@ These are the steps to create a new release:
    for example:
 
    ```sh
-   git tag -s -F RELEASE_NOTES.md v0.0.1
+   git tag -s --cleanup=whitespace -F RELEASE_NOTES.md v0.0.1
    ```
 
 4. Push the new tag.
