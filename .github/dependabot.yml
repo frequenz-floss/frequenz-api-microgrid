@@ -1,0 +1,44 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "07:00"
+    labels:
+      - "part:tooling"
+      - "type:tech-debt"
+    # Default versioning-strategy. For other versioning-strategy see:
+    # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#versioning-strategy
+    versioning-strategy: auto
+    # Allow up to 10 open pull requests for updates to dependency versions
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "06:00"
+    labels:
+      - "part:tooling"
+      - "type:tech-debt"
+
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    # We only want to track updates on google api common because the
+    # dependencies to other submodules are also indirectly tracked by the
+    # python dependencies (and because the gitsubmodule dependency tracker
+    # doesn't support updating only to tags or following semver, see
+    # https://github.com/dependabot/dependabot-core/issues/1639 for details)
+    # We do so by explicitly ignoring the other submodules, as `ignore` all
+    # + `allow` one doesn't seem to work.
+    ignore:
+      - dependency-name: "submodules/frequenz-api-common"
+    # The google api common repo changes very seldom, so there is no need to
+    # check very often.
+    schedule:
+      interval: "monthly"
+      time: "06:00"
+    labels:
+      - "part:tooling"
+      - "type:tech-debt"
