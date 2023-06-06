@@ -6,7 +6,15 @@
 
 ## Upgrading
 
-<!-- Here goes notes on how to upgrade from previous versions, including if there are any deprecations and what they should be replaced with -->
+* [Upgraded `frequenz-api-common` to v0.3.0](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/65)
+
+  The submodule `frequenz-api-common` has been upgraded to v0.3.0.
+  This version renames the enum representing EV charger types to `EvChargerType`
+  and defined the `MetricAggregation` message, which was previously defined in
+  `frequenz-api-microgrid`.
+
+  Since the message `MetricAggregation` is now being imported from the common
+  specs, it has been removed from the file `common.proto`.
 
 ## New Features
 
