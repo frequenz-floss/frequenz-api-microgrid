@@ -464,7 +464,7 @@ message ComponentData {
     meter.Meter meter = 3;
     inverter.Inverter inverter = 4;
     battery.Battery battery = 5;
-    ev_charger.EVCharger ev_charger = 6;
+    ev_charger.EvCharger ev_charger = 6;
     sensor.Sensor sensor = 7;
   }
 }

@@ -19,7 +19,7 @@ import "frequenz/api/common/metrics/electrical.proto";
 // The EV charger metadata.
 message Metadata {
   // The EV charger type.
-  frequenz.api.common.components.EVChargerType type = 1;
+  frequenz.api.common.components.EvChargerType type = 1;
 }
 
 // The possible states of an EV charging station.
@@ -186,8 +186,8 @@ message Properties {
   string firmware_ver = 1;
 }
 
-// EVCharger details
-message EVCharger {
+// EvCharger details
+message EvCharger {
   // The component properties
   Properties properties = 1;
 
