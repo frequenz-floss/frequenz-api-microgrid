@@ -2,7 +2,8 @@
 
 ## Summary
 
-<!-- Here goes a general summary of what this release is about -->
+This release upgrades the submodule `frequenz-api-common` to v0.3.0, and
+renames the message `EVCharger` to `EvCharger`.
 
 ## Upgrading
 
@@ -25,8 +26,8 @@
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+None
 
 ## Bug Fixes
 
-<!-- Here goes notable bug fixes that are worth a special mention or explanation -->
+None
