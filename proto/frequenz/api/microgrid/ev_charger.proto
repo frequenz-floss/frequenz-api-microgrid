@@ -186,8 +186,8 @@ message Properties {
   string firmware_ver = 1;
 }
 
-// EVCharger details
-message EVCharger {
+// EvCharger details
+message EvCharger {
   // The component properties
   Properties properties = 1;
 
