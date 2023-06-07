@@ -32,7 +32,7 @@ service Microgrid {
   /// e.g., the microgrid ID, location.
   rpc GetMicrogridMetadata(google.protobuf.Empty) returns (MicrogridMetadata) {
     option (google.api.http) = {
-      get : "v1/metadata"
+      get : "/v1/metadata"
     };
   }
 
