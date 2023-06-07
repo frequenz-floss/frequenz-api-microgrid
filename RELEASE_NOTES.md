@@ -14,4 +14,7 @@
 
 ## Bug Fixes
 
-<!-- Here goes notable bug fixes that are worth a special mention or explanation -->
+* [Added missing leading `/` to `GetMicrogridMetadata()`'s HTTP endpoint](https://github.com/frequenz-floss/frequenz-api-microgrid/pull/69)
+
+  This bug prevented building the gRPC gateway for the microgrid API.
+  This fix should allow the gRPC gateway builds again.
