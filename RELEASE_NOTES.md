@@ -2,15 +2,15 @@
 
 ## Summary
 
-<!-- Here goes a general summary of what this release is about -->
+Bug fixes.
 
 ## Upgrading
 
-<!-- Here goes notes on how to upgrade from previous versions, including if there are any deprecations and what they should be replaced with -->
+None
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+None
 
 ## Bug Fixes
 
