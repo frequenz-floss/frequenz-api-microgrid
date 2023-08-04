@@ -1,10 +1,9 @@
 // Contains grid connection point details.
 //
-// Copyright:
 // Copyright 2023 Frequenz Energy-as-a-Service GmbH
 //
-// License:
-// MIT
+// Licensed under the MIT License (the "License");
+// you may not use this file except in compliance with the License.
 
 syntax = "proto3";
 
