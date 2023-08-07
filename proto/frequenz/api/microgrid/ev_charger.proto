@@ -1,9 +1,10 @@
 // Contains definitions specific to EV charging stations.
 //
-// Copyright 2023 Frequenz Energy-as-a-Service GmbH
+// Copyright:
+// Copyright 2022 Frequenz Energy-as-a-Service GmbH
 //
-// Licensed under the MIT License (the "License");
-// you may not use this file except in compliance with the License.
+// License:
+// MIT
 
 syntax = "proto3";
 
