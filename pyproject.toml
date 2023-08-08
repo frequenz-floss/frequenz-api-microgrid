@@ -1,10 +1,10 @@
 [build-system]
 requires = [
-    "grpcio-tools >= 1.47.0, < 2",
-    "mypy-protobuf >= 3.0.0, < 4",
-    "setuptools >= 65.4.1, < 66",
-    "setuptools_scm[toml] >= 7.0.5, < 8",
-    "wheel"
+  "grpcio-tools >= 1.47.0, < 2",
+  "mypy-protobuf >= 3.0.0, < 4",
+  "setuptools >= 65.4.1, < 66",
+  "setuptools_scm[toml] >= 7.0.5, < 8",
+  "wheel",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -13,25 +13,25 @@ name = "frequenz-api-microgrid"
 description = "Frequenz gRPC API for monitoring and control of microgrids"
 readme = "README.md"
 license = { text = "MIT" }
-keywords = [ "frequenz", "api", "microgrid", "grpc" ]
+keywords = ["frequenz", "api", "microgrid", "grpc"]
 classifiers = [
-   "Development Status :: 3 - Alpha",
-   "Intended Audience :: Developers",
-   "License :: OSI Approved :: MIT License",
-   "Programming Language :: Python :: 3",
-   "Programming Language :: Python :: 3 :: Only",
-   "Topic :: Software Development :: Libraries",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Libraries",
 ]
 requires-python = ">= 3.11, < 4"
 dependencies = [
-    "frequenz-api-common == 0.3.0",
-    "googleapis-common-protos >= 1.56.2, < 2",
-    "grpcio >= 1.47.0, < 2",
+  "frequenz-api-common >= 0.3.0, < 0.4",
+  "googleapis-common-protos >= 1.56.2, < 2",
+  "grpcio >= 1.47.0, < 2",
 ]
-dynamic = [ "version" ]
+dynamic = ["version"]
 
 [[project.authors]]
-name ="Frequenz Energy-as-a-Service GmbH"
+name = "Frequenz Energy-as-a-Service GmbH"
 email = "floss@frequenz.com"
 
 [project.urls]
@@ -44,7 +44,7 @@ Support = "https://github.com/frequenz-floss/frequenz-api-microgrid/discussions/
 "" = "py"
 
 [tool.setuptools.package-data]
-"frequenz.api.microgrid" = [ "py.typed", "*.pyi" ]
+"frequenz.api.microgrid" = ["py.typed", "*.pyi"]
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
