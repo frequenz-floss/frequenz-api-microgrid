@@ -1,4 +1,4 @@
-# Frequenz Migrogrid API Release Notes
+# Frequenz Microgrid API Release Notes
 
 ## Summary
 
