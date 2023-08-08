@@ -1,10 +1,11 @@
+# License: MIT
+# Copyright © 2022 Frequenz Energy-as-a-Service GmbH
+
 [build-system]
 requires = [
-  "grpcio-tools >= 1.47.0, < 2",
-  "mypy-protobuf >= 3.0.0, < 4",
-  "setuptools >= 65.4.1, < 66",
-  "setuptools_scm[toml] >= 7.0.5, < 8",
-  "wheel",
+  "setuptools == 67.7.2",
+  "setuptools_scm[toml] == 7.1.0",
+  "frequenz-repo-config[api] == 0.4.0",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -13,7 +14,7 @@ name = "frequenz-api-microgrid"
 description = "Frequenz gRPC API for monitoring and control of microgrids"
 readme = "README.md"
 license = { text = "MIT" }
-keywords = ["frequenz", "api", "microgrid", "grpc"]
+keywords = ["frequenz", "python", "api", "grpc", "protobuf", "rpc", "microgrid"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
@@ -21,6 +22,7 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Topic :: Software Development :: Libraries",
+  "Typing :: Typed",
 ]
 requires-python = ">= 3.11, < 4"
 dependencies = [
@@ -34,17 +36,78 @@ dynamic = ["version"]
 name = "Frequenz Energy-as-a-Service GmbH"
 email = "floss@frequenz.com"
 
+[project.optional-dependencies]
+dev-docstrings = [
+  "pydocstyle == 6.3.0",
+  "darglint == 1.8.1",
+  "tomli == 2.0.1",      # Needed by pydocstyle to read pyproject.toml
+]
+dev-formatting = ["black == 23.3.0", "isort == 5.12.0"]
+dev-mkdocs = [
+  "mike == 1.1.2",
+  "mkdocs-gen-files == 0.5.0",
+  "mkdocs-literate-nav == 0.6.0",
+  "mkdocs-material == 9.1.16",
+  "mkdocs-section-index == 0.3.5",
+  "mkdocstrings[python] == 0.22.0",
+  "frequenz-repo-config[api] == 0.4.0",
+]
+dev-mypy = [
+  "mypy == 1.2.0",
+  # For checking the noxfile, docs/ script, and tests
+  "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
+]
+dev-noxfile = ["nox == 2023.4.22", "frequenz-repo-config[api] == 0.4.0"]
+dev-pylint = [
+  "pylint == 2.17.3",
+  # For checking the noxfile, docs/ script, and tests
+  "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
+]
+dev-pytest = ["pytest == 7.3.1"]
+dev = [
+  "frequenz-api-microgrid[dev-mkdocs,dev-docstrings,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",
+]
+
 [project.urls]
 Changelog = "https://github.com/frequenz-floss/frequenz-api-microgrid/releases"
-Repository = "https://github.com/frequenz-floss/frequenz-api-microgrid"
 Issues = "https://github.com/frequenz-floss/frequenz-api-microgrid/issues"
+Repository = "https://github.com/frequenz-floss/frequenz-api-microgrid"
 Support = "https://github.com/frequenz-floss/frequenz-api-microgrid/discussions/categories/support"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+src_paths = ["benchmarks", "examples", "src", "tests"]
+
+[tool.pylint.similarities]
+ignore-comments = ['yes']
+ignore-docstrings = ['yes']
+ignore-imports = ['no']
+min-similarity-lines = 40
+
+[tool.pylint.messages_control]
+disable = [
+  "too-few-public-methods",
+  # disabled because it conflicts with isort
+  "wrong-import-order",
+  "ungrouped-imports",
+  # pylint's unsubscriptable check is buggy and is not needed because
+  # it is a type-check, for which we already have mypy.
+  "unsubscriptable-object",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["pytests"]
 
 [tool.setuptools.package-dir]
 "" = "py"
 
 [tool.setuptools.package-data]
-"frequenz.api.microgrid" = ["py.typed", "*.pyi"]
+"*" = ["*.pyi"]
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
