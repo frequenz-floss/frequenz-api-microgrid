@@ -11,6 +11,10 @@
 
 - `frequenz-api-common` has been updated to `v0.3.1`.
 
+- The message `microgrid.Location` has been removed, and
+  `frequenz.api.common.location.Location` is being used instead. The `Location`
+  message from the common API also has a `country_code` member.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
