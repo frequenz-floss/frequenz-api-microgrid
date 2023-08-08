@@ -3,6 +3,9 @@
 
 """Tests for the frequenz.api.microgrid package."""
 
+# pylint: disable=import-outside-toplevel
+
+
 def test_package_import() -> None:
     """Test if the microgrid package can be imported."""
     import frequenz.api.microgrid as microgrid
