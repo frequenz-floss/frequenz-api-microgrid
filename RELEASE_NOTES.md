@@ -9,6 +9,8 @@
 - The `CanStreamData` RPC has been removed. Users are recommended to check it
   by calling the `StreamComponentData` RPC.
 
+- `frequenz-api-common` has been updated to `v0.3.1`.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
