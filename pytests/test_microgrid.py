@@ -1,3 +1,8 @@
+# License: MIT
+# Copyright © 2022 Frequenz Energy-as-a-Service GmbH
+
+"""Tests for the frequenz.api.microgrid package."""
+
 def test_package_import() -> None:
     import frequenz.api.microgrid as microgrid
 
