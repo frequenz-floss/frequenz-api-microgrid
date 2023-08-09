@@ -6,7 +6,8 @@
 
 ## Upgrading
 
-<!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
+- The `CanStreamData` RPC has been removed. Users are recommended to check it
+  by calling the `StreamComponentData` RPC.
 
 ## New Features
 

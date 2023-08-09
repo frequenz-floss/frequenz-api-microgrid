@@ -87,13 +87,6 @@ service Microgrid {
     };
   }
 
-  // Returns whether the component with given ID can stream data.
-  rpc CanStreamData(ComponentIdParam) returns (google.protobuf.BoolValue) {
-    option (google.api.http) = {
-      get : "/v1/components/{id}/canStream"
-    };
-  }
-
   // Adds exclusion bounds for a given metric of a given component, and returns
   // the UTC timestamp until which the given exclusion bounds will stay in
   // effect.
