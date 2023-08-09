@@ -18,6 +18,3 @@ labelMappings:
   "part:tests": "part:tests"
   "part:tooling": "part:tooling"
   "part:❓": "part:❓"
-  "version:old": "version:old"
-  "version:0.10.x": "version:0.10.x"
-  "version:❓": "version:❓"

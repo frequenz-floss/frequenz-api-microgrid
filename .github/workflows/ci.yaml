@@ -1,9 +1,30 @@
-name: frequenz-api-microgrid
+name: CI
 
-on: [pull_request, push]
+on:
+  merge_group:
+  pull_request:
+  push:
+    # We need to explicitly include tags because otherwise when adding
+    # `branches-ignore` it will only trigger on branches.
+    tags:
+      - '*'
+    branches-ignore:
+      # Ignore pushes to merge queues.
+      # We only want to test the merge commit (`merge_group` event), the hashes
+      # in the push were already tested by the PR checks
+      - 'gh-readonly-queue/**'
+  workflow_dispatch:
+
+env:
+  # Please make sure this version is included in the `matrix`, as the
+  # `matrix` section can't use `env`, so it must be entered manually
+  DEFAULT_PYTHON_VERSION: '3.11'
+  # It would be nice to be able to also define a DEFAULT_UBUNTU_VERSION
+  # but sadly `env` can't be used either in `runs-on`.
 
 jobs:
   protolint:
+    name: Check proto files with protolint
     runs-on: ubuntu-20.04
 
     steps:
@@ -11,50 +32,31 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
-
-      - name: Get protolint
-        run: |
-          # checksum taken from: https://github.com/yoheimuta/protolint/releases/download/v0.38.1/checksums.txt
-          echo "c1a43f352da6f96f3e60efe33438eaca6148526e6145d9bbd77c40cebc9895a6  protolint_0.38.1_Linux_x86_64.tar.gz" > checksum.txt
-
-          curl -LO https://github.com/yoheimuta/protolint/releases/download/v0.38.1/protolint_0.38.1_Linux_x86_64.tar.gz \
-          && sha256sum --check checksum.txt \
-          && tar xf protolint_0.38.1_Linux_x86_64.tar.gz \
-          && chmod +x protolint \
-          && sudo mv protolint /usr/local/bin/protolint
 
       - name: Run protolint
-        run: protolint lint proto
-
-  gen-docs:
-    runs-on: ubuntu-20.04
-
-    steps:
-      - name: Fetch sources
-        uses: actions/checkout@v3
+        # Only use hashes here, as we are passing the github token, we want to
+        # make sure updates are done consciously to avoid security issues if the
+        # action repo gets hacked
+        uses: yoheimuta/action-protolint@e94cc01b1ad085ed9427098442f66f2519c723eb # v1.0.0
         with:
-          submodules: true
+          fail_on_error: true
+          filter_mode: nofilter
+          github_token: ${{ secrets.github_token }}
+          protolint_flags: proto/
+          protolint_version: "0.45.0"
+          reporter: github-check
 
-      - name: Generate documentation
-        run: |
-          docker run --rm -v $PWD:$PWD pseudomuto/protoc-gen-doc \
-            -I $PWD/proto \
-            -I $PWD/submodules/api-common-protos \
-            -I $PWD/submodules/frequenz-api-common/proto \
-            --doc_opt=markdown,gen-docs.md --doc_out=$PWD \
-            $(find $PWD/proto -name *.proto)
-
-      - name: Write summary
-        run: cat gen-docs.md > $GITHUB_STEP_SUMMARY
-
-  tests:
+  nox:
+    name: Test with nox
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-20.04
-        python-version:
+        python:
           - "3.11"
     runs-on: ${{ matrix.os }}
+
     steps:
       - name: Fetch sources
         uses: actions/checkout@v3
@@ -64,17 +66,22 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python }}
+          cache: 'pip'
 
       - name: Install required Python packages
         run: |
           python -m pip install --upgrade pip
-          python -m pip install tox
+          python -m pip install -e .[dev-noxfile]
 
-      - name: Run tox
-        run: tox -r
+      - name: Run nox
+        # To speed things up a bit we use the special ci_checks_max session
+        # that uses the same venv to run multiple linting sessions
+        run: nox -e ci_checks_max pytest_min
+        timeout-minutes: 10
 
-  build-dist:
+  build:
+    name: Build distribution packages
     runs-on: ubuntu-20.04
     steps:
       - name: Fetch sources
@@ -85,9 +92,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          cache: 'pip'
 
-      - name: Install build dependencies
+      - name: Install required Python packages
         run: |
           python -m pip install -U pip
           python -m pip install -U build
@@ -95,17 +103,136 @@ jobs:
       - name: Build the source and binary distribution
         run: python -m build
 
-      - name: Upload dist files
+      - name: Upload distribution files
         uses: actions/upload-artifact@v3
         with:
-          name: frequenz-api-microgrid-dist
+          name: dist-packages
           path: dist/
           if-no-files-found: error
 
+  test-docs:
+    name: Test documentation website generation
+    if: github.event_name != 'push'
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Fetch sources
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup Git user and e-mail
+        uses: frequenz-floss/setup-git-user@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install -U pip
+          python -m pip install .[dev-mkdocs]
+
+      - name: Generate the documentation
+        env:
+          MIKE_VERSION: gh-${{ github.job }}
+        run: |
+          mike deploy $MIKE_VERSION
+          mike set-default $MIKE_VERSION
+
+      - name: Upload site
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs-site
+          path: site/
+          if-no-files-found: error
+
+  publish-docs:
+    name: Publish documentation website to GitHub pages
+    needs: ["nox", "build", "protolint"]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    steps:
+      - name: Calculate and check version
+        id: mike-metadata
+        env:
+          REF: ${{ github.ref }}
+          REF_NAME: ${{ github.ref_name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          aliases=
+          version=
+          if test "$REF_NAME" = "$DEFAULT_BRANCH"
+          then
+            version=next
+          # A tag that starts with vX.Y or X.Y
+          elif echo "$REF" | grep -q '^refs/tags' && echo "$REF_NAME" | grep -Pq '^v?\d+\.\d+\.'
+          then
+            if echo "$REF_NAME" | grep -Pq -- "-" # pre-release
+            then
+              echo "::notice title=Documentation was not published::" \
+                "The tag '$REF_NAME' looks like a pre-release."
+              exit 0
+            fi
+            version=$(echo "$REF_NAME" | sed -r 's/^(v?[0-9]+\.[0-9]+)\..*$/\1/') # vX.Y
+            major=$(echo "$REF_NAME" | sed -r 's/^(v?[0-9]+)\..*$/\1/') # vX
+            default_major=$(echo "$DEFAULT_BRANCH" | sed -r 's/^(v?[0-9]+)\..*$/\1/') # vX
+            aliases=$major
+            if test "$major" = "$default_major"
+            then
+              aliases="$aliases latest"
+            fi
+          else
+            echo "::warning title=Documentation was not published::" \
+              "Don't know how to handle '$REF' to make 'mike' version."
+            exit 0
+          fi
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "aliases=$aliases" >> $GITHUB_OUTPUT
+
+      - name: Fetch sources
+        if: steps.mike-metadata.outputs.version
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup Git user and e-mail
+        if: steps.mike-metadata.outputs.version
+        uses: frequenz-floss/setup-git-user@v2
+
+      - name: Set up Python
+        if: steps.mike-metadata.outputs.version
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install build dependencies
+        if: steps.mike-metadata.outputs.version
+        run: |
+          python -m pip install -U pip
+          python -m pip install .[dev-mkdocs]
+
+      - name: Fetch the gh-pages branch
+        if: steps.mike-metadata.outputs.version
+        run: git fetch origin gh-pages --depth=1
+
+      - name: Publish site
+        if: steps.mike-metadata.outputs.version
+        env:
+          VERSION: ${{ steps.mike-metadata.outputs.version }}
+          ALIASES: ${{ steps.mike-metadata.outputs.aliases }}
+        run: |
+          mike deploy --push --update-aliases "$VERSION" $ALIASES
+
   create-github-release:
-    needs: ["protolint", "gen-docs", "tests", "build-dist"]
+    name: Create GitHub release
+    needs: ["publish-docs"]
     # Create a release only on tags creation
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     permissions:
       # We need write permissions on contents to create GitHub releases and on
       # discussions to create the release announcement in the discussion forums
@@ -113,10 +240,10 @@ jobs:
       discussions: write
     runs-on: ubuntu-20.04
     steps:
-      - name: Download dist files
+      - name: Download distribution files
         uses: actions/download-artifact@v3
         with:
-          name: frequenz-api-microgrid-dist
+          name: dist-packages
           path: dist
 
       - name: Download RELEASE_NOTES.md
@@ -140,7 +267,6 @@ jobs:
           if echo "$REF_NAME" | grep -- -; then extra_opts=" --prerelease"; fi
           gh release create \
             -R "$REPOSITORY" \
-            --discussion-category announcements \
             --notes-file RELEASE_NOTES.md \
             --generate-notes \
             $extra_opts \
@@ -152,6 +278,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-to-pypi:
+    name: Publish packages to PyPI
     needs: ["create-github-release"]
     runs-on: ubuntu-20.04
     permissions:
@@ -159,10 +286,10 @@ jobs:
       # https://blog.pypi.org/posts/2023-04-20-introducing-trusted-publishers/
       id-token: write
     steps:
-      - name: Download dist files
+      - name: Download distribution files
         uses: actions/download-artifact@v3
         with:
-          name: frequenz-api-microgrid-dist
+          name: dist-packages
           path: dist
 
       - name: Publish the Python distribution to PyPI

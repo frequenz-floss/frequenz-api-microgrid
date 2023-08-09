@@ -1,8 +1,9 @@
 exclude .gitignore
 exclude .gitmodules
 exclude CODEOWNERS
-exclude tox.ini
+exclude noxfile.py
 recursive-exclude .github *
 recursive-exclude pytests *
+recursive-include py *.pyi
 recursive-include submodules/api-common-protos/google *.proto
 recursive-include submodules/frequenz-api-common/proto/frequenz *.proto
