@@ -688,13 +688,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#location" class="md-nav__link">
-    Location
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#microgridmetadata" class="md-nav__link">
     MicrogridMetadata
   </a>
@@ -1285,13 +1278,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#location" class="md-nav__link">
-    Location
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#microgridmetadata" class="md-nav__link">
     MicrogridMetadata
   </a>
@@ -1385,7 +1371,6 @@
 <li><a href="#frequenz-api-microgrid-Connection">Connection</a></li>
 <li><a href="#frequenz-api-microgrid-ConnectionFilter">ConnectionFilter</a></li>
 <li><a href="#frequenz-api-microgrid-ConnectionList">ConnectionList</a></li>
-<li><a href="#frequenz-api-microgrid-Location">Location</a></li>
 <li><a href="#frequenz-api-microgrid-MicrogridMetadata">MicrogridMetadata</a></li>
 <li><a href="#frequenz-api-microgrid-PowerLevelParam">PowerLevelParam</a></li>
 <li><a href="#frequenz-api-microgrid-SetBoundsParam">SetBoundsParam</a></li>
@@ -1697,33 +1682,6 @@ https://en.wikipedia.org/wiki/Passive_sign_convention</p>
 </tr>
 </tbody>
 </table>
-<p><a name="frequenz-api-microgrid-Location"></a></p>
-<h3 id="location">Location<a class="headerlink" href="#location" title="Permanent link">¤</a></h3>
-<p>A pair of geographical co-ordinates, representing the location of a place.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Label</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>latitude</td>
-<td><a href="#float">float</a></td>
-<td></td>
-<td>The latitude of the place.</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td><a href="#float">float</a></td>
-<td></td>
-<td>The longitude of the place.</td>
-</tr>
-</tbody>
-</table>
 <p><a name="frequenz-api-microgrid-MicrogridMetadata"></a></p>
 <h3 id="microgridmetadata">MicrogridMetadata<a class="headerlink" href="#microgridmetadata" title="Permanent link">¤</a></h3>
 <p>Metadata that describes a microgrid.</p>
@@ -1745,7 +1703,7 @@ https://en.wikipedia.org/wiki/Passive_sign_convention</p>
 </tr>
 <tr>
 <td>location</td>
-<td><a href="#frequenz-api-microgrid-Location">Location</a></td>
+<td><a href="#frequenz-api-common-location-Location">frequenz.api.common.location.Location</a></td>
 <td></td>
 <td>The location of the microgrid, in geographical co-ordinates.</td>
 </tr>
