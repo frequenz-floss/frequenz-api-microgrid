@@ -63,7 +63,7 @@ dev-pylint = [
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
-dev-pytest = ["pytest == 7.3.1"]
+dev-pytest = ["pytest == 7.4.0"]
 dev = [
   "frequenz-api-microgrid[dev-mkdocs,dev-docstrings,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",
 ]
