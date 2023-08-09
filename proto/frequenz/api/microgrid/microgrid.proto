@@ -18,6 +18,7 @@ import "frequenz/api/microgrid/meter.proto";
 import "frequenz/api/microgrid/sensor.proto";
 
 import "frequenz/api/common/components.proto";
+import "frequenz/api/common/location.proto";
 import "frequenz/api/common/metrics.proto";
 
 import "google/api/annotations.proto";
@@ -306,15 +307,6 @@ service Microgrid {
   }
 }
 
-// A pair of geographical co-ordinates, representing the location of a place.
-message Location {
-  // The latitude of the place.
-  float latitude = 1;
-
-  // The longitude of the place.
-  float longitude = 2;
-}
-
 // Metadata that describes a microgrid.
 message MicrogridMetadata {
   // The microgrid ID.
@@ -322,7 +314,7 @@ message MicrogridMetadata {
   uint64 microgrid_id = 1;
 
   // The location of the microgrid, in geographical co-ordinates.
-  Location location = 2;
+  frequenz.api.common.location.Location location = 2;
 }
 
 // Parameters for filtering the components.
