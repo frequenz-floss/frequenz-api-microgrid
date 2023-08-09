@@ -1,0 +1,65 @@
+// Contains definitions for relays.
+//
+// Relays are electromagnetic switches that control circuit breakers in the
+// microgrid, e.g., to connect or disconnect an inverter from the grid.
+//
+// Copyright:
+// Copyright 2023 Frequenz Energy-as-a-Service GmbH
+//
+// License:
+// MIT
+
+syntax = "proto3";
+
+package frequenz.api.microgrid.relay;
+
+import "frequenz/api/microgrid/common.proto";
+
+
+// Enumerated relay states.
+enum ComponentState {
+  // Unspecified state.
+  COMPONENT_STATE_UNSPECIFIED = 0;
+
+  // The relays are off/open.
+  COMPONENT_STATE_OFF = 1;
+
+  // The relays are on/closed.
+  COMPONENT_STATE_ON = 2;
+
+  // The relay is in an error state.
+  COMPONENT_STATE_ERROR = 4;
+}
+
+// Enumerated error codes.
+enum ErrorCode {
+  // Unspecified.
+  ERROR_CODE_UNSPECIFIED = 0;
+}
+
+// State message.
+message State {
+  // The state of the overall component.
+  ComponentState component_state = 1;
+}
+
+// Error message.
+message Error {
+  // The error code.
+  ErrorCode code = 1;
+
+  // The error severity level.
+  common.ErrorLevel level = 2;
+
+  // The error message.
+  string msg = 3;
+}
+
+// Relay details.
+message Relay {
+  // The component's state.
+  State state = 2;
+
+  // A list of errors encountered the component. An empty list implies no error.
+  repeated Error errors = 3;
+}
