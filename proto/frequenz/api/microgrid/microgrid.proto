@@ -82,7 +82,7 @@ service Microgrid {
   }
 
   // Returns a stream containing data from a component with a given ID.
-  rpc StreamComponentData(ComponentIdParam) returns (stream ComponentData) {
+  rpc SubscribeComponentData(ComponentIdParam) returns (stream ComponentData) {
     option (google.api.http) = {
       get : "/v1/components/{id}/data"
     };
