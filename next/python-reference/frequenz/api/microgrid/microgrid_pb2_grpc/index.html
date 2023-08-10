@@ -1089,8 +1089,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridAsyncStub.StreamComponentData" class="md-nav__link">
-    StreamComponentData
+  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridAsyncStub.SubscribeComponentData" class="md-nav__link">
+    SubscribeComponentData
   </a>
   
 </li>
@@ -1206,8 +1206,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridServicer.StreamComponentData" class="md-nav__link">
-    StreamComponentData()
+  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridServicer.SubscribeComponentData" class="md-nav__link">
+    SubscribeComponentData()
   </a>
   
 </li>
@@ -1323,8 +1323,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridStub.StreamComponentData" class="md-nav__link">
-    StreamComponentData
+  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridStub.SubscribeComponentData" class="md-nav__link">
+    SubscribeComponentData
   </a>
   
 </li>
@@ -1596,8 +1596,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridAsyncStub.StreamComponentData" class="md-nav__link">
-    StreamComponentData
+  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridAsyncStub.SubscribeComponentData" class="md-nav__link">
+    SubscribeComponentData
   </a>
   
 </li>
@@ -1713,8 +1713,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridServicer.StreamComponentData" class="md-nav__link">
-    StreamComponentData()
+  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridServicer.SubscribeComponentData" class="md-nav__link">
+    SubscribeComponentData()
   </a>
   
 </li>
@@ -1830,8 +1830,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridStub.StreamComponentData" class="md-nav__link">
-    StreamComponentData
+  <a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridStub.SubscribeComponentData" class="md-nav__link">
+    SubscribeComponentData
   </a>
   
 </li>
@@ -2218,7 +2218,7 @@
 </span><span id="__span-0-503"><a id="__codelineno-0-503" name="__codelineno-0-503"></a>            <span class="n">insecure</span><span class="p">,</span> <span class="n">call_credentials</span><span class="p">,</span> <span class="n">compression</span><span class="p">,</span> <span class="n">wait_for_ready</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
 </span><span id="__span-0-504"><a id="__codelineno-0-504" name="__codelineno-0-504"></a>
 </span><span id="__span-0-505"><a id="__codelineno-0-505" name="__codelineno-0-505"></a>    <span class="nd">@staticmethod</span>
-</span><span id="__span-0-506"><a id="__codelineno-0-506" name="__codelineno-0-506"></a>    <span class="k">def</span> <span class="nf">StreamComponentData</span><span class="p">(</span><span class="n">request</span><span class="p">,</span>
+</span><span id="__span-0-506"><a id="__codelineno-0-506" name="__codelineno-0-506"></a>    <span class="k">def</span> <span class="nf">SubscribeComponentData</span><span class="p">(</span><span class="n">request</span><span class="p">,</span>
 </span><span id="__span-0-507"><a id="__codelineno-0-507" name="__codelineno-0-507"></a>            <span class="n">target</span><span class="p">,</span>
 </span><span id="__span-0-508"><a id="__codelineno-0-508" name="__codelineno-0-508"></a>            <span class="n">options</span><span class="o">=</span><span class="p">(),</span>
 </span><span id="__span-0-509"><a id="__codelineno-0-509" name="__codelineno-0-509"></a>            <span class="n">channel_credentials</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -2228,7 +2228,7 @@
 </span><span id="__span-0-513"><a id="__codelineno-0-513" name="__codelineno-0-513"></a>            <span class="n">wait_for_ready</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-514"><a id="__codelineno-0-514" name="__codelineno-0-514"></a>            <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-515"><a id="__codelineno-0-515" name="__codelineno-0-515"></a>            <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="__span-0-516"><a id="__codelineno-0-516" name="__codelineno-0-516"></a>        <span class="k">return</span> <span class="n">grpc</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">unary_stream</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="s1">&#39;/frequenz.api.microgrid.Microgrid/StreamComponentData&#39;</span><span class="p">,</span>
+</span><span id="__span-0-516"><a id="__codelineno-0-516" name="__codelineno-0-516"></a>        <span class="k">return</span> <span class="n">grpc</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">unary_stream</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="s1">&#39;/frequenz.api.microgrid.Microgrid/SubscribeComponentData&#39;</span><span class="p">,</span>
 </span><span id="__span-0-517"><a id="__codelineno-0-517" name="__codelineno-0-517"></a>            <span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">,</span>
 </span><span id="__span-0-518"><a id="__codelineno-0-518" name="__codelineno-0-518"></a>            <span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="o">.</span><span class="n">FromString</span><span class="p">,</span>
 </span><span id="__span-0-519"><a id="__codelineno-0-519" name="__codelineno-0-519"></a>            <span class="n">options</span><span class="p">,</span> <span class="n">channel_credentials</span><span class="p">,</span>
@@ -2787,8 +2787,8 @@
 </span><span id="__span-0-391"><a id="__codelineno-0-391" name="__codelineno-0-391"></a><span class="sd">                    request_deserializer=frequenz_dot_api_dot_microgrid_dot_microgrid__pb2.ConnectionFilter.FromString,</span>
 </span><span id="__span-0-392"><a id="__codelineno-0-392" name="__codelineno-0-392"></a><span class="sd">                    response_serializer=frequenz_dot_api_dot_microgrid_dot_microgrid__pb2.ConnectionList.SerializeToString,</span>
 </span><span id="__span-0-393"><a id="__codelineno-0-393" name="__codelineno-0-393"></a><span class="sd">            ),</span>
-</span><span id="__span-0-394"><a id="__codelineno-0-394" name="__codelineno-0-394"></a><span class="sd">            &#39;StreamComponentData&#39;: grpc.unary_stream_rpc_method_handler(</span>
-</span><span id="__span-0-395"><a id="__codelineno-0-395" name="__codelineno-0-395"></a><span class="sd">                    servicer.StreamComponentData,</span>
+</span><span id="__span-0-394"><a id="__codelineno-0-394" name="__codelineno-0-394"></a><span class="sd">            &#39;SubscribeComponentData&#39;: grpc.unary_stream_rpc_method_handler(</span>
+</span><span id="__span-0-395"><a id="__codelineno-0-395" name="__codelineno-0-395"></a><span class="sd">                    servicer.SubscribeComponentData,</span>
 </span><span id="__span-0-396"><a id="__codelineno-0-396" name="__codelineno-0-396"></a><span class="sd">                    request_deserializer=frequenz_dot_api_dot_microgrid_dot_microgrid__pb2.ComponentIdParam.FromString,</span>
 </span><span id="__span-0-397"><a id="__codelineno-0-397" name="__codelineno-0-397"></a><span class="sd">                    response_serializer=frequenz_dot_api_dot_microgrid_dot_microgrid__pb2.ComponentData.SerializeToString,</span>
 </span><span id="__span-0-398"><a id="__codelineno-0-398" name="__codelineno-0-398"></a><span class="sd">            ),</span>
@@ -2899,7 +2899,7 @@
 </span><span id="__span-0-503"><a id="__codelineno-0-503" name="__codelineno-0-503"></a><span class="s2">            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)</span>
 </span><span id="__span-0-504"><a id="__codelineno-0-504" name="__codelineno-0-504"></a>
 </span><span id="__span-0-505"><a id="__codelineno-0-505" name="__codelineno-0-505"></a><span class="s2">    @staticmethod</span>
-</span><span id="__span-0-506"><a id="__codelineno-0-506" name="__codelineno-0-506"></a><span class="s2">    def StreamComponentData(request,</span>
+</span><span id="__span-0-506"><a id="__codelineno-0-506" name="__codelineno-0-506"></a><span class="s2">    def SubscribeComponentData(request,</span>
 </span><span id="__span-0-507"><a id="__codelineno-0-507" name="__codelineno-0-507"></a><span class="s2">            target,</span>
 </span><span id="__span-0-508"><a id="__codelineno-0-508" name="__codelineno-0-508"></a><span class="s2">            options=(),</span>
 </span><span id="__span-0-509"><a id="__codelineno-0-509" name="__codelineno-0-509"></a><span class="s2">            channel_credentials=None,</span>
@@ -2909,7 +2909,7 @@
 </span><span id="__span-0-513"><a id="__codelineno-0-513" name="__codelineno-0-513"></a><span class="s2">            wait_for_ready=None,</span>
 </span><span id="__span-0-514"><a id="__codelineno-0-514" name="__codelineno-0-514"></a><span class="s2">            timeout=None,</span>
 </span><span id="__span-0-515"><a id="__codelineno-0-515" name="__codelineno-0-515"></a><span class="s2">            metadata=None):</span>
-</span><span id="__span-0-516"><a id="__codelineno-0-516" name="__codelineno-0-516"></a><span class="s2">        return grpc.experimental.unary_stream(request, target, &#39;/frequenz.api.microgrid.Microgrid/StreamComponentData&#39;,</span>
+</span><span id="__span-0-516"><a id="__codelineno-0-516" name="__codelineno-0-516"></a><span class="s2">        return grpc.experimental.unary_stream(request, target, &#39;/frequenz.api.microgrid.Microgrid/SubscribeComponentData&#39;,</span>
 </span><span id="__span-0-517"><a id="__codelineno-0-517" name="__codelineno-0-517"></a><span class="s2">            frequenz_dot_api_dot_microgrid_dot_microgrid__pb2.ComponentIdParam.SerializeToString,</span>
 </span><span id="__span-0-518"><a id="__codelineno-0-518" name="__codelineno-0-518"></a><span class="s2">            frequenz_dot_api_dot_microgrid_dot_microgrid__pb2.ComponentData.FromString,</span>
 </span><span id="__span-0-519"><a id="__codelineno-0-519" name="__codelineno-0-519"></a><span class="s2">            options, channel_credentials,</span>
@@ -3415,14 +3415,14 @@ skipped.</p>
 
 
 
-<h6 id="frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridAsyncStub.StreamComponentData" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">StreamComponentData</span><span class="p">:</span> <span class="n">grpc</span><span class="o">.</span><span class="n">aio</span><span class="o">.</span><span class="n">UnaryStreamMultiCallable</span><span class="p">[</span><span class="n">frequenz</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">microgrid</span><span class="o">.</span><span class="n">microgrid_pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="p">,</span> <span class="n">frequenz</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">microgrid</span><span class="o">.</span><span class="n">microgrid_pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="p">]</span></code>
+<h6 id="frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridAsyncStub.SubscribeComponentData" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SubscribeComponentData</span><span class="p">:</span> <span class="n">grpc</span><span class="o">.</span><span class="n">aio</span><span class="o">.</span><span class="n">UnaryStreamMultiCallable</span><span class="p">[</span><span class="n">frequenz</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">microgrid</span><span class="o">.</span><span class="n">microgrid_pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="p">,</span> <span class="n">frequenz</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">microgrid</span><span class="o">.</span><span class="n">microgrid_pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="p">]</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
   </span>
 
-<a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridAsyncStub.StreamComponentData" class="headerlink" title="Permanent link">¤</a></h6>
+<a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridAsyncStub.SubscribeComponentData" class="headerlink" title="Permanent link">¤</a></h6>
 
 
   <div class="doc doc-contents ">
@@ -3807,7 +3807,7 @@ skipped.</p>
 </span><span id="__span-0-140"><a id="__codelineno-0-140" name="__codelineno-0-140"></a>        <span class="n">context</span><span class="o">.</span><span class="n">set_details</span><span class="p">(</span><span class="s1">&#39;Method not implemented!&#39;</span><span class="p">)</span>
 </span><span id="__span-0-141"><a id="__codelineno-0-141" name="__codelineno-0-141"></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Method not implemented!&#39;</span><span class="p">)</span>
 </span><span id="__span-0-142"><a id="__codelineno-0-142" name="__codelineno-0-142"></a>
-</span><span id="__span-0-143"><a id="__codelineno-0-143" name="__codelineno-0-143"></a>    <span class="k">def</span> <span class="nf">StreamComponentData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+</span><span id="__span-0-143"><a id="__codelineno-0-143" name="__codelineno-0-143"></a>    <span class="k">def</span> <span class="nf">SubscribeComponentData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
 </span><span id="__span-0-144"><a id="__codelineno-0-144" name="__codelineno-0-144"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a stream containing data from a component with a given ID.</span>
 </span><span id="__span-0-145"><a id="__codelineno-0-145" name="__codelineno-0-145"></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="__span-0-146"><a id="__codelineno-0-146" name="__codelineno-0-146"></a>        <span class="n">context</span><span class="o">.</span><span class="n">set_code</span><span class="p">(</span><span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
@@ -5033,10 +5033,10 @@ skipped.</p>
 
 
 
-<h6 id="frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridServicer.StreamComponentData" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">StreamComponentData</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></code>
+<h6 id="frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridServicer.SubscribeComponentData" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SubscribeComponentData</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></code>
 
-<a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridServicer.StreamComponentData" class="headerlink" title="Permanent link">¤</a></h6>
+<a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridServicer.SubscribeComponentData" class="headerlink" title="Permanent link">¤</a></h6>
 
 
   <div class="doc doc-contents ">
@@ -5050,7 +5050,7 @@ skipped.</p>
 <span class="normal"><a href="#__codelineno-0-145">145</a></span>
 <span class="normal"><a href="#__codelineno-0-146">146</a></span>
 <span class="normal"><a href="#__codelineno-0-147">147</a></span>
-<span class="normal"><a href="#__codelineno-0-148">148</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-143"><a id="__codelineno-0-143" name="__codelineno-0-143"></a><span class="k">def</span> <span class="nf">StreamComponentData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<span class="normal"><a href="#__codelineno-0-148">148</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-143"><a id="__codelineno-0-143" name="__codelineno-0-143"></a><span class="k">def</span> <span class="nf">SubscribeComponentData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
 </span><span id="__span-0-144"><a id="__codelineno-0-144" name="__codelineno-0-144"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a stream containing data from a component with a given ID.</span>
 </span><span id="__span-0-145"><a id="__codelineno-0-145" name="__codelineno-0-145"></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="__span-0-146"><a id="__codelineno-0-146" name="__codelineno-0-146"></a>    <span class="n">context</span><span class="o">.</span><span class="n">set_code</span><span class="p">(</span><span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">UNIMPLEMENTED</span><span class="p">)</span>
@@ -5187,8 +5187,8 @@ skipped.</p>
 </span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>                <span class="n">request_serializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ConnectionFilter</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">,</span>
 </span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>                <span class="n">response_deserializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ConnectionList</span><span class="o">.</span><span class="n">FromString</span><span class="p">,</span>
 </span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a>                <span class="p">)</span>
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">StreamComponentData</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">unary_stream</span><span class="p">(</span>
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>                <span class="s1">&#39;/frequenz.api.microgrid.Microgrid/StreamComponentData&#39;</span><span class="p">,</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">SubscribeComponentData</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">unary_stream</span><span class="p">(</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>                <span class="s1">&#39;/frequenz.api.microgrid.Microgrid/SubscribeComponentData&#39;</span><span class="p">,</span>
 </span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36"></a>                <span class="n">request_serializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">,</span>
 </span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a>                <span class="n">response_deserializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="o">.</span><span class="n">FromString</span><span class="p">,</span>
 </span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a>                <span class="p">)</span>
@@ -5680,14 +5680,14 @@ skipped.</p>
 
 
 
-<h6 id="frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridStub.StreamComponentData" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">StreamComponentData</span><span class="p">:</span> <span class="n">grpc</span><span class="o">.</span><span class="n">UnaryStreamMultiCallable</span><span class="p">[</span><span class="n">frequenz</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">microgrid</span><span class="o">.</span><span class="n">microgrid_pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="p">,</span> <span class="n">frequenz</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">microgrid</span><span class="o">.</span><span class="n">microgrid_pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="p">]</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">unary_stream</span><span class="p">(</span><span class="s1">&#39;/frequenz.api.microgrid.Microgrid/StreamComponentData&#39;</span><span class="p">,</span> <span class="n">request_serializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">,</span> <span class="n">response_deserializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="o">.</span><span class="n">FromString</span><span class="p">)</span></code>
+<h6 id="frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridStub.SubscribeComponentData" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SubscribeComponentData</span><span class="p">:</span> <span class="n">grpc</span><span class="o">.</span><span class="n">UnaryStreamMultiCallable</span><span class="p">[</span><span class="n">frequenz</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">microgrid</span><span class="o">.</span><span class="n">microgrid_pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="p">,</span> <span class="n">frequenz</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">microgrid</span><span class="o">.</span><span class="n">microgrid_pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="p">]</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">unary_stream</span><span class="p">(</span><span class="s1">&#39;/frequenz.api.microgrid.Microgrid/SubscribeComponentData&#39;</span><span class="p">,</span> <span class="n">request_serializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">,</span> <span class="n">response_deserializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="o">.</span><span class="n">FromString</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
   </span>
 
-<a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridStub.StreamComponentData" class="headerlink" title="Permanent link">¤</a></h6>
+<a href="#frequenz.api.microgrid.microgrid_pb2_grpc.MicrogridStub.SubscribeComponentData" class="headerlink" title="Permanent link">¤</a></h6>
 
 
   <div class="doc doc-contents ">
@@ -5834,8 +5834,8 @@ skipped.</p>
 </span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>            <span class="n">request_serializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ConnectionFilter</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">,</span>
 </span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>            <span class="n">response_deserializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ConnectionList</span><span class="o">.</span><span class="n">FromString</span><span class="p">,</span>
 </span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a>            <span class="p">)</span>
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">StreamComponentData</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">unary_stream</span><span class="p">(</span>
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>            <span class="s1">&#39;/frequenz.api.microgrid.Microgrid/StreamComponentData&#39;</span><span class="p">,</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">SubscribeComponentData</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">unary_stream</span><span class="p">(</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>            <span class="s1">&#39;/frequenz.api.microgrid.Microgrid/SubscribeComponentData&#39;</span><span class="p">,</span>
 </span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36"></a>            <span class="n">request_serializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentIdParam</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">,</span>
 </span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a>            <span class="n">response_deserializer</span><span class="o">=</span><span class="n">frequenz_dot_api_dot_microgrid_dot_microgrid__pb2</span><span class="o">.</span><span class="n">ComponentData</span><span class="o">.</span><span class="n">FromString</span><span class="p">,</span>
 </span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a>            <span class="p">)</span>
