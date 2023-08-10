@@ -15,6 +15,9 @@
   `frequenz.api.common.location.Location` is being used instead. The `Location`
   message from the common API also has a `country_code` member.
 
+- The following gRPC method has been renamed:
+  `StreamComponentData` -> `SubscribeComponentData`
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
