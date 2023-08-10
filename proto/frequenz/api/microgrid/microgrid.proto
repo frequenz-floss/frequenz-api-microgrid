@@ -134,7 +134,8 @@ service Microgrid {
   // ```
   // ---- values here are disallowed and wil be rejected
   // ==== vales here are allowed and will be accepted
-  rpc AddExclusionBounds(SetBoundsParam) returns (google.protobuf.Timestamp);
+  rpc AddComponentExclusionBounds(SetBoundsParam)
+    returns (google.protobuf.Timestamp);
 
   // Adds inclusion bounds for a given metric of a given component, and returns
   // the UTC timestamp until which the given inclusion bounds will stay in
@@ -171,7 +172,8 @@ service Microgrid {
   // ```
   // ---- values here are disallowed and wil be rejected
   // ==== vales here are allowed and will be accepted
-  rpc AddInclusionBounds(SetBoundsParam) returns (google.protobuf.Timestamp);
+  rpc AddComponentInclusionBounds(SetBoundsParam)
+    returns (google.protobuf.Timestamp);
 
   // Sets the active power output of a component with a given ID, provided the
   // component supports it.
@@ -186,7 +188,8 @@ service Microgrid {
   //
   // * Inverter: Sends the discharge command to the inverter, making it deliver
   //  AC power.
-  rpc SetPowerActive(SetPowerActiveParam) returns (google.protobuf.Empty) {
+  rpc SetComponentPowerActive(SetPowerActiveParam)
+    returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{component_id}/setPowerActive/{power}"
     };
@@ -199,7 +202,8 @@ service Microgrid {
   // E.g., an inverter may have a resolution of 88 VAr.
   // In such cases, the magnitude of power will be floored to the nearest
   // multiple of the resolution.
-  rpc SetPowerReactive(SetPowerReactiveParam) returns (google.protobuf.Empty) {
+  rpc SetComponentPowerReactive(SetPowerReactiveParam)
+    returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{component_id}/setPowerReactive/{power}"
     };
@@ -224,7 +228,7 @@ service Microgrid {
   //
   // If a feature required to perform an action is missing, then that action is
   // skipped.
-  rpc Start(ComponentIdParam) returns (google.protobuf.Empty) {
+  rpc StartComponent(ComponentIdParam) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{id}/start"
     };
@@ -244,7 +248,7 @@ service Microgrid {
   //
   // If any of the above mentioned actions for a given component has already
   // been performed, then this method call effectively skips that action.
-  rpc HotStandby(ComponentIdParam) returns (google.protobuf.Empty) {
+  rpc HotStandbyComponent(ComponentIdParam) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{id}/hotStandby"
     };
@@ -265,7 +269,7 @@ service Microgrid {
   //
   // If any of the above mentioned actions for a given component has already
   // been performed, then this method call efffectively skips that action.
-  rpc ColdStandby(ComponentIdParam) returns (google.protobuf.Empty) {
+  rpc ColdStandbyComponent(ComponentIdParam) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{id}/coldStandby"
     };
@@ -292,7 +296,7 @@ service Microgrid {
   //
   // If a feature required to perform an action is missing, then that action is
   // skipped.
-  rpc Stop(ComponentIdParam) returns (google.protobuf.Empty) {
+  rpc StopComponent(ComponentIdParam) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{id}/stop"
     };
@@ -300,7 +304,7 @@ service Microgrid {
 
   // Acknowledges any recoverable error reported by the component, and brings it
   // back to the stopped or cold-standby state.
-  rpc ErrorAck(ComponentIdParam) returns (google.protobuf.Empty) {
+  rpc AckComponentError(ComponentIdParam) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{id}/errorAck"
     };
