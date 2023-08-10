@@ -15,6 +15,7 @@ import "frequenz/api/microgrid/ev_charger.proto";
 import "frequenz/api/microgrid/grid.proto";
 import "frequenz/api/microgrid/inverter.proto";
 import "frequenz/api/microgrid/meter.proto";
+import "frequenz/api/microgrid/precharge_module.proto";
 import "frequenz/api/microgrid/relay.proto";
 import "frequenz/api/microgrid/sensor.proto";
 
@@ -227,6 +228,9 @@ service Microgrid {
   // * Relays:
   //  * closes relays
   //
+  // * Precharge Modules:
+  //  * starts the precharge process, and eventually closes the DC relays.
+  //
   // If any of the above mentioned actions for a given component has already
   // been performed, then this method call effectively skips that action.
   //
@@ -294,6 +298,9 @@ service Microgrid {
   //
   // * Relays:
   //  * opens relays
+  //
+  // * Precharge Modules:
+  //  * opens the DC relays.
   //
   // If any of the checks mentioned above fails, then the method call returns an
   // error.
@@ -463,6 +470,7 @@ message ComponentData {
     ev_charger.EvCharger ev_charger = 6;
     sensor.Sensor sensor = 7;
     relay.Relay relay = 8;
+    precharge_module.PrechargeModule precharge_module = 9;
   }
 }
 
