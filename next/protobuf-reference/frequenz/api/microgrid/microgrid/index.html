@@ -1906,28 +1906,28 @@ the <code>SetPowerReactive</code> RPC.</p>
 | ListConnections | <a href="#frequenz-api-microgrid-ConnectionFilter">ConnectionFilter</a> | <a href="#frequenz-api-microgrid-ConnectionList">ConnectionList</a> | Returns a list of the connections between components as <code>(start, end)</code> pairs of connection IDs, where the direction of individual connections is always away from the grid endpoint, i.e. aligned with the direction of positive current according to the passive sign convention: https://en.wikipedia.org/wiki/Passive_sign_convention</p>
 <p>The request may be filtered by <code>start</code>/<code>end</code> component(s) of individual connections. If provided, the <code>start</code> and <code>end</code> filters have an <code>AND</code> relationship between each other, meaning that they are applied serially, but an <code>OR</code> relationship with other elements in the same list. For example, if <code>start</code> = <code>[1, 2, 3]</code>, and <code>end</code> = <code>[4, 5, 6]</code>, then the result should have all the connections where * each <code>start</code> component ID is either <code>1</code>, <code>2</code>, OR <code>3</code>, AND * each <code>end</code> component ID is either <code>4</code>, <code>5</code>, OR <code>6</code>. |
 | SubscribeComponentData | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#frequenz-api-microgrid-ComponentData">ComponentData</a> stream | Returns a stream containing data from a component with a given ID. |
-| AddExclusionBounds | <a href="#frequenz-api-microgrid-SetBoundsParam">SetBoundsParam</a> | <a href="#google-protobuf-Timestamp">.google.protobuf.Timestamp</a> | Adds exclusion bounds for a given metric of a given component, and returns the UTC timestamp until which the given exclusion bounds will stay in effect.</p>
+| AddComponentExclusionBounds | <a href="#frequenz-api-microgrid-SetBoundsParam">SetBoundsParam</a> | <a href="#google-protobuf-Timestamp">.google.protobuf.Timestamp</a> | Adds exclusion bounds for a given metric of a given component, and returns the UTC timestamp until which the given exclusion bounds will stay in effect.</p>
 <p>Exclusion bounds refer to the range of values that are disallowed for the metric. If these bounds for a metric are [<code>lower</code>, <code>upper</code>], then this metric&#39;s <code>value</code> needs to comply with the constraints <code>value &amp;lt;= lower</code> OR <code>upper &amp;lt;= value</code>.</p>
 <p>Exclusion bounds are a useful tool for enhancing the performance of a system. They can be used to restrict the acceptance of commands that fall below a certain threshold, which can help ensure the smooth functioning of the system. E.g., exclusion bounds can be set to limit the minimum charging power to a sufficiently high level, preventing a peak-shaver client from sending charge powers that are too low when a DC heater client is executing a charge pulse. This can significantly improve the overall performance of the DC heating mechanism.</p>
 <p>If multiple exclusion bounds have been provided bor a metric, then the aggregated lower and upper exclusion bounds are calculated as follows: lower: the minimum of all lower exclusion bounds upper: the maximum of all upper exclusion bounds</p>
 <p>It is important to note that these bounds work together with <code>system_inclusion_bounds</code>.</p>
 <p>E.g., for the system to accept a charge command, clients need to request power values within the bounds <code>[system_inclusion_bounds.lower, system_exclusion_bounds.lower]</code>. This means that clients can only request charge commands with values that are within the <code>system_inclusion_bounds</code>, but not within <code>system_exclusion_bounds</code>. Similarly, for the system to accept a discharge command, clients need to request power values within the bounds <code>[system_exclusion_bounds.upper, system_inclusion_bounds.upper]</code>.</p>
 <p>The following diagram illustrates the relationship between the bounds. <code>inclusion.lower inclusion.upper &amp;lt;-------|============|------------------|============|---------&amp;gt; exclusion.lower exclusion.upper</code> ---- values here are disallowed and wil be rejected ==== vales here are allowed and will be accepted |
-| AddInclusionBounds | <a href="#frequenz-api-microgrid-SetBoundsParam">SetBoundsParam</a> | <a href="#google-protobuf-Timestamp">.google.protobuf.Timestamp</a> | Adds inclusion bounds for a given metric of a given component, and returns the UTC timestamp until which the given inclusion bounds will stay in effect.</p>
+| AddComponentInclusionBounds | <a href="#frequenz-api-microgrid-SetBoundsParam">SetBoundsParam</a> | <a href="#google-protobuf-Timestamp">.google.protobuf.Timestamp</a> | Adds inclusion bounds for a given metric of a given component, and returns the UTC timestamp until which the given inclusion bounds will stay in effect.</p>
 <p>Inclusion bounds refer to the range of values that are allowed for the metric. If these bounds for a metric are [<code>lower</code>, <code>upper</code>], then this metric&#39;s <code>value</code> needs to comply with the constraint <code>lower &amp;lt;= value &amp;lt;= upper</code>.</p>
 <p>If multiple inclusion bounds have been provided bor a metric, then the aggregated lower and upper inclusion bounds are calculated as follows: lower: the maximum of all lower inclusion bounds upper: the minimum of all upper inclusion bounds</p>
 <p>It is important to note that these bounds work together with <code>system_exclusion_bounds</code>.</p>
 <p>E.g., for the system to accept a charge command, clients need to request power values within the bounds <code>[system_inclusion_bounds.lower, system_exclusion_bounds.lower]</code>. This means that clients can only request charge commands with values that are within the <code>system_inclusion_bounds</code>, but not within <code>system_exclusion_bounds</code>. Similarly, for the system to accept a discharge command, clients need to request power values within the bounds <code>[system_exclusion_bounds.upper, system_inclusion_bounds.upper]</code>.</p>
 <p>The following diagram illustrates the relationship between the bounds. <code>inclusion.lower inclusion.upper &amp;lt;-------|============|------------------|============|---------&amp;gt; exclusion.lower exclusion.upper</code> ---- values here are disallowed and wil be rejected ==== vales here are allowed and will be accepted |
-| SetPowerActive | <a href="#frequenz-api-microgrid-SetPowerActiveParam">SetPowerActiveParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the active power output of a component with a given ID, provided the component supports it.</p>
+| SetComponentPowerActive | <a href="#frequenz-api-microgrid-SetPowerActiveParam">SetPowerActiveParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the active power output of a component with a given ID, provided the component supports it.</p>
 <p>Note that the target component may have a resolution of more than 1 W. E.g., an inverter may have a resolution of 88 W. In such cases, the magnitude of power will be floored to the nearest multiple of the resolution.</p>
 <p>Performs the following sequence actions for the following component categories:</p>
 <ul>
 <li>Inverter: Sends the discharge command to the inverter, making it deliver AC power. |
-| SetPowerReactive | <a href="#frequenz-api-microgrid-SetPowerReactiveParam">SetPowerReactiveParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the reactive power output of a component with a given ID, provided the component supports it.</li>
+| SetComponentPowerReactive | <a href="#frequenz-api-microgrid-SetPowerReactiveParam">SetPowerReactiveParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the reactive power output of a component with a given ID, provided the component supports it.</li>
 </ul>
 <p>Note that the target component may have a resolution of more than 1 VAr. E.g., an inverter may have a resolution of 88 VAr. In such cases, the magnitude of power will be floored to the nearest multiple of the resolution. |
-| Start | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Starts the component, and brings it into a state where it is immediately operational.</p>
+| StartComponent | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Starts the component, and brings it into a state where it is immediately operational.</p>
 <p>Performs the following sequence of actions for the following component categories:</p>
 <ul>
 <li>
@@ -1939,21 +1939,21 @@ the <code>SetPowerReactive</code> RPC.</p>
 </ul>
 <p>If any of the above mentioned actions for a given component has already been performed, then this method call effectively skips that action.</p>
 <p>If a feature required to perform an action is missing, then that action is skipped. |
-| HotStandby | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the given component into a hot-standby state, from which it can return into an operational state within at most 5 seconds.</p>
+| HotStandbyComponent | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the given component into a hot-standby state, from which it can return into an operational state within at most 5 seconds.</p>
 <p>Performs the following sequence actions for the following component categories:</p>
 <ul>
 <li>Inverter: Checks if AC and DC relays are closed, then * sets power to 0</li>
 </ul>
 <p>If any of the checks mentioned above fails, then the method call returns an error.</p>
 <p>If any of the above mentioned actions for a given component has already been performed, then this method call effectively skips that action. |
-| ColdStandby | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the given component into a cold-standby state, from which it can return into an operational state within at most 2 minutes.</p>
+| ColdStandbyComponent | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the given component into a cold-standby state, from which it can return into an operational state within at most 2 minutes.</p>
 <p>Performs the following sequence actions for the following component categories:</p>
 <ul>
 <li>Inverter: Checks if AC and DC relays are closed, then * sets power to 0, and * opens AC relays</li>
 </ul>
 <p>If any of the checks mentioned above fails, then the method call returns an error.</p>
 <p>If any of the above mentioned actions for a given component has already been performed, then this method call efffectively skips that action. |
-| Stop | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Stops the component completely, potentially disengaging its power electronics controller(s).</p>
+| StopComponent | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Stops the component completely, potentially disengaging its power electronics controller(s).</p>
 <p>Performs the following sequence actions for the following component categories:</p>
 <ul>
 <li>
@@ -1966,7 +1966,7 @@ the <code>SetPowerReactive</code> RPC.</p>
 <p>If any of the checks mentioned above fails, then the method call returns an error.</p>
 <p>If any of the above mentioned actions for a given component has already been performed, then this method call effectively skips that action.</p>
 <p>If a feature required to perform an action is missing, then that action is skipped. |
-| ErrorAck | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Acknowledges any recoverable error reported by the component, and brings it back to the stopped or cold-standby state. |</p>
+| AckComponentError | <a href="#frequenz-api-microgrid-ComponentIdParam">ComponentIdParam</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Acknowledges any recoverable error reported by the component, and brings it back to the stopped or cold-standby state. |</p>
 <h2 id="scalar-value-types">Scalar Value Types<a class="headerlink" href="#scalar-value-types" title="Permanent link">¤</a></h2>
 <table>
 <thead>
