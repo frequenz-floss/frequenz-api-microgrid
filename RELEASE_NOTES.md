@@ -15,8 +15,17 @@
   `frequenz.api.common.location.Location` is being used instead. The `Location`
   message from the common API also has a `country_code` member.
 
-- The following gRPC method has been renamed:
+- The following gRPC methods have been renamed:
   `StreamComponentData` -> `SubscribeComponentData`
+  `AddExclusionBounds`  -> `AddComponentExclusionBounds`
+  `AddInclusionBounds`  -> `AddComponentInclusionBounds`
+  `SetPowerActive`      -> `SetComponentPowerActive`
+  `SetPowerReactive`    -> `SetComponentPowerReactive`
+  `Start`               -> `StartComponent`
+  `HotStandby`          -> `HotStandbyComponent`
+  `ColdStandby`         -> `ColdStandbyComponent`
+  `Stop`                -> `StopComponent`
+  `ErrorAck`            -> `AckComponentError`
 
 ## New Features
 
