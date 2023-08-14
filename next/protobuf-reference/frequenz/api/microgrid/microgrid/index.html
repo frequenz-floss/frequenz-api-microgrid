@@ -16,7 +16,7 @@
         <link rel="prev" href="../meter/">
       
       
-        <link rel="next" href="../sensor/">
+        <link rel="next" href="../precharge_module/">
       
       <link rel="icon" href="../../../../../logo.png">
       <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
@@ -763,6 +763,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../precharge_module/" class="md-nav__link">
+        precharge_module.proto
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relay/" class="md-nav__link">
+        relay.proto
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sensor/" class="md-nav__link">
         sensor.proto
       </a>
@@ -1104,6 +1132,62 @@
     <li class="md-nav__item">
       <a href="../../../../../python-reference/frequenz/api/microgrid/microgrid_pb2_grpc/" class="md-nav__link">
         microgrid_pb2_grpc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../python-reference/frequenz/api/microgrid/precharge_module_pb2/" class="md-nav__link">
+        precharge_module_pb2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../python-reference/frequenz/api/microgrid/precharge_module_pb2_grpc/" class="md-nav__link">
+        precharge_module_pb2_grpc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../python-reference/frequenz/api/microgrid/relay_pb2/" class="md-nav__link">
+        relay_pb2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../python-reference/frequenz/api/microgrid/relay_pb2_grpc/" class="md-nav__link">
+        relay_pb2_grpc
       </a>
     </li>
   
@@ -1531,6 +1615,18 @@ component, with its static parameters.</p>
 <td></td>
 <td></td>
 </tr>
+<tr>
+<td>relay</td>
+<td><a href="#frequenz-api-microgrid-relay-Relay">relay.Relay</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>precharge_module</td>
+<td><a href="#frequenz-api-microgrid-precharge_module-PrechargeModule">precharge_module.PrechargeModule</a></td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <p><a name="frequenz-api-microgrid-ComponentFilter"></a></p>
@@ -1936,6 +2032,12 @@ the <code>SetPowerReactive</code> RPC.</p>
 <li>
 <p>Battery: Checks if DC relays are open, then * closes DC relays</p>
 </li>
+<li>
+<p>Relays: * closes relays</p>
+</li>
+<li>
+<p>Precharge Modules: * starts the precharge process, and eventually closes the DC relays.</p>
+</li>
 </ul>
 <p>If any of the above mentioned actions for a given component has already been performed, then this method call effectively skips that action.</p>
 <p>If a feature required to perform an action is missing, then that action is skipped. |
@@ -1961,6 +2063,12 @@ the <code>SetPowerReactive</code> RPC.</p>
 </li>
 <li>
 <p>Battery: Checks if the power output is 0, then * opens DC relays</p>
+</li>
+<li>
+<p>Relays: * opens relays</p>
+</li>
+<li>
+<p>Precharge Modules: * opens the DC relays.</p>
 </li>
 </ul>
 <p>If any of the checks mentioned above fails, then the method call returns an error.</p>
