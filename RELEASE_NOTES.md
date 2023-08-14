@@ -27,6 +27,23 @@
   `Stop`                -> `StopComponent`
   `ErrorAck`            -> `AckComponentError`
 
+- Added support for a new Component category: Relays. These are electromagnetic
+  switches that control circuit breakers in the microgrid, e.g., to connect or
+  disconnect an inverter from the grid. Relays support the following methods:
+  - `StartComponent`
+  - `StopComponent`
+
+- Added support for a new Component category: Precharge modules.
+  Precharging a DC (Direct Current) bus refers to a controlled process in
+  electrical systems, e.g., when connecting an inverter to a battery, where the
+  voltage across a DC bus is gradually increased from a low level to a desired
+  level before connecting a load or initiating normal operation. This process
+  is primarily used to prevent sudden surges of current that can occur when a
+  load is directly connected to a high-voltage DC source.
+  Precharge modules support the following methods:
+  - `StartComponent`
+  - `StopComponent`
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
