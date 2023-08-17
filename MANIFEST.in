@@ -1,3 +1,4 @@
+exclude .editorconfig
 exclude .gitignore
 exclude .gitmodules
 exclude CODEOWNERS
