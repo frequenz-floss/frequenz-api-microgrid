@@ -3,6 +3,7 @@ exclude .gitignore
 exclude .gitmodules
 exclude CODEOWNERS
 exclude noxfile.py
+exclude src/conftest.py
 recursive-exclude .github *
 recursive-exclude pytests *
 recursive-include py *.pyi
