@@ -53,7 +53,7 @@ dev-mkdocs = [
   "frequenz-repo-config[api] == 0.5.2",
 ]
 dev-mypy = [
-  "mypy == 1.5.0",
+  "mypy == 1.5.1",
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
