@@ -64,7 +64,7 @@ dev-pylint = [
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
 dev-pytest = [
-  "pytest == 7.4.0",
+  "pytest == 7.4.1",
   "frequenz-repo-config[extra-lint-examples] == 0.5.2",
 ]
 dev = [
