@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Fetch sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -59,7 +59,7 @@ jobs:
 
     steps:
       - name: Fetch sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Fetch sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -116,7 +116,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Fetch sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -195,7 +195,7 @@ jobs:
 
       - name: Fetch sources
         if: steps.mike-metadata.outputs.version
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
