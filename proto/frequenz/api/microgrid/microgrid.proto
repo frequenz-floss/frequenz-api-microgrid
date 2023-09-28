@@ -15,7 +15,7 @@ import "frequenz/api/microgrid/ev_charger.proto";
 import "frequenz/api/microgrid/grid.proto";
 import "frequenz/api/microgrid/inverter.proto";
 import "frequenz/api/microgrid/meter.proto";
-import "frequenz/api/microgrid/precharge_module.proto";
+import "frequenz/api/microgrid/precharger.proto";
 import "frequenz/api/microgrid/relay.proto";
 import "frequenz/api/microgrid/sensor.proto";
 
@@ -470,7 +470,7 @@ message ComponentData {
     ev_charger.EvCharger ev_charger = 6;
     sensor.Sensor sensor = 7;
     relay.Relay relay = 8;
-    precharge_module.PrechargeModule precharge_module = 9;
+    precharger.Precharger precharger = 9;
   }
 }
 

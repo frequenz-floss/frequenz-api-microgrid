@@ -33,7 +33,7 @@
   - `StartComponent`
   - `StopComponent`
 
-- Added support for a new Component category: Precharge modules.
+- Added support for a new Component category: Precharger.
   Precharging a DC (Direct Current) bus refers to a controlled process in
   electrical systems, e.g., when connecting an inverter to a battery, where the
   voltage across a DC bus is gradually increased from a low level to a desired
