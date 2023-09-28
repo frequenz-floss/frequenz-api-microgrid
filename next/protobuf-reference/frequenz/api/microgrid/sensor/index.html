@@ -883,13 +883,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#sensormetric" class="md-nav__link">
-    SensorMetric
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1651,13 +1644,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#sensormetric" class="md-nav__link">
-    SensorMetric
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1708,7 +1694,6 @@
 <p><a href="#frequenz-api-microgrid-sensor-ComponentState">ComponentState</a></p>
 </li>
 <li><a href="#frequenz-api-microgrid-sensor-ErrorCode">ErrorCode</a></li>
-<li><a href="#frequenz-api-microgrid-sensor-SensorMetric">SensorMetric</a></li>
 </ul>
 </li>
 <li>
@@ -1736,7 +1721,7 @@
 <td>sensor_data</td>
 <td><a href="#frequenz-api-microgrid-sensor-SensorData">SensorData</a></td>
 <td>repeated</td>
-<td>AC metrics of the inverter.</td>
+<td>An array of sensor data.</td>
 </tr>
 </tbody>
 </table>
@@ -1788,7 +1773,7 @@
 <tbody>
 <tr>
 <td>type</td>
-<td><a href="#frequenz-api-common-components-SensorType">frequenz.api.common.components.SensorType</a></td>
+<td><a href="#frequenz-api-common-v1-sensors-SensorCategory">frequenz.api.common.v1.sensors.SensorCategory</a></td>
 <td></td>
 <td>The sensor type.</td>
 </tr>
@@ -1875,7 +1860,7 @@
 </tr>
 <tr>
 <td>sensor_metric</td>
-<td><a href="#frequenz-api-microgrid-sensor-SensorMetric">SensorMetric</a></td>
+<td><a href="#frequenz-api-common-v1-sensors-SensorMetric">frequenz.api.common.v1.sensors.SensorMetric</a></td>
 <td></td>
 <td>The metric name.</td>
 </tr>
@@ -1950,66 +1935,6 @@
 </tr>
 </tbody>
 </table>
-<p><a name="frequenz-api-microgrid-sensor-SensorMetric"></a></p>
-<h3 id="sensormetric">SensorMetric<a class="headerlink" href="#sensormetric" title="Permanent link">¤</a></h3>
-<p>The type of the metric reported in a sensor data sample.</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Number</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SENSOR_METRIC_UNSPECIFIED</td>
-<td>0</td>
-<td>Unspecified.</td>
-</tr>
-<tr>
-<td>SENSOR_METRIC_TEMPERATURE</td>
-<td>1</td>
-<td>Temperature. In Celsius (°C).</td>
-</tr>
-<tr>
-<td>SENSOR_METRIC_HUMIDITY</td>
-<td>2</td>
-<td>Humidity In percentage (%).</td>
-</tr>
-<tr>
-<td>SENSOR_METRIC_PRESSURE</td>
-<td>3</td>
-<td>Pressure In Pascal (Pa).</td>
-</tr>
-<tr>
-<td>SENSOR_METRIC_IRRADIANCE</td>
-<td>4</td>
-<td>Irradiance / Radiation flux In watts per square meter (W / m^2).</td>
-</tr>
-<tr>
-<td>SENSOR_METRIC_VELOCITY</td>
-<td>5</td>
-<td>Velocity In meters per second (m / s).</td>
-</tr>
-<tr>
-<td>SENSOR_METRIC_ACCELERATION</td>
-<td>6</td>
-<td>Acceleration. In meters per second per second (m / s^2)</td>
-</tr>
-<tr>
-<td>SENSOR_METRIC_ANGLE</td>
-<td>7</td>
-<td>Metric to represent angles, for metrics like direction. In angles with respect to the (magnetic) North (°).</td>
-</tr>
-<tr>
-<td>SENSOR_METRIC_DEW_POINT</td>
-<td>8</td>
-<td>Dew point. The temperature at which the air becomes saturated with water vapor.</td>
-</tr>
-</tbody>
-</table>
-<p>In Celsius (°C). |</p>
 <h2 id="scalar-value-types">Scalar Value Types<a class="headerlink" href="#scalar-value-types" title="Permanent link">¤</a></h2>
 <table>
 <thead>
