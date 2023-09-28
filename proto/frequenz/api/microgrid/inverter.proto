@@ -12,9 +12,9 @@ package frequenz.api.microgrid.inverter;
 
 import "frequenz/api/microgrid/common.proto";
 
-import "frequenz/api/common/components.proto";
-import "frequenz/api/common/metrics.proto";
-import "frequenz/api/common/metrics/electrical.proto";
+import "frequenz/api/common/v1/components.proto";
+import "frequenz/api/common/v1/metrics.proto";
+import "frequenz/api/common/v1/metrics/electrical.proto";
 
 // Enumerated inverter types.
 enum Type {
@@ -27,7 +27,7 @@ enum Type {
 // The inverter metadata.
 message Metadata {
   // The inverter type.
-  frequenz.api.common.components.InverterType type = 1;
+  frequenz.api.common.v1.components.InverterType type = 1;
 }
 
 // Enumerated inverter states.
@@ -100,18 +100,18 @@ message Error {
 message Data {
   // DC metrics for the inverter-battery linkage.
   // This is applicable to `BATTERY` and `HYBRID` inverters only.
-  frequenz.api.common.metrics.electrical.DC dc_battery = 4;
+  frequenz.api.common.v1.metrics.electrical.DC dc_battery = 4;
 
   // DC metrics for the inverter-PV linkage.
   // This is applicable to `SOLAR` and `HYBRID` inverters only.
-  frequenz.api.common.metrics.electrical.DC dc_solar = 5;
+  frequenz.api.common.v1.metrics.electrical.DC dc_solar = 5;
 
   // AC metrics of the inverter.
-  frequenz.api.common.metrics.electrical.AC ac = 2;
+  frequenz.api.common.v1.metrics.electrical.AC ac = 2;
 
   // The verall temperature of the inverter.
   // In degree Celsius (°C).
-  frequenz.api.common.metrics.Metric temperature = 3;
+  frequenz.api.common.v1.metrics.Metric temperature = 3;
 }
 
 // Inverter properties.

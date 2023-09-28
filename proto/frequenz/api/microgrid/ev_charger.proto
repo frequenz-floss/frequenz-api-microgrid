@@ -12,14 +12,14 @@ package frequenz.api.microgrid.ev_charger;
 
 import "frequenz/api/microgrid/common.proto";
 
-import "frequenz/api/common/components.proto";
-import "frequenz/api/common/metrics.proto";
-import "frequenz/api/common/metrics/electrical.proto";
+import "frequenz/api/common/v1/components.proto";
+import "frequenz/api/common/v1/metrics.proto";
+import "frequenz/api/common/v1/metrics/electrical.proto";
 
 // The EV charger metadata.
 message Metadata {
   // The EV charger type.
-  frequenz.api.common.components.EvChargerType type = 1;
+  frequenz.api.common.v1.components.EvChargerType type = 1;
 }
 
 // The possible states of an EV charging station.
@@ -167,17 +167,17 @@ message Data {
   // Contains data only if DC charging is supported by the EV charging station.
   // (in which case, the type of the EV charging station is TYPE_DC or
   // TYPE_HYBRID)
-  frequenz.api.common.metrics.electrical.DC dc = 1;
+  frequenz.api.common.v1.metrics.electrical.DC dc = 1;
 
   // AC metrics of the EV charging station.
   // Contains data only if AC charging is supported by the EV charging station.
   // (in which case, the type of the EV charging station is TYPE_AC or
   // TYPE_HYBRID)
-  frequenz.api.common.metrics.electrical.AC ac = 2;
+  frequenz.api.common.v1.metrics.electrical.AC ac = 2;
 
   // The overall temperature of the EV charger.
   // In degree Celsius (°C).
-  frequenz.api.common.metrics.Metric temperature = 3;
+  frequenz.api.common.v1.metrics.Metric temperature = 3;
 }
 
 // EV charger properties.

@@ -44,6 +44,8 @@
   - `StartComponent`
   - `StopComponent`
 
+- Upgraded the `frequenz-api-common` package to `v0.4.0`.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->

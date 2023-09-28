@@ -12,14 +12,14 @@ package frequenz.api.microgrid.battery;
 
 import "frequenz/api/microgrid/common.proto";
 
-import "frequenz/api/common/components.proto";
-import "frequenz/api/common/metrics.proto";
-import "frequenz/api/common/metrics/electrical.proto";
+import "frequenz/api/common/v1/components.proto";
+import "frequenz/api/common/v1/metrics.proto";
+import "frequenz/api/common/v1/metrics/electrical.proto";
 
 // The battery metadata.
 message Metadata {
   // The battery type.
-  frequenz.api.common.components.BatteryType type = 1;
+  frequenz.api.common.v1.components.BatteryType type = 1;
 }
 
 enum ComponentState {
@@ -175,19 +175,19 @@ message Error {
 // Battery data.
 message Data {
   // DC electricity metrics.
-  frequenz.api.common.metrics.electrical.DC dc = 1;
+  frequenz.api.common.v1.metrics.electrical.DC dc = 1;
 
   // Battery's overall SoC.
   // In percent (%).
-  frequenz.api.common.metrics.MetricAggregation soc = 2;
+  frequenz.api.common.v1.metrics.MetricAggregation soc = 2;
 
   // The aggregated values of all the temperature measurements of a battery.
   // In degree Celsius (°C).
-  frequenz.api.common.metrics.MetricAggregation temperature = 3;
+  frequenz.api.common.v1.metrics.MetricAggregation temperature = 3;
 
   // The aggregated values of all the humidity measurements of a battery.
   // In percent (%).
-  frequenz.api.common.metrics.MetricAggregation humidity = 4;
+  frequenz.api.common.v1.metrics.MetricAggregation humidity = 4;
 }
 
 // Battery properties.

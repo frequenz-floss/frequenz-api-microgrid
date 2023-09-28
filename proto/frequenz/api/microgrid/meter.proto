@@ -12,7 +12,7 @@ package frequenz.api.microgrid.meter;
 
 import "frequenz/api/microgrid/common.proto";
 
-import "frequenz/api/common/metrics/electrical.proto";
+import "frequenz/api/common/v1/metrics/electrical.proto";
 
 // Enumerated meter types.
 enum Type {
@@ -76,7 +76,7 @@ message Error {
 // Meter data.
 message Data {
   // AC metrics of the inverter.
-  frequenz.api.common.metrics.electrical.AC ac = 1;
+  frequenz.api.common.v1.metrics.electrical.AC ac = 1;
 }
 
 // Meter properties.
