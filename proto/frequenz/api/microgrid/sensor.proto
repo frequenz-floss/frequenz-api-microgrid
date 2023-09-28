@@ -12,12 +12,12 @@ package frequenz.api.microgrid.sensor;
 
 import "frequenz/api/microgrid/common.proto";
 
-import "frequenz/api/common/components.proto";
+import "frequenz/api/common/v1/sensors.proto";
 
 // The sensor metadata.
 message Metadata {
   // The sensor type.
-  frequenz.api.common.components.SensorType type = 1;
+  frequenz.api.common.v1.sensors.SensorCategory type = 1;
 }
 
 // Enumerated sensor states.
@@ -36,46 +36,6 @@ enum ComponentState {
 enum ErrorCode {
   // Unspecified.
   ERROR_CODE_UNSPECIFIED = 0;
-}
-
-// The type of the metric reported in a sensor data sample.
-enum SensorMetric {
-  // Unspecified.
-  SENSOR_METRIC_UNSPECIFIED = 0;
-
-  // Temperature.
-  // In Celsius (°C).
-  SENSOR_METRIC_TEMPERATURE = 1;
-
-  // Humidity
-  // In percentage (%).
-  SENSOR_METRIC_HUMIDITY = 2;
-
-  // Pressure
-  // In Pascal (Pa).
-  SENSOR_METRIC_PRESSURE = 3;
-
-  // Irradiance / Radiation flux
-  // In watts per square meter (W / m^2).
-  SENSOR_METRIC_IRRADIANCE = 4;
-
-  // Velocity
-  // In meters per second (m / s).
-  SENSOR_METRIC_VELOCITY = 5;
-
-  // Acceleration.
-  // In meters per second per second (m / s^2)
-  SENSOR_METRIC_ACCELERATION = 6;
-
-  // Metric to represent angles, for metrics like direction.
-  // In angles with respect to the (magnetic) North (°).
-  SENSOR_METRIC_ANGLE = 7;
-
-  // Dew point.
-  // The temperature at which the air becomes saturated with water vapor.
-  //
-  // In Celsius (°C).
-  SENSOR_METRIC_DEW_POINT = 8;
 }
 
 // State message.
@@ -102,12 +62,12 @@ message SensorData {
   float value = 1;
 
   // The metric name.
-  SensorMetric sensor_metric = 2;
+  frequenz.api.common.v1.sensors.SensorMetric sensor_metric = 2;
 }
 
 // Sensor data.
 message Data {
-  // AC metrics of the inverter.
+  // An array of sensor data.
   repeated SensorData sensor_data = 1;
 }
 

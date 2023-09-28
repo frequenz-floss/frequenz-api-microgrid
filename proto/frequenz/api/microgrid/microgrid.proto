@@ -19,9 +19,9 @@ import "frequenz/api/microgrid/precharge_module.proto";
 import "frequenz/api/microgrid/relay.proto";
 import "frequenz/api/microgrid/sensor.proto";
 
-import "frequenz/api/common/components.proto";
-import "frequenz/api/common/location.proto";
-import "frequenz/api/common/metrics.proto";
+import "frequenz/api/common/v1/components.proto";
+import "frequenz/api/common/v1/location.proto";
+import "frequenz/api/common/v1/metrics.proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -332,7 +332,7 @@ message MicrogridMetadata {
   uint64 microgrid_id = 1;
 
   // The location of the microgrid, in geographical co-ordinates.
-  frequenz.api.common.location.Location location = 2;
+  frequenz.api.common.v1.location.Location location = 2;
 }
 
 // Parameters for filtering the components.
@@ -341,7 +341,7 @@ message ComponentFilter {
   repeated uint64 ids = 1;
 
   // Return components that have the specified categories only.
-  repeated frequenz.api.common.components.ComponentCategory categories = 2;
+  repeated frequenz.api.common.v1.components.ComponentCategory categories = 2;
 }
 
 // Encapsulation of a component ID, intended to be used as a parameter for rpc
@@ -416,7 +416,7 @@ message SetBoundsParam {
   TargetMetric target_metric = 2;
 
   // The bounds for the target metric.
-  frequenz.api.common.metrics.Bounds bounds = 3;
+  frequenz.api.common.v1.metrics.Bounds bounds = 3;
 }
 
 // A generic message for components. It is used to represent any category of
@@ -429,7 +429,7 @@ message Component {
   string name = 2;
 
   // The category of the component.
-  frequenz.api.common.components.ComponentCategory category = 3;
+  frequenz.api.common.v1.components.ComponentCategory category = 3;
 
   // The component manufacturer.
   string manufacturer = 4;
