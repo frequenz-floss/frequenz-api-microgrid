@@ -15,7 +15,7 @@
 
 syntax = "proto3";
 
-package frequenz.api.microgrid.precharge_module;
+package frequenz.api.microgrid.precharger;
 
 import "frequenz/api/microgrid/common.proto";
 
@@ -62,8 +62,8 @@ message Error {
   string msg = 3;
 }
 
-// PrechargeModule details.
-message PrechargeModule {
+// Precharger details.
+message Precharger {
   // The component's state.
   State state = 2;
 
