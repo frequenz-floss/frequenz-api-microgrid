@@ -24,6 +24,7 @@ import "frequenz/api/microgrid/voltage_transformer.proto";
 import "frequenz/api/common/v1/components.proto";
 import "frequenz/api/common/v1/location.proto";
 import "frequenz/api/common/v1/metrics.proto";
+import "frequenz/api/common/v1/sensors.proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -64,6 +65,29 @@ service Microgrid {
     };
   }
 
+  // Returns a list of sensors in the local microgrid, optionally filtered by a
+  // given list of sensor IDs and sensor categories.
+  //
+  // If provided, the filters for sensor IDs and categories have an `AND`
+  // relationship with one another, meaning that they are applied serially,
+  // but the elements within a single filter list have an `OR` relationship with
+  // each other.
+  // E.g., if `ids` = [1, 2, 3], and `categories` = [
+  //  `SensorCategory::SENSOR_CATEGORY_THERMOMETER`,
+  //  `SensorCategory::SENSOR_CATEGORY_HYGROMETER`],
+  // then the results will consist of elements that
+  // have the IDs 1, OR 2, OR 3,
+  // AND
+  // are of the categories `SensorCategory::SENSOR_CATEGORY_THERMOMETER` OR
+  // `SensorCategory::SENSOR_CATEGORY_HYGROMETER`.
+  //
+  // If a filter list is empty, then that filter is not applied.
+  rpc ListSensors(SensorFilter) returns (SensorList) {
+    option (google.api.http) = {
+      get : "/v1/sensors"
+    };
+  }
+
   // Returns a list of the connections between components as `(start, end)`
   // pairs of connection IDs, where the direction of individual connections
   // is always away from the grid endpoint, i.e. aligned with the direction
@@ -89,6 +113,13 @@ service Microgrid {
   rpc SubscribeComponentData(ComponentIdParam) returns (stream ComponentData) {
     option (google.api.http) = {
       get : "/v1/components/{id}/data"
+    };
+  }
+
+  // Returns a stream containing data from a sensor with a given ID.
+  rpc SubscribeSensorData(SensorIdParam) returns (stream SensorData) {
+    option (google.api.http) = {
+      get : "/v1/sensors/{id}/data"
     };
   }
 
@@ -371,7 +402,6 @@ message Component {
     inverter.Metadata inverter = 13;
     meter.Metadata meter = 14;
     ev_charger.Metadata ev_charger = 15;
-    sensor.Metadata sensor = 16;
     fuse.Metadata fuse = 17;
     voltage_transformer.Metadata voltage_transformer = 18;
   }
@@ -402,6 +432,51 @@ message ComponentData {
   }
 }
 
+// Parameters for filtering sensors.
+message SensorFilter {
+  // Return sensors that have the specified IDs only.
+  repeated uint64 ids = 1;
+
+  // Return sensors that have the specified categories only.
+  repeated frequenz.api.common.v1.sensors.SensorCategory categories = 2;
+}
+
+// A sensor that measures a physical metric in the microgrid's surrounding
+// environment.
+message Sensor {
+  // A unique identifier for the sensor.
+  uint64 id = 1;
+
+  // An optional name for the sensor.
+  string name = 2;
+
+  // The category of the sensor.
+  frequenz.api.common.v1.sensors.SensorCategory category = 3;
+
+  // The sensor manufacturer.
+  string manufacturer = 4;
+
+  // The model name of the sensor.
+  string model_name = 5;
+}
+
+// A message containing a list of sensors, used as a return type in certain
+// RPC methods.
+message SensorList {
+  repeated Sensor sensors = 1;
+}
+
+// Data that originates from a sensor.
+message SensorData {
+  // The timestamp of when the data was measured.
+  google.protobuf.Timestamp ts = 1;
+
+  // The sensor ID.
+  uint64 id = 2;
+
+  // The data object.
+  sensor.Sensor data = 7;
+}
 
 // Parameters for filtering the component connections
 message ConnectionFilter {
@@ -480,5 +555,11 @@ message SetBoundsParam {
 // Encapsulation of a component ID, intended to be used as a parameter for rpc
 // methods.
 message ComponentIdParam {
+  uint64 id = 1;
+}
+
+// Encapsulation of a sensor ID, intended to be used as a parameter for rpc
+// methods.
+message SensorIdParam {
   uint64 id = 1;
 }
