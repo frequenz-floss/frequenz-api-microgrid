@@ -1,4 +1,4 @@
-// Contains the definitions for Microgrid gRPC API.
+// Frequenz Microgrid API
 //
 // Copyright:
 // Copyright 2022 Frequenz Energy-as-a-Service GmbH
@@ -31,6 +31,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
+// The Frequenz Microgrid API
 service Microgrid {
   /// Returns the microgrid metadata
   /// The metadata consists of information that describes the overall
