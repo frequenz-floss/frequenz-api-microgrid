@@ -488,7 +488,7 @@ message ReceiveComponentDataStreamRequest {
 // Components belonging to all categories and types can be represented using
 // this message.
 message ComponentData {
-  // The timestamp of when the data was measured.
+  // The UTC timestamp of when the data was measured.
   google.protobuf.Timestamp ts = 1;
 
   // The component ID.
@@ -513,7 +513,7 @@ message ReceiveSensorDataStreamRequest {
 
 // A data sample from a sensor in the microgrid.
 message SensorData {
-  // The timestamp of when the data was measured.
+  // The UTC timestamp of when the data was measured.
   google.protobuf.Timestamp ts = 1;
 
   // The sensor ID.
