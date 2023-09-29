@@ -346,69 +346,6 @@ message ComponentFilter {
   repeated frequenz.api.common.v1.components.ComponentCategory categories = 2;
 }
 
-// Encapsulation of a component ID, intended to be used as a parameter for rpc
-// methods.
-message ComponentIdParam {
-  uint64 id = 1;
-}
-
-// Parameters for filtering the component connections
-message ConnectionFilter {
-  // Only return connections that start from the specified component ID(s):
-  // if empty, connections with any `start` will be returned
-  repeated uint64 starts = 1;
-
-  // Only return connections that end at the specified component ID(s):
-  // if empty, connections with any `end` will be returned
-  repeated uint64 ends = 2;
-}
-
-// Parameters for setting the active power of an appropriate component using the
-// `SetPowerActive` RPC.
-message SetPowerActiveParam {
-  // The ID of the component to set the output active power of.
-  uint64 component_id = 1;
-
-  // The output active power level, in watts.
-  // -ve values are for discharging, and +ve values are for charging.
-  float power = 2;
-}
-
-// Parameters for setting the reactive power of an appropriate component using
-// the `SetPowerReactive` RPC.
-message SetPowerReactiveParam {
-  // The ID of the component to set the output reactive power of.
-  uint64 component_id = 1;
-
-  // The output reactive power level, in VAr.
-  // -ve values are for inductive (lagging) power , and +ve values are for
-  //  capacitive (leading) power.
-  float power = 2;
-}
-
-// Parameters for setting bounds of a given metric of a given component.
-message SetBoundsParam {
-  // An enumerated list of metrics whose bounds can be set.
-  enum TargetMetric {
-    TARGET_METRIC_UNSPECIFIED = 0;
-    TARGET_METRIC_POWER_ACTIVE = 1;
-    TARGET_METRIC_CURRENT = 2;
-    TARGET_METRIC_CURRENT_PHASE_1 = 3;
-    TARGET_METRIC_CURRENT_PHASE_2 = 4;
-    TARGET_METRIC_CURRENT_PHASE_3 = 5;
-    TARGET_METRIC_POWER_REACTIVE = 6;
-  }
-
-  // The ID of the target component.
-  uint64 component_id = 1;
-
-  // The target metric whose bounds have to be set.
-  TargetMetric target_metric = 2;
-
-  // The bounds for the target metric.
-  frequenz.api.common.v1.metrics.Bounds bounds = 3;
-}
-
 // A generic message for components. It is used to represent any category of
 // component, with its static parameters.
 message Component {
@@ -460,10 +397,21 @@ message ComponentData {
     inverter.Inverter inverter = 4;
     battery.Battery battery = 5;
     ev_charger.EvCharger ev_charger = 6;
-    sensor.Sensor sensor = 7;
     relay.Relay relay = 8;
     precharger.Precharger precharger = 9;
   }
+}
+
+
+// Parameters for filtering the component connections
+message ConnectionFilter {
+  // Only return connections that start from the specified component ID(s):
+  // if empty, connections with any `start` will be returned
+  repeated uint64 starts = 1;
+
+  // Only return connections that end at the specified component ID(s):
+  // if empty, connections with any `end` will be returned
+  repeated uint64 ends = 2;
 }
 
 // Describes a single connection between components of the microgrid,
@@ -482,3 +430,55 @@ message Connection {
 message ConnectionList {
   repeated Connection connections = 1;
 };
+
+// Parameters for setting the active power of an appropriate component using the
+// `SetPowerActive` RPC.
+message SetPowerActiveParam {
+  // The ID of the component to set the output active power of.
+  uint64 component_id = 1;
+
+  // The output active power level, in watts.
+  // -ve values are for discharging, and +ve values are for charging.
+  float power = 2;
+}
+
+// Parameters for setting the reactive power of an appropriate component using
+// the `SetPowerReactive` RPC.
+message SetPowerReactiveParam {
+  // The ID of the component to set the output reactive power of.
+  uint64 component_id = 1;
+
+  // The output reactive power level, in VAr.
+  // -ve values are for inductive (lagging) power , and +ve values are for
+  //  capacitive (leading) power.
+  float power = 2;
+}
+
+// Parameters for setting bounds of a given metric of a given component.
+message SetBoundsParam {
+  // An enumerated list of metrics whose bounds can be set.
+  enum TargetMetric {
+    TARGET_METRIC_UNSPECIFIED = 0;
+    TARGET_METRIC_POWER_ACTIVE = 1;
+    TARGET_METRIC_CURRENT = 2;
+    TARGET_METRIC_CURRENT_PHASE_1 = 3;
+    TARGET_METRIC_CURRENT_PHASE_2 = 4;
+    TARGET_METRIC_CURRENT_PHASE_3 = 5;
+    TARGET_METRIC_POWER_REACTIVE = 6;
+  }
+
+  // The ID of the target component.
+  uint64 component_id = 1;
+
+  // The target metric whose bounds have to be set.
+  TargetMetric target_metric = 2;
+
+  // The bounds for the target metric.
+  frequenz.api.common.v1.metrics.Bounds bounds = 3;
+}
+
+// Encapsulation of a component ID, intended to be used as a parameter for rpc
+// methods.
+message ComponentIdParam {
+  uint64 id = 1;
+}
