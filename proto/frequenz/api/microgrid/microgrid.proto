@@ -363,18 +363,6 @@ message ConnectionFilter {
   repeated uint64 ends = 2;
 }
 
-// Parameters for setting the charge/discharge power of an appropriate
-// component.
-message PowerLevelParam {
-  // The ID of the component to set the output power of.
-  uint64 component_id = 1;
-
-  // The output power level, in watts. This is always a +ve integer. The sign
-  // of the power level is controlled by the implementations of the `Charge`
-  // and `Discharge` RPC methods.
-  uint64 power_w = 2;
-}
-
 // Parameters for setting the active power of an appropriate component using the
 // `SetPowerActive` RPC.
 message SetPowerActiveParam {
