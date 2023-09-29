@@ -48,6 +48,9 @@
 
 - Changed inverter DC metrics to repeated fields.
 
+- Added fuse component. Fuses are used to protect electrical components from
+  overcurrent.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->

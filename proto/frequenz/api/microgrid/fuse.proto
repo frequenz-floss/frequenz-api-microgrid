@@ -1,0 +1,28 @@
+// Contains definitions for fuses.
+//
+// The fuse component represents a fuse in the microgrid. It is used to protect
+// components from overcurrents.
+//
+// Copyright:
+// Copyright 2023 Frequenz Energy-as-a-Service GmbH
+//
+// License:
+// MIT
+
+syntax = "proto3";
+
+package frequenz.api.microgrid.fuse;
+
+// The fuse component represents a fuse in the microgrid. It is used to protect
+// components from overcurrents.
+message Metadata {
+  // The rated current of the fuse in amperes.
+  // This is the maximum current that the fuse can withstand for a long time.
+  // This limit applies to currents both flowing in or out of each of the 3
+  // phases individually.
+  //
+  // In other words, a current _i_ A at one of the phases of the node must
+  // comply with the following constraint:
+  // `-rated_fuse_current <= i <= rated_fuse_current`
+  uint32 rated_current = 1;
+}
