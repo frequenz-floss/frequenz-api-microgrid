@@ -34,7 +34,7 @@ import "google/protobuf/wrappers.proto";
 service Microgrid {
   /// Returns the microgrid metadata
   /// The metadata consists of information that describes the overall
-  /// microgrid, as opposed to its components,
+  /// microgrid, as opposed to its electrical components or sensors,
   /// e.g., the microgrid ID, location.
   rpc GetMicrogridMetadata(google.protobuf.Empty) returns (MicrogridMetadata) {
     option (google.api.http) = {
@@ -42,8 +42,12 @@ service Microgrid {
     };
   }
 
-  // List components in the local microgrid, optionally filtered by a given list
-  // of component IDs and component categories.
+  // List electrical components in the local microgrid, optionally filtered by a
+  // given list of component IDs and component categories.
+  //
+  // Electrical components are a part of a microgrid's electrical infrastructure
+  // are can be connected to each other to form an electrical circuit, which can
+  // then be represented as a graph.
   //
   // If provided, the filters for component IDs and categories have an `AND`
   // relationship with one another, meaning that they are applied serially,
@@ -68,6 +72,9 @@ service Microgrid {
   // Returns a list of sensors in the local microgrid, optionally filtered by a
   // given list of sensor IDs and sensor categories.
   //
+  // Sensors measure physical metrics in the microgrid's surroundings, and are
+  // not classified as electrical components.
+  //
   // If provided, the filters for sensor IDs and categories have an `AND`
   // relationship with one another, meaning that they are applied serially,
   // but the elements within a single filter list have an `OR` relationship with
@@ -88,10 +95,14 @@ service Microgrid {
     };
   }
 
-  // Returns a list of the connections between components as `(start, end)`
-  // pairs of connection IDs, where the direction of individual connections
-  // is always away from the grid endpoint, i.e. aligned with the direction
-  // of positive current according to the passive sign convention:
+  // Electrical components are a part of a microgrid's electrical infrastructure
+  // are can be connected to each other to form an electrical circuit, which can
+  // then be represented as a graph.
+  //
+  // This RPC return a list of the connections between two components, denoted
+  // by `(start, end)`. The direction of a connection is always away from the
+  // grid endpoint, i.e. aligned with the direction of positive current
+  // according to the passive sign convention:
   // https://en.wikipedia.org/wiki/Passive_sign_convention
   //
   // The request may be filtered by `start`/`end` component(s) of individual
