@@ -12,12 +12,14 @@ package frequenz.api.microgrid;
 
 import "frequenz/api/microgrid/battery.proto";
 import "frequenz/api/microgrid/ev_charger.proto";
+import "frequenz/api/microgrid/fuse.proto";
 import "frequenz/api/microgrid/grid.proto";
 import "frequenz/api/microgrid/inverter.proto";
 import "frequenz/api/microgrid/meter.proto";
 import "frequenz/api/microgrid/precharger.proto";
 import "frequenz/api/microgrid/relay.proto";
 import "frequenz/api/microgrid/sensor.proto";
+import "frequenz/api/microgrid/voltage_transformer.proto";
 
 import "frequenz/api/common/v1/components.proto";
 import "frequenz/api/common/v1/location.proto";
@@ -445,6 +447,8 @@ message Component {
     meter.Metadata meter = 14;
     ev_charger.Metadata ev_charger = 15;
     sensor.Metadata sensor = 16;
+    fuse.Metadata fuse = 17;
+    voltage_transformer.Metadata voltage_transformer = 18;
   }
 }
 
