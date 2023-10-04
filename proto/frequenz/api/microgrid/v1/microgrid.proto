@@ -182,7 +182,7 @@ service Microgrid {
   // <-------|============|------------------|============|--------->
   //                exclusion.lower    exclusion.upper
   // ```
-  // ---- values here are disallowed and wil be rejected
+  // ---- values here are disallowed and will be rejected
   // ==== vales here are allowed and will be accepted
   rpc AddComponentExclusionBounds(AddComponentExclusionBoundsRequest)
     returns (AddComponentExclusionBoundsResponse);
@@ -220,7 +220,7 @@ service Microgrid {
   // <-------|============|------------------|============|--------->
   //                exclusion.lower    exclusion.upper
   // ```
-  // ---- values here are disallowed and wil be rejected
+  // ---- values here are disallowed and will be rejected
   // ==== vales here are allowed and will be accepted
   rpc AddComponentInclusionBounds(AddComponentInclusionBoundsRequest)
     returns (AddComponentInclusionBoundsResponse);
