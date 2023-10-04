@@ -14,22 +14,16 @@ import "frequenz/api/microgrid/common.proto";
 
 import "frequenz/api/common/v1/sensors.proto";
 
-// The sensor metadata.
-message Metadata {
-  // The sensor type.
-  frequenz.api.common.v1.sensors.SensorCategory type = 1;
-}
-
 // Enumerated sensor states.
-enum ComponentState {
+enum SensorState {
   // Unspecified state.
-  COMPONENT_STATE_UNSPECIFIED = 0;
+  SENSOR_STATE_UNSPECIFIED = 0;
 
   // The sensor is behaving as expected.
-  COMPONENT_STATE_OK = 1;
+  SENSOR_STATE_OK = 1;
 
   // The sensor is in an error state.
-  COMPONENT_STATE_ERROR = 2;
+  SENSOR_STATE_ERROR = 2;
 }
 
 // Enumerated sensor error codes.
@@ -41,7 +35,7 @@ enum ErrorCode {
 // State message.
 message State {
   // The state of the overall component.
-  ComponentState component_state = 1;
+  SensorState sensor_state = 1;
 }
 
 // Error message.

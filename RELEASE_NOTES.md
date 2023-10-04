@@ -51,6 +51,9 @@
 - Added fuse component. Fuses are used to protect electrical components from
   overcurrent.
 
+- Introduced a dedicated RPC method for listing sensors in the microgrid,
+  separating them from the "component" category.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
