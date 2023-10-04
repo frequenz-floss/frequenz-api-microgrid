@@ -54,6 +54,9 @@
 - Introduced a dedicated RPC method for listing sensors in the microgrid,
   separating them from the "component" category.
 
+- The RPC parameters have been renamed to be more consistent with the RPC names,
+  and with each other.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
