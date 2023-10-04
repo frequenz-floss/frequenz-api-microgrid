@@ -855,13 +855,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#metadata" class="md-nav__link">
-    Metadata
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#properties" class="md-nav__link">
     Properties
   </a>
@@ -890,15 +883,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#componentstate" class="md-nav__link">
-    ComponentState
+  <a href="#errorcode" class="md-nav__link">
+    ErrorCode
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#errorcode" class="md-nav__link">
-    ErrorCode
+  <a href="#sensorstate" class="md-nav__link">
+    SensorState
   </a>
   
 </li>
@@ -1716,13 +1709,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#metadata" class="md-nav__link">
-    Metadata
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#properties" class="md-nav__link">
     Properties
   </a>
@@ -1751,15 +1737,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#componentstate" class="md-nav__link">
-    ComponentState
+  <a href="#errorcode" class="md-nav__link">
+    ErrorCode
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#errorcode" class="md-nav__link">
-    ErrorCode
+  <a href="#sensorstate" class="md-nav__link">
+    SensorState
   </a>
   
 </li>
@@ -1803,7 +1789,6 @@
 <ul>
 <li><a href="#frequenz-api-microgrid-sensor-Data">Data</a></li>
 <li><a href="#frequenz-api-microgrid-sensor-Error">Error</a></li>
-<li><a href="#frequenz-api-microgrid-sensor-Metadata">Metadata</a></li>
 <li><a href="#frequenz-api-microgrid-sensor-Properties">Properties</a></li>
 <li><a href="#frequenz-api-microgrid-sensor-Sensor">Sensor</a></li>
 <li><a href="#frequenz-api-microgrid-sensor-SensorData">SensorData</a></li>
@@ -1811,9 +1796,9 @@
 <p><a href="#frequenz-api-microgrid-sensor-State">State</a></p>
 </li>
 <li>
-<p><a href="#frequenz-api-microgrid-sensor-ComponentState">ComponentState</a></p>
+<p><a href="#frequenz-api-microgrid-sensor-ErrorCode">ErrorCode</a></p>
 </li>
-<li><a href="#frequenz-api-microgrid-sensor-ErrorCode">ErrorCode</a></li>
+<li><a href="#frequenz-api-microgrid-sensor-SensorState">SensorState</a></li>
 </ul>
 </li>
 <li>
@@ -1875,27 +1860,6 @@
 <td><a href="#string">string</a></td>
 <td></td>
 <td>The error message.</td>
-</tr>
-</tbody>
-</table>
-<p><a name="frequenz-api-microgrid-sensor-Metadata"></a></p>
-<h3 id="metadata">Metadata<a class="headerlink" href="#metadata" title="Permanent link">¤</a></h3>
-<p>The sensor metadata.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Label</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>type</td>
-<td><a href="#frequenz-api-common-v1-sensors-SensorCategory">frequenz.api.common.v1.sensors.SensorCategory</a></td>
-<td></td>
-<td>The sensor type.</td>
 </tr>
 </tbody>
 </table>
@@ -2000,39 +1964,10 @@
 </thead>
 <tbody>
 <tr>
-<td>component_state</td>
-<td><a href="#frequenz-api-microgrid-sensor-ComponentState">ComponentState</a></td>
+<td>sensor_state</td>
+<td><a href="#frequenz-api-microgrid-sensor-SensorState">SensorState</a></td>
 <td></td>
 <td>The state of the overall component.</td>
-</tr>
-</tbody>
-</table>
-<p><a name="frequenz-api-microgrid-sensor-ComponentState"></a></p>
-<h3 id="componentstate">ComponentState<a class="headerlink" href="#componentstate" title="Permanent link">¤</a></h3>
-<p>Enumerated sensor states.</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Number</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>COMPONENT_STATE_UNSPECIFIED</td>
-<td>0</td>
-<td>Unspecified state.</td>
-</tr>
-<tr>
-<td>COMPONENT_STATE_OK</td>
-<td>1</td>
-<td>The sensor is behaving as expected.</td>
-</tr>
-<tr>
-<td>COMPONENT_STATE_ERROR</td>
-<td>2</td>
-<td>The sensor is in an error state.</td>
 </tr>
 </tbody>
 </table>
@@ -2052,6 +1987,35 @@
 <td>ERROR_CODE_UNSPECIFIED</td>
 <td>0</td>
 <td>Unspecified.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-microgrid-sensor-SensorState"></a></p>
+<h3 id="sensorstate">SensorState<a class="headerlink" href="#sensorstate" title="Permanent link">¤</a></h3>
+<p>Enumerated sensor states.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Number</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SENSOR_STATE_UNSPECIFIED</td>
+<td>0</td>
+<td>Unspecified state.</td>
+</tr>
+<tr>
+<td>SENSOR_STATE_OK</td>
+<td>1</td>
+<td>The sensor is behaving as expected.</td>
+</tr>
+<tr>
+<td>SENSOR_STATE_ERROR</td>
+<td>2</td>
+<td>The sensor is in an error state.</td>
 </tr>
 </tbody>
 </table>
