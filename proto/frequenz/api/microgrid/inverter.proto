@@ -100,11 +100,13 @@ message Error {
 message Data {
   // DC metrics for the inverter-battery linkage.
   // This is applicable to `BATTERY` and `HYBRID` inverters only.
-  frequenz.api.common.v1.metrics.electrical.DC dc_battery = 4;
+  // The inverter may have multiple batteries connected to it.
+  repeated frequenz.api.common.v1.metrics.electrical.DC dc_batteries = 4;
 
   // DC metrics for the inverter-PV linkage.
   // This is applicable to `SOLAR` and `HYBRID` inverters only.
-  frequenz.api.common.v1.metrics.electrical.DC dc_solar = 5;
+  // The inverter may have multiple PV arrays connected to it.
+  repeated frequenz.api.common.v1.metrics.electrical.DC dc_pv_arrays = 5;
 
   // AC metrics of the inverter.
   frequenz.api.common.v1.metrics.electrical.AC ac = 2;
