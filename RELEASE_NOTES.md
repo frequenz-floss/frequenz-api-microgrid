@@ -27,6 +27,8 @@
   `Stop`                -> `StopComponent`
   `ErrorAck`            -> `AckComponentError`
 
+- The following gRPC method have been removed: `HotStandby`
+
 - Added support for a new Component category: Relays. These are electromagnetic
   switches that control circuit breakers in the microgrid, e.g., to connect or
   disconnect an inverter from the grid. Relays support the following methods:

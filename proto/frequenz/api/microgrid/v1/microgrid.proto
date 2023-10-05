@@ -289,27 +289,6 @@ service Microgrid {
     };
   }
 
-  // Sets the given component into a hot-standby state, from which it can return
-  // into an operational state within at most 5 seconds.
-  //
-  // Performs the following sequence actions for the following component
-  // categories:
-  //
-  // * Inverter: Checks if AC and DC relays are closed, then
-  //  * sets power to 0
-  //
-  // If any of the checks mentioned above fails, then the method call returns an
-  // error.
-  //
-  // If any of the above mentioned actions for a given component has already
-  // been performed, then this method call effectively skips that action.
-  rpc HotStandbyComponent(HotStandbyComponentRequest)
-    returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      get : "/v1/components/{id}/hotStandby"
-    };
-  }
-
   // Sets the given component into a standby state, from which it can take a
   // few minutes to return to an operational state. A transition to an
   // operational state can be triggered by calling the `StartComponent` RPC, or
@@ -615,12 +594,6 @@ message SetComponentPowerReactiveRequest {
 // Request parameters for the RPC `StartComponent`.
 message StartComponentRequest {
   // The component ID to start.
-  uint64 component_id = 1;
-}
-
-// Request parameters for the RPC `HotStandbyComponent`.
-message HotStandbyComponentRequest {
-  // The component ID to set to hot-standby.
   uint64 component_id = 1;
 }
 
