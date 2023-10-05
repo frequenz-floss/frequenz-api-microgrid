@@ -130,7 +130,7 @@ service Microgrid {
   }
 
   // Returns a stream containing data from a sensor with a given ID.
-  rpc SubscribeSensorData(SubscribeSensorDataRequest)
+  rpc ReceiveSensorDataStream(ReceiveSensorDataStreamRequest)
     returns (stream SensorData) {
     option (google.api.http) = {
       get : "/v1/sensors/{id}/data"
@@ -504,8 +504,8 @@ message ComponentData {
   }
 }
 
-// Request parameters for the RPC `SubscribeSensorData`.
-message SubscribeSensorDataRequest {
+// Request parameters for the RPC `ReceiveSensorDataStream`.
+message ReceiveSensorDataStreamRequest {
   // The sensor ID to subscribe to.
   uint64 sensor_id = 1;
 }
