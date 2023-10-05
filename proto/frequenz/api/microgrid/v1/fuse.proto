@@ -11,7 +11,7 @@
 
 syntax = "proto3";
 
-package frequenz.api.microgrid.fuse;
+package frequenz.api.microgrid.v1.fuse;
 
 // The fuse component represents a fuse in the microgrid. It is used to protect
 // components from overcurrents.

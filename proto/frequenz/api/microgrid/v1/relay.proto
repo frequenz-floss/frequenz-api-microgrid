@@ -11,9 +11,9 @@
 
 syntax = "proto3";
 
-package frequenz.api.microgrid.relay;
+package frequenz.api.microgrid.v1.relay;
 
-import "frequenz/api/microgrid/common.proto";
+import "frequenz/api/microgrid/v1/common.proto";
 
 
 // Enumerated relay states.

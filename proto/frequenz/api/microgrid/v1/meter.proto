@@ -8,9 +8,9 @@
 
 syntax = "proto3";
 
-package frequenz.api.microgrid.meter;
+package frequenz.api.microgrid.v1.meter;
 
-import "frequenz/api/microgrid/common.proto";
+import "frequenz/api/microgrid/v1/common.proto";
 
 import "frequenz/api/common/v1/metrics/electrical.proto";
 

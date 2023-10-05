@@ -8,7 +8,7 @@
 
 syntax = "proto3";
 
-package frequenz.api.microgrid.grid;
+package frequenz.api.microgrid.v1.grid;
 
 // The grid connection point metadata.
 message Metadata {

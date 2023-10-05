@@ -57,6 +57,10 @@
 - The RPC parameters have been renamed to be more consistent with the RPC names,
   and with each other.
 
+- The package names have been changed from `frequenz.api.microgrid.<package>` to
+  `frequenz.api.microgrid.v1.<package>`. `v1` is the API's major version, and
+  will be incremented for breaking changes.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->

@@ -14,7 +14,7 @@
 
 syntax = "proto3";
 
-package frequenz.api.microgrid.voltage_transformer;
+package frequenz.api.microgrid.v1.voltage_transformer;
 
 // A voltage transformer.
 // Voltage transformers are used to step up or step down the voltage, keeping
