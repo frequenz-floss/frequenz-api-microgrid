@@ -23,7 +23,7 @@
   `SetPowerReactive`    -> `SetComponentPowerReactive`
   `Start`               -> `StartComponent`
   `HotStandby`          -> `HotStandbyComponent`
-  `ColdStandby`         -> `ColdStandbyComponent`
+  `ColdStandby`         -> `PutComponentInStandby`
   `Stop`                -> `StopComponent`
   `ErrorAck`            -> `AckComponentError`
 

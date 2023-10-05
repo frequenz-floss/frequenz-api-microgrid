@@ -310,8 +310,10 @@ service Microgrid {
     };
   }
 
-  // Sets the given component into a cold-standby state, from which it can
-  // return into an operational state within at most 2 minutes.
+  // Sets the given component into a standby state, from which it can take a
+  // few minutes to return to an operational state. A transition to an
+  // operational state can be triggered by calling the `StartComponent` RPC, or
+  // the `SetComponentPowerActive` RPC.
   //
   // Performs the following sequence actions for the following component
   // categories:
@@ -325,10 +327,10 @@ service Microgrid {
   //
   // If any of the above mentioned actions for a given component has already
   // been performed, then this method call efffectively skips that action.
-  rpc ColdStandbyComponent(ColdStandbyComponentRequest)
+  rpc PutComponentInStandby(PutComponentInStandbyRequest)
     returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{id}/coldStandby"
+      get : "/v1/components/{id}/standby"
     };
   }
 
@@ -622,9 +624,9 @@ message HotStandbyComponentRequest {
   uint64 component_id = 1;
 }
 
-// Request parameters for the RPC `ColdStandbyComponent`.
-message ColdStandbyComponentRequest {
-  // The component ID to set to cold-standby.
+// Request parameters for the RPC `PutComponentInStandby`.
+message PutComponentInStandbyRequest {
+  // The component ID to set to standby.
   uint64 component_id = 1;
 }
 
