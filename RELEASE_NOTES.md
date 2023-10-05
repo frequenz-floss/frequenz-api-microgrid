@@ -16,7 +16,7 @@
   message from the common API also has a `country_code` member.
 
 - The following gRPC methods have been renamed:
-  `StreamComponentData` -> `SubscribeComponentData`
+  `StreamComponentData` -> `ReceiveComponentDataStream`
   `AddExclusionBounds`  -> `AddComponentExclusionBounds`
   `AddInclusionBounds`  -> `AddComponentInclusionBounds`
   `SetPowerActive`      -> `SetComponentPowerActive`

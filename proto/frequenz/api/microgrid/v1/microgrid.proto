@@ -122,7 +122,7 @@ service Microgrid {
   }
 
   // Returns a stream containing data from a component with a given ID.
-  rpc SubscribeComponentData(SubscribeComponentDataRequest)
+  rpc ReceiveComponentDataStream(ReceiveComponentDataStreamRequest)
     returns (stream ComponentData) {
     option (google.api.http) = {
       get : "/v1/components/{id}/data"
@@ -477,8 +477,8 @@ message ListConnectionsResponse {
   repeated Connection connections = 1;
 };
 
-// Request parameters for the RPC `SubscribeComponentData`.
-message SubscribeComponentDataRequest {
+// Request parameters for the RPC `ReceiveComponentDataStream`.
+message ReceiveComponentDataStreamRequest {
   // The component ID to subscribe to.
   uint64 component_id = 1;
 }
