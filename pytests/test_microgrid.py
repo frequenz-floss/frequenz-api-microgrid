@@ -8,16 +8,17 @@
 
 def test_package_import() -> None:
     """Test if the microgrid package can be imported."""
-    from frequenz.api import microgrid
+    from frequenz.api.microgrid import v1
 
-    assert microgrid is not None
+    assert v1 is not None
 
 
 def test_module_import() -> None:
     """Test if the microgrid_pb2 package can be imported."""
-    from frequenz.api.microgrid import microgrid_pb2
+    from frequenz.api.microgrid.v1 import microgrid_pb2
 
     assert microgrid_pb2 is not None
-    from frequenz.api.microgrid import microgrid_pb2_grpc
+
+    from frequenz.api.microgrid.v1 import microgrid_pb2_grpc
 
     assert microgrid_pb2_grpc is not None

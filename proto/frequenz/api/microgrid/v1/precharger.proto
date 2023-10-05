@@ -15,9 +15,9 @@
 
 syntax = "proto3";
 
-package frequenz.api.microgrid.precharger;
+package frequenz.api.microgrid.v1.precharger;
 
-import "frequenz/api/microgrid/common.proto";
+import "frequenz/api/microgrid/v1/common.proto";
 
 
 // Enumerated meter states.
