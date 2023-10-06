@@ -33,10 +33,10 @@ import "google/protobuf/wrappers.proto";
 
 // The Frequenz Microgrid API
 service Microgrid {
-  /// Returns the microgrid metadata
-  /// The metadata consists of information that describes the overall
-  /// microgrid, as opposed to its electrical components or sensors,
-  /// e.g., the microgrid ID, location.
+  // Returns the microgrid metadata
+  // The metadata consists of information that describes the overall
+  // microgrid, as opposed to its electrical components or sensors,
+  // e.g., the microgrid ID, location.
   rpc GetMicrogridMetadata(google.protobuf.Empty) returns (MicrogridMetadata) {
     option (google.api.http) = {
       get : "/v1/metadata"
