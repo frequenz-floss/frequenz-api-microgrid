@@ -1,4 +1,4 @@
-// Contains the definitions for Microgrid gRPC API.
+// Frequenz Microgrid API
 //
 // Copyright:
 // Copyright 2022 Frequenz Energy-as-a-Service GmbH
@@ -31,11 +31,12 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
+// The Frequenz Microgrid API
 service Microgrid {
-  /// Returns the microgrid metadata
-  /// The metadata consists of information that describes the overall
-  /// microgrid, as opposed to its electrical components or sensors,
-  /// e.g., the microgrid ID, location.
+  // Returns the microgrid metadata
+  // The metadata consists of information that describes the overall
+  // microgrid, as opposed to its electrical components or sensors,
+  // e.g., the microgrid ID, location.
   rpc GetMicrogridMetadata(google.protobuf.Empty) returns (MicrogridMetadata) {
     option (google.api.http) = {
       get : "/v1/metadata"
@@ -181,7 +182,7 @@ service Microgrid {
   // <-------|============|------------------|============|--------->
   //                exclusion.lower    exclusion.upper
   // ```
-  // ---- values here are disallowed and wil be rejected
+  // ---- values here are disallowed and will be rejected
   // ==== vales here are allowed and will be accepted
   rpc AddComponentExclusionBounds(AddComponentExclusionBoundsRequest)
     returns (AddComponentExclusionBoundsResponse);
@@ -219,7 +220,7 @@ service Microgrid {
   // <-------|============|------------------|============|--------->
   //                exclusion.lower    exclusion.upper
   // ```
-  // ---- values here are disallowed and wil be rejected
+  // ---- values here are disallowed and will be rejected
   // ==== vales here are allowed and will be accepted
   rpc AddComponentInclusionBounds(AddComponentInclusionBoundsRequest)
     returns (AddComponentInclusionBoundsResponse);
@@ -487,7 +488,7 @@ message ReceiveComponentDataStreamRequest {
 // Components belonging to all categories and types can be represented using
 // this message.
 message ComponentData {
-  // The timestamp of when the data was measured.
+  // The UTC timestamp of when the data was measured.
   google.protobuf.Timestamp ts = 1;
 
   // The component ID.
@@ -512,7 +513,7 @@ message ReceiveSensorDataStreamRequest {
 
 // A data sample from a sensor in the microgrid.
 message SensorData {
-  // The timestamp of when the data was measured.
+  // The UTC timestamp of when the data was measured.
   google.protobuf.Timestamp ts = 1;
 
   // The sensor ID.
