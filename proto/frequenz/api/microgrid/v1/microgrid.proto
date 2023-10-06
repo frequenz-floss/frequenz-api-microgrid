@@ -122,7 +122,7 @@ service Microgrid {
   }
 
   // Returns a stream containing data from a component with a given ID.
-  rpc SubscribeComponentData(SubscribeComponentDataRequest)
+  rpc ReceiveComponentDataStream(ReceiveComponentDataStreamRequest)
     returns (stream ComponentData) {
     option (google.api.http) = {
       get : "/v1/components/{id}/data"
@@ -130,7 +130,7 @@ service Microgrid {
   }
 
   // Returns a stream containing data from a sensor with a given ID.
-  rpc SubscribeSensorData(SubscribeSensorDataRequest)
+  rpc ReceiveSensorDataStream(ReceiveSensorDataStreamRequest)
     returns (stream SensorData) {
     option (google.api.http) = {
       get : "/v1/sensors/{id}/data"
@@ -289,29 +289,10 @@ service Microgrid {
     };
   }
 
-  // Sets the given component into a hot-standby state, from which it can return
-  // into an operational state within at most 5 seconds.
-  //
-  // Performs the following sequence actions for the following component
-  // categories:
-  //
-  // * Inverter: Checks if AC and DC relays are closed, then
-  //  * sets power to 0
-  //
-  // If any of the checks mentioned above fails, then the method call returns an
-  // error.
-  //
-  // If any of the above mentioned actions for a given component has already
-  // been performed, then this method call effectively skips that action.
-  rpc HotStandbyComponent(HotStandbyComponentRequest)
-    returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      get : "/v1/components/{id}/hotStandby"
-    };
-  }
-
-  // Sets the given component into a cold-standby state, from which it can
-  // return into an operational state within at most 2 minutes.
+  // Sets the given component into a standby state, from which it can take a
+  // few minutes to return to an operational state. A transition to an
+  // operational state can be triggered by calling the `StartComponent` RPC, or
+  // the `SetComponentPowerActive` RPC.
   //
   // Performs the following sequence actions for the following component
   // categories:
@@ -325,10 +306,10 @@ service Microgrid {
   //
   // If any of the above mentioned actions for a given component has already
   // been performed, then this method call efffectively skips that action.
-  rpc ColdStandbyComponent(ColdStandbyComponentRequest)
+  rpc PutComponentInStandby(PutComponentInStandbyRequest)
     returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{id}/coldStandby"
+      get : "/v1/components/{id}/standby"
     };
   }
 
@@ -496,8 +477,8 @@ message ListConnectionsResponse {
   repeated Connection connections = 1;
 };
 
-// Request parameters for the RPC `SubscribeComponentData`.
-message SubscribeComponentDataRequest {
+// Request parameters for the RPC `ReceiveComponentDataStream`.
+message ReceiveComponentDataStreamRequest {
   // The component ID to subscribe to.
   uint64 component_id = 1;
 }
@@ -523,8 +504,8 @@ message ComponentData {
   }
 }
 
-// Request parameters for the RPC `SubscribeSensorData`.
-message SubscribeSensorDataRequest {
+// Request parameters for the RPC `ReceiveSensorDataStream`.
+message ReceiveSensorDataStreamRequest {
   // The sensor ID to subscribe to.
   uint64 sensor_id = 1;
 }
@@ -616,15 +597,9 @@ message StartComponentRequest {
   uint64 component_id = 1;
 }
 
-// Request parameters for the RPC `HotStandbyComponent`.
-message HotStandbyComponentRequest {
-  // The component ID to set to hot-standby.
-  uint64 component_id = 1;
-}
-
-// Request parameters for the RPC `ColdStandbyComponent`.
-message ColdStandbyComponentRequest {
-  // The component ID to set to cold-standby.
+// Request parameters for the RPC `PutComponentInStandby`.
+message PutComponentInStandbyRequest {
+  // The component ID to set to standby.
   uint64 component_id = 1;
 }
 

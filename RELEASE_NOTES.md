@@ -16,16 +16,18 @@
   message from the common API also has a `country_code` member.
 
 - The following gRPC methods have been renamed:
-  `StreamComponentData` -> `SubscribeComponentData`
+  `StreamComponentData` -> `ReceiveComponentDataStream`
   `AddExclusionBounds`  -> `AddComponentExclusionBounds`
   `AddInclusionBounds`  -> `AddComponentInclusionBounds`
   `SetPowerActive`      -> `SetComponentPowerActive`
   `SetPowerReactive`    -> `SetComponentPowerReactive`
   `Start`               -> `StartComponent`
   `HotStandby`          -> `HotStandbyComponent`
-  `ColdStandby`         -> `ColdStandbyComponent`
+  `ColdStandby`         -> `PutComponentInStandby`
   `Stop`                -> `StopComponent`
   `ErrorAck`            -> `AckComponentError`
+
+- The following gRPC method have been removed: `HotStandby`
 
 - Added support for a new Component category: Relays. These are electromagnetic
   switches that control circuit breakers in the microgrid, e.g., to connect or
