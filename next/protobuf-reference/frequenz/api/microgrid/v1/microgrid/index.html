@@ -2425,7 +2425,7 @@ this message.</p>
 <td>ts</td>
 <td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
 <td></td>
-<td>The timestamp of when the data was measured.</td>
+<td>The UTC timestamp of when the data was measured.</td>
 </tr>
 <tr>
 <td>id</td>
@@ -2804,7 +2804,7 @@ environment.</p>
 <td>ts</td>
 <td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
 <td></td>
-<td>The timestamp of when the data was measured.</td>
+<td>The UTC timestamp of when the data was measured.</td>
 </tr>
 <tr>
 <td>id</td>
@@ -2968,6 +2968,7 @@ environment.</p>
 </table>
 <p><a name="frequenz-api-microgrid-v1-Microgrid"></a></p>
 <h3 id="microgrid">Microgrid<a class="headerlink" href="#microgrid" title="Permanent link">¤</a></h3>
+<p>The Frequenz Microgrid API</p>
 <table>
 <thead>
 <tr>
@@ -2982,7 +2983,7 @@ environment.</p>
 <td>GetMicrogridMetadata</td>
 <td><a href="#google-protobuf-Empty">.google.protobuf.Empty</a></td>
 <td><a href="#frequenz-api-microgrid-v1-MicrogridMetadata">MicrogridMetadata</a></td>
-<td>Returns the microgrid metadata / The metadata consists of information that describes the overall / microgrid, as opposed to its electrical components or sensors, / e.g., the microgrid ID, location.</td>
+<td>Returns the microgrid metadata The metadata consists of information that describes the overall microgrid, as opposed to its electrical components or sensors, e.g., the microgrid ID, location.</td>
 </tr>
 <tr>
 <td>ListComponents</td>
@@ -3010,13 +3011,13 @@ environment.</p>
 <p>If multiple exclusion bounds have been provided bor a metric, then the aggregated lower and upper exclusion bounds are calculated as follows: lower: the minimum of all lower exclusion bounds upper: the maximum of all upper exclusion bounds</p>
 <p>It is important to note that these bounds work together with <code>system_inclusion_bounds</code>.</p>
 <p>E.g., for the system to accept a charge command, clients need to request power values within the bounds <code>[system_inclusion_bounds.lower, system_exclusion_bounds.lower]</code>. This means that clients can only request charge commands with values that are within the <code>system_inclusion_bounds</code>, but not within <code>system_exclusion_bounds</code>. Similarly, for the system to accept a discharge command, clients need to request power values within the bounds <code>[system_exclusion_bounds.upper, system_inclusion_bounds.upper]</code>.</p>
-<p>The following diagram illustrates the relationship between the bounds. <code>inclusion.lower inclusion.upper &amp;lt;-------|============|------------------|============|---------&amp;gt; exclusion.lower exclusion.upper</code> ---- values here are disallowed and wil be rejected ==== vales here are allowed and will be accepted |
+<p>The following diagram illustrates the relationship between the bounds. <code>inclusion.lower inclusion.upper &amp;lt;-------|============|------------------|============|---------&amp;gt; exclusion.lower exclusion.upper</code> ---- values here are disallowed and will be rejected ==== vales here are allowed and will be accepted |
 | AddComponentInclusionBounds | <a href="#frequenz-api-microgrid-v1-AddComponentInclusionBoundsRequest">AddComponentInclusionBoundsRequest</a> | <a href="#frequenz-api-microgrid-v1-AddComponentInclusionBoundsResponse">AddComponentInclusionBoundsResponse</a> | Adds inclusion bounds for a given metric of a given component, and returns the UTC timestamp until which the given inclusion bounds will stay in effect.</p>
 <p>Inclusion bounds refer to the range of values that are allowed for the metric. If these bounds for a metric are [<code>lower</code>, <code>upper</code>], then this metric&#39;s <code>value</code> needs to comply with the constraint <code>lower &amp;lt;= value &amp;lt;= upper</code>.</p>
 <p>If multiple inclusion bounds have been provided bor a metric, then the aggregated lower and upper inclusion bounds are calculated as follows: lower: the maximum of all lower inclusion bounds upper: the minimum of all upper inclusion bounds</p>
 <p>It is important to note that these bounds work together with <code>system_exclusion_bounds</code>.</p>
 <p>E.g., for the system to accept a charge command, clients need to request power values within the bounds <code>[system_inclusion_bounds.lower, system_exclusion_bounds.lower]</code>. This means that clients can only request charge commands with values that are within the <code>system_inclusion_bounds</code>, but not within <code>system_exclusion_bounds</code>. Similarly, for the system to accept a discharge command, clients need to request power values within the bounds <code>[system_exclusion_bounds.upper, system_inclusion_bounds.upper]</code>.</p>
-<p>The following diagram illustrates the relationship between the bounds. <code>inclusion.lower inclusion.upper &amp;lt;-------|============|------------------|============|---------&amp;gt; exclusion.lower exclusion.upper</code> ---- values here are disallowed and wil be rejected ==== vales here are allowed and will be accepted |
+<p>The following diagram illustrates the relationship between the bounds. <code>inclusion.lower inclusion.upper &amp;lt;-------|============|------------------|============|---------&amp;gt; exclusion.lower exclusion.upper</code> ---- values here are disallowed and will be rejected ==== vales here are allowed and will be accepted |
 | SetComponentPowerActive | <a href="#frequenz-api-microgrid-v1-SetComponentPowerActiveRequest">SetComponentPowerActiveRequest</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the active power output of a component with a given ID, provided the component supports it.</p>
 <p>Note that the target component may have a resolution of more than 1 W. E.g., an inverter may have a resolution of 88 W. In such cases, the magnitude of power will be floored to the nearest multiple of the resolution.</p>
 <p>Performs the following sequence actions for the following component categories:</p>
