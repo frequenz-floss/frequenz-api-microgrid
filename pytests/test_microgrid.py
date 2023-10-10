@@ -3,22 +3,23 @@
 
 """Tests for the frequenz.api.microgrid package."""
 
-# pylint: disable=import-outside-toplevel
-
 
 def test_package_import() -> None:
-    """Test if the microgrid package can be imported."""
+    """Test that the package can be imported."""
+    # pylint: disable=import-outside-toplevel
     from frequenz.api.microgrid import v1
 
     assert v1 is not None
 
 
-def test_module_import() -> None:
-    """Test if the microgrid_pb2 package can be imported."""
+def test_module_import_components() -> None:
+    """Test that the modules can be imported."""
+    # pylint: disable=import-outside-toplevel
     from frequenz.api.microgrid.v1 import microgrid_pb2
 
     assert microgrid_pb2 is not None
 
+    # pylint: disable=import-outside-toplevel
     from frequenz.api.microgrid.v1 import microgrid_pb2_grpc
 
     assert microgrid_pb2_grpc is not None

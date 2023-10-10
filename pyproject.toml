@@ -5,7 +5,7 @@
 requires = [
   "setuptools == 68.1.0",
   "setuptools_scm[toml] == 7.1.0",
-  "frequenz-repo-config[api] == 0.5.2",
+  "frequenz-repo-config[api] == 0.6.2",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -37,10 +37,12 @@ name = "Frequenz Energy-as-a-Service GmbH"
 email = "floss@frequenz.com"
 
 [project.optional-dependencies]
-dev-docstrings = [
+dev-flake8 = [
+  "flake8 == 6.1.0",
+  "flake8-docstrings == 1.7.0",
+  "flake8-pyproject == 1.2.3",  # For reading the flake8 config from pyproject.toml
+  "pydoclint == 0.3.1",
   "pydocstyle == 6.3.0",
-  "darglint == 1.8.1",
-  "tomli == 2.0.1",      # Needed by pydocstyle to read pyproject.toml
 ]
 dev-formatting = ["black == 23.9.1", "isort == 5.12.0"]
 dev-mkdocs = [
@@ -48,16 +50,19 @@ dev-mkdocs = [
   "mkdocs-gen-files == 0.5.0",
   "mkdocs-literate-nav == 0.6.1",
   "mkdocs-material == 9.4.4",
-  "mkdocs-section-index == 0.3.8",
   "mkdocstrings[python] == 0.23.0",
-  "frequenz-repo-config[api] == 0.5.2",
+  "frequenz-repo-config[api] == 0.6.2",
 ]
 dev-mypy = [
   "mypy == 1.5.1",
+  "grpc-stubs == 1.53.0.2",
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
-dev-noxfile = ["nox == 2023.4.22", "frequenz-repo-config[api] == 0.5.2"]
+dev-noxfile = [
+  "nox == 2023.4.22",
+  "frequenz-repo-config[api] == 0.6.2",
+]
 dev-pylint = [
   "pylint == 2.17.7",
   # For checking the noxfile, docs/ script, and tests
@@ -65,10 +70,10 @@ dev-pylint = [
 ]
 dev-pytest = [
   "pytest == 7.4.3",
-  "frequenz-repo-config[extra-lint-examples] == 0.5.2",
+  "frequenz-repo-config[extra-lint-examples] == 0.6.2",
 ]
 dev = [
-  "frequenz-api-microgrid[dev-mkdocs,dev-docstrings,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",
+  "frequenz-api-microgrid[dev-mkdocs,dev-flake8,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",
 ]
 
 [project.urls]
@@ -86,6 +91,23 @@ profile = "black"
 line_length = 88
 src_paths = ["benchmarks", "examples", "src", "tests"]
 
+[tool.flake8]
+# We give some flexibility to go over 88, there are cases like long URLs or
+# code in documenation that have extra indentation. Black will still take care
+# of making everything that can be 88 wide, 88 wide.
+max-line-length = 100
+extend-ignore = [
+  "E203", # Whitespace before ':' (conflicts with black)
+  "W503", # Line break before binary operator (conflicts with black)
+]
+# pydoclint options
+style = "google"
+check-return-types = false
+check-yield-types = false
+arg-type-hints-in-docstring = false
+arg-type-hints-in-signature = true
+allow-init-docstring = true
+
 [tool.pylint.similarities]
 ignore-comments = ['yes']
 ignore-docstrings = ['yes']
@@ -101,10 +123,26 @@ disable = [
   # pylint's unsubscriptable check is buggy and is not needed because
   # it is a type-check, for which we already have mypy.
   "unsubscriptable-object",
+  # Checked by flake8
+  "line-too-long",
+  "unused-variable",
+  "unnecessary-lambda-assignment",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["pytests"]
+
+[tool.mypy]
+explicit_package_bases = true
+namespace_packages = true
+# This option disables mypy cache, and it is sometimes useful to enable it if
+# you are getting weird intermittent error, or error in the CI but not locally
+# (or vice versa). In particular errors saying that type: ignore is not
+# used but getting the original ignored error when removing the type: ignore.
+# See for example: https://github.com/python/mypy/issues/2960
+#no_incremental = true
+packages = ["frequenz.api.microgrid"]
+strict = true
 
 [tool.setuptools.package-dir]
 "" = "py"

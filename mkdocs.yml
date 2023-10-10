@@ -24,6 +24,7 @@ theme:
   features:
     - content.code.annotate
     - content.code.copy
+    - navigation.indexes
     - navigation.instant
     - navigation.tabs
     - navigation.top
@@ -109,7 +110,6 @@ plugins:
             - https://grpc.github.io/grpc/python/objects.inv
             - https://typing-extensions.readthedocs.io/en/stable/objects.inv
   - search
-  - section-index
 
 # Preview controls
 watch:
