@@ -12,8 +12,8 @@ def test_package_import() -> None:
     assert v1 is not None
 
 
-def test_module_import_components() -> None:
-    """Test that the modules can be imported."""
+def test_package_import_microgrid() -> None:
+    """Test that the package can be imported."""
     # pylint: disable=import-outside-toplevel
     from frequenz.api.microgrid.v1 import microgrid_pb2
 

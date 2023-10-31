@@ -10,21 +10,12 @@ syntax = "proto3";
 
 package frequenz.api.microgrid.v1;
 
-import "frequenz/api/microgrid/v1/battery.proto";
-import "frequenz/api/microgrid/v1/ev_charger.proto";
-import "frequenz/api/microgrid/v1/fuse.proto";
-import "frequenz/api/microgrid/v1/grid.proto";
-import "frequenz/api/microgrid/v1/inverter.proto";
-import "frequenz/api/microgrid/v1/meter.proto";
-import "frequenz/api/microgrid/v1/precharger.proto";
-import "frequenz/api/microgrid/v1/relay.proto";
-import "frequenz/api/microgrid/v1/sensor.proto";
-import "frequenz/api/microgrid/v1/voltage_transformer.proto";
-
-import "frequenz/api/common/v1/components.proto";
 import "frequenz/api/common/v1/location.proto";
-import "frequenz/api/common/v1/metrics.proto";
-import "frequenz/api/common/v1/sensors.proto";
+import "frequenz/api/common/v1/metrics/bounds.proto";
+import "frequenz/api/common/v1/metrics/metric_sample.proto";
+import "frequenz/api/common/v1/microgrid/components/components.proto";
+import "frequenz/api/common/v1/microgrid/microgrid.proto";
+import "frequenz/api/common/v1/microgrid/sensors/sensors.proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -37,7 +28,8 @@ service Microgrid {
   // The metadata consists of information that describes the overall
   // microgrid, as opposed to its electrical components or sensors,
   // e.g., the microgrid ID, location.
-  rpc GetMicrogridMetadata(google.protobuf.Empty) returns (MicrogridMetadata) {
+  rpc GetMicrogridMetadata(google.protobuf.Empty)
+    returns (GetMicrogridMetadataResponse) {
     option (google.api.http) = {
       get : "/v1/metadata"
     };
@@ -124,7 +116,7 @@ service Microgrid {
 
   // Returns a stream containing data from a component with a given ID.
   rpc ReceiveComponentDataStream(ReceiveComponentDataStreamRequest)
-    returns (stream ComponentData) {
+    returns (stream ReceiveComponentDataStreamResponse) {
     option (google.api.http) = {
       get : "/v1/components/{id}/data"
     };
@@ -132,7 +124,7 @@ service Microgrid {
 
   // Returns a stream containing data from a sensor with a given ID.
   rpc ReceiveSensorDataStream(ReceiveSensorDataStreamRequest)
-    returns (stream SensorData) {
+    returns (stream ReceiveSensorDataStreamResponse) {
     option (google.api.http) = {
       get : "/v1/sensors/{id}/data"
     };
@@ -358,13 +350,9 @@ service Microgrid {
 }
 
 // Metadata that describes a microgrid.
-message MicrogridMetadata {
-  // The microgrid ID.
-  // This is a natural number that uniquely identifies a given microgrid.
-  uint64 microgrid_id = 1;
-
+message GetMicrogridMetadataResponse {
   // The location of the microgrid, in geographical co-ordinates.
-  frequenz.api.common.v1.location.Location location = 2;
+  frequenz.api.common.v1.microgrid.Microgrid  microgrid= 1;
 }
 
 // Request parameters for the RPC `ListComponents`.
@@ -374,42 +362,14 @@ message ListComponentsRequest {
   repeated uint64 component_ids = 1;
 
   // Return components that have the specified categories only.
-  repeated frequenz.api.common.v1.components.ComponentCategory categories = 2;
-}
-
-// A message containing the metadata for a component.
-message Component {
-  // The component ID.
-  uint64 id = 1;
-
-  // The component name.
-  string name = 2;
-
-  // The component category. E.g., Inverter, Battery, etc.
-  frequenz.api.common.v1.components.ComponentCategory category = 3;
-
-  // The component manufacturer.
-  string manufacturer = 4;
-
-  // The model name of the component.
-  string model_name = 5;
-
-  // The metadata specific to the component category.
-  oneof metadata {
-    grid.Metadata grid = 11;
-    battery.Metadata battery = 12;
-    inverter.Metadata inverter = 13;
-    meter.Metadata meter = 14;
-    ev_charger.Metadata ev_charger = 15;
-    fuse.Metadata fuse = 17;
-    voltage_transformer.Metadata voltage_transformer = 18;
-  }
+  repeated frequenz.api.common.v1.microgrid.components.ComponentCategory
+    categories = 2;
 }
 
 // A message containing a list of components.
 // Used as the return type in the RPC `ListComponents`.
 message ListComponentsResponse {
-  repeated Component components = 1;
+  repeated frequenz.api.common.v1.microgrid.components.Component components = 1;
 }
 
 // Request parameters for the RPC `ListSensors`.
@@ -419,32 +379,14 @@ message ListSensorRequest {
   repeated uint64 sensor_ids = 1;
 
   // Return sensors that have the specified categories only.
-  repeated frequenz.api.common.v1.sensors.SensorCategory categories = 2;
-}
-
-// A sensor that measures a physical metric in the microgrid's surrounding
-// environment.
-message Sensor {
-  // A unique identifier for the sensor.
-  uint64 id = 1;
-
-  // An optional name for the sensor.
-  string name = 2;
-
-  // The category of the sensor.
-  frequenz.api.common.v1.sensors.SensorCategory category = 3;
-
-  // The sensor manufacturer.
-  string manufacturer = 4;
-
-  // The model name of the sensor.
-  string model_name = 5;
+  repeated frequenz.api.common.v1.microgrid.sensors.SensorCategory
+    categories = 2;
 }
 
 // Response message for the RPC `ListSensors`.
 // A message containing a list of sensors.
 message ListSensorsResponse {
-  repeated Sensor sensors = 1;
+  repeated frequenz.api.common.v1.microgrid.sensors.Sensor sensors = 1;
 }
 
 // Request parameters for the RPC `ListConnections`.
@@ -459,23 +401,12 @@ message ListConnectionsRequest {
   repeated uint64 ends = 2;
 }
 
-// Describes a single connection between components of the microgrid,
-// with direction away from the grid endpoint, meaning it is aligned
-// with positive current according to the passive sign convention:
-// https://en.wikipedia.org/wiki/Passive_sign_convention
-message Connection {
-  // `id` of the component the connection starts from
-  uint64 start = 1;
-
-  // `id` of the component the connection points to
-  uint64 end = 2;
-}
-
 // Response message for the RPC `ListConnections`.
 // Contains a list of connections.
 message ListConnectionsResponse {
   // The list of connections.
-  repeated Connection connections = 1;
+  repeated frequenz.api.common.v1.microgrid.components.ComponentConnection
+    connections = 1;
 };
 
 // Request parameters for the RPC `ReceiveComponentDataStream`.
@@ -487,22 +418,8 @@ message ReceiveComponentDataStreamRequest {
 // A data sample from a component in the microgrid.
 // Components belonging to all categories and types can be represented using
 // this message.
-message ComponentData {
-  // The UTC timestamp of when the data was measured.
-  google.protobuf.Timestamp ts = 1;
-
-  // The component ID.
-  uint64 id = 2;
-
-  // The data object.
-  oneof data {
-    meter.Meter meter = 3;
-    inverter.Inverter inverter = 4;
-    battery.Battery battery = 5;
-    ev_charger.EvCharger ev_charger = 6;
-    relay.Relay relay = 8;
-    precharger.Precharger precharger = 9;
-  }
+message ReceiveComponentDataStreamResponse {
+  frequenz.api.common.v1.microgrid.components.ComponentData data = 1;
 }
 
 // Request parameters for the RPC `ReceiveSensorDataStream`.
@@ -512,15 +429,9 @@ message ReceiveSensorDataStreamRequest {
 }
 
 // A data sample from a sensor in the microgrid.
-message SensorData {
-  // The UTC timestamp of when the data was measured.
-  google.protobuf.Timestamp ts = 1;
-
-  // The sensor ID.
-  uint64 id = 2;
-
-  // The data object.
-  sensor.Sensor data = 7;
+message ReceiveSensorDataStreamResponse {
+  // The sensor data.
+  frequenz.api.common.v1.microgrid.sensors.SensorData data = 1;
 }
 
 // An enumerated list of metrics whose bounds can be set using the RPCs

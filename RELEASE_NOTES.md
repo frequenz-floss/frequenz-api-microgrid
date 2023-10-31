@@ -63,6 +63,11 @@
   `frequenz.api.microgrid.v1.<package>`. `v1` is the API's major version, and
   will be incremented for breaking changes.
 
+- The common protobuf dependency has been upgraded to `v0.5.0`. The protobuf
+  messages returned by the RPCs are now in the `frequenz.api.common.v1` package.
+  As a result, all files besides `microgrid.proto` have become obsolete, and
+  should be removed.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
