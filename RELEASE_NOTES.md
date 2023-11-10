@@ -9,8 +9,6 @@
 - The `CanStreamData` RPC has been removed. Users are recommended to check it
   by calling the `StreamComponentData` RPC.
 
-- `frequenz-api-common` has been updated to `v0.3.1`.
-
 - The message `microgrid.Location` has been removed, and
   `frequenz.api.common.location.Location` is being used instead. The `Location`
   message from the common API also has a `country_code` member.
@@ -29,30 +27,6 @@
 
 - The following gRPC method have been removed: `HotStandby`
 
-- Added support for a new Component category: Relays. These are electromagnetic
-  switches that control circuit breakers in the microgrid, e.g., to connect or
-  disconnect an inverter from the grid. Relays support the following methods:
-  - `StartComponent`
-  - `StopComponent`
-
-- Added support for a new Component category: Precharger.
-  Precharging a DC (Direct Current) bus refers to a controlled process in
-  electrical systems, e.g., when connecting an inverter to a battery, where the
-  voltage across a DC bus is gradually increased from a low level to a desired
-  level before connecting a load or initiating normal operation. This process
-  is primarily used to prevent sudden surges of current that can occur when a
-  load is directly connected to a high-voltage DC source.
-  Precharge modules support the following methods:
-  - `StartComponent`
-  - `StopComponent`
-
-- Upgraded the `frequenz-api-common` package to `v0.4.0`.
-
-- Changed inverter DC metrics to repeated fields.
-
-- Added fuse component. Fuses are used to protect electrical components from
-  overcurrent.
-
 - Introduced a dedicated RPC method for listing sensors in the microgrid,
   separating them from the "component" category.
 
@@ -62,6 +36,11 @@
 - The package names have been changed from `frequenz.api.microgrid.<package>` to
   `frequenz.api.microgrid.v1.<package>`. `v1` is the API's major version, and
   will be incremented for breaking changes.
+
+- The common protobuf dependency has been upgraded to `v0.5.0`. The protobuf
+  messages returned by the RPCs are now in the `frequenz.api.common.v1` package.
+  As a result, all files besides `microgrid.proto` became obsolete, and
+  therefore, have been removed.
 
 ## New Features
 
