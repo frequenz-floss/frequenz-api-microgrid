@@ -413,8 +413,30 @@ message ListConnectionsResponse {
 
 // Request parameters for the RPC `ReceiveComponentDataStream`.
 message ReceiveComponentDataStreamRequest {
+  // A message for specifying a filter to apply to the stream.
+  message ComponentDataStreamFilter {
+    // List of metrics to return. Only the specified metrics will be returned.
+    //
+    // !!! note
+    //     At least one metric must be specified. If no metric is specified,
+    //     then the stream will return an error.
+    //
+    // !!! note
+    //     Components may not support all metrics. If a component does not
+    //     support a given metric, then the returned data stream will not
+    //     contain that metric.
+    repeated frequenz.api.common.v1.metrics.Metric metrics = 1;
+  }
+
   // The component ID to subscribe to.
   uint64 component_id = 1;
+
+  // The filter to apply to the stream.
+  //
+  // This field is optional. If this is not provided, then the stream will
+  // return all metrics for the given component. If this is provided, then the
+  // stream will return only the metrics specified in the filter.
+  ComponentDataStreamFilter filter = 2;
 }
 
 // A data sample from a component in the microgrid.
@@ -426,8 +448,30 @@ message ReceiveComponentDataStreamResponse {
 
 // Request parameters for the RPC `ReceiveSensorDataStream`.
 message ReceiveSensorDataStreamRequest {
+  // A message for specifying a filter to apply to the stream.
+  message SensorDataStreamFilter {
+    // List of metrics to return. Only the specified metrics will be returned.
+    //
+    // !!! note
+    //     At least one metric must be specified. If no metric is specified,
+    //     then the stream will return an error.
+    //
+    // !!! note
+    //     Sensors may not support all metrics. If a sensor does not support a
+    //     given metric, then the returned data stream will not contain that
+    //     metric.
+    repeated frequenz.api.common.v1.metrics.Metric metrics = 1;
+  }
+
   // The sensor ID to subscribe to.
   uint64 sensor_id = 1;
+
+  // The filter to apply to the stream.
+  //
+  // This field is optional. If this is not provided, then the stream will
+  // return all metrics for the given component. If this is provided, then the
+  // stream will return only the metrics specified in the filter.
+  SensorDataStreamFilter filter = 2;
 }
 
 // A data sample from a sensor in the microgrid.
