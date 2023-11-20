@@ -54,6 +54,12 @@
   before then. By default, this timestamp will be the current time plus 60
   seconds.
 
+- The RPC `SetComponentPowerReactive`now returns a timestamp until which the
+  command will stay in effect. The component's reactive power will be set to 0
+  after this timestamp, if the API receives no further requests to change it
+  before then. By default, this timestamp will be the current time plus 60
+  seconds.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
