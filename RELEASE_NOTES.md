@@ -48,6 +48,12 @@
   If this list is empty, then no data will be streamed, and the service will
   return an error.
 
+- The RPC `SetComponentPowerActive`now returns a timestamp until which the
+  command will stay in effect. The component's active power will be set to 0
+  after this timestamp, if the API receives no further requests to change it
+  before then. By default, this timestamp will be the current time plus 60
+  seconds.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
