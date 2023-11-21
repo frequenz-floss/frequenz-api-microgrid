@@ -821,6 +821,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#receivecomponentdatastreamrequestcomponentdatastreamfilter" class="md-nav__link">
+    ReceiveComponentDataStreamRequest.ComponentDataStreamFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#receivecomponentdatastreamresponse" class="md-nav__link">
     ReceiveComponentDataStreamResponse
   </a>
@@ -830,6 +837,13 @@
           <li class="md-nav__item">
   <a href="#receivesensordatastreamrequest" class="md-nav__link">
     ReceiveSensorDataStreamRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receivesensordatastreamrequestsensordatastreamfilter" class="md-nav__link">
+    ReceiveSensorDataStreamRequest.SensorDataStreamFilter
   </a>
   
 </li>
@@ -1414,6 +1428,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#receivecomponentdatastreamrequestcomponentdatastreamfilter" class="md-nav__link">
+    ReceiveComponentDataStreamRequest.ComponentDataStreamFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#receivecomponentdatastreamresponse" class="md-nav__link">
     ReceiveComponentDataStreamResponse
   </a>
@@ -1423,6 +1444,13 @@
           <li class="md-nav__item">
   <a href="#receivesensordatastreamrequest" class="md-nav__link">
     ReceiveSensorDataStreamRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receivesensordatastreamrequestsensordatastreamfilter" class="md-nav__link">
+    ReceiveSensorDataStreamRequest.SensorDataStreamFilter
   </a>
   
 </li>
@@ -1527,8 +1555,10 @@
 <li><a href="#frequenz-api-microgrid-v1-ListSensorsResponse">ListSensorsResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-PutComponentInStandbyRequest">PutComponentInStandbyRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ReceiveComponentDataStreamRequest">ReceiveComponentDataStreamRequest</a></li>
+<li><a href="#frequenz-api-microgrid-v1-ReceiveComponentDataStreamRequest-ComponentDataStreamFilter">ReceiveComponentDataStreamRequest.ComponentDataStreamFilter</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ReceiveComponentDataStreamResponse">ReceiveComponentDataStreamResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ReceiveSensorDataStreamRequest">ReceiveSensorDataStreamRequest</a></li>
+<li><a href="#frequenz-api-microgrid-v1-ReceiveSensorDataStreamRequest-SensorDataStreamFilter">ReceiveSensorDataStreamRequest.SensorDataStreamFilter</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ReceiveSensorDataStreamResponse">ReceiveSensorDataStreamResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-SetComponentPowerActiveRequest">SetComponentPowerActiveRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1-SetComponentPowerReactiveRequest">SetComponentPowerReactiveRequest</a></li>
@@ -1892,8 +1922,38 @@ A message containing a list of sensors.</p>
 <td></td>
 <td>The component ID to subscribe to.</td>
 </tr>
+<tr>
+<td>filter</td>
+<td><a href="#frequenz-api-microgrid-v1-ReceiveComponentDataStreamRequest-ComponentDataStreamFilter">ReceiveComponentDataStreamRequest.ComponentDataStreamFilter</a></td>
+<td></td>
+<td>The filter to apply to the stream.</td>
+</tr>
 </tbody>
 </table>
+<p>This field is optional. If this is not provided, then the stream will return all metrics for the given component. If this is provided, then the stream will return only the metrics specified in the filter. |</p>
+<p><a name="frequenz-api-microgrid-v1-ReceiveComponentDataStreamRequest-ComponentDataStreamFilter"></a></p>
+<h3 id="receivecomponentdatastreamrequestcomponentdatastreamfilter">ReceiveComponentDataStreamRequest.ComponentDataStreamFilter<a class="headerlink" href="#receivecomponentdatastreamrequestcomponentdatastreamfilter" title="Permanent link">¤</a></h3>
+<p>A message for specifying a filter to apply to the stream.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>metrics</td>
+<td><a href="#frequenz-api-common-v1-metrics-Metric">frequenz.api.common.v1.metrics.Metric</a></td>
+<td>repeated</td>
+<td>List of metrics to return. Only the specified metrics will be returned.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! note At least one metric must be specified. If no metric is specified, then the stream will return an error.</p>
+<p>!!! note Components may not support all metrics. If a component does not support a given metric, then the returned data stream will not contain that metric. |</p>
 <p><a name="frequenz-api-microgrid-v1-ReceiveComponentDataStreamResponse"></a></p>
 <h3 id="receivecomponentdatastreamresponse">ReceiveComponentDataStreamResponse<a class="headerlink" href="#receivecomponentdatastreamresponse" title="Permanent link">¤</a></h3>
 <p>A data sample from a component in the microgrid.
@@ -1936,8 +1996,38 @@ this message.</p>
 <td></td>
 <td>The sensor ID to subscribe to.</td>
 </tr>
+<tr>
+<td>filter</td>
+<td><a href="#frequenz-api-microgrid-v1-ReceiveSensorDataStreamRequest-SensorDataStreamFilter">ReceiveSensorDataStreamRequest.SensorDataStreamFilter</a></td>
+<td></td>
+<td>The filter to apply to the stream.</td>
+</tr>
 </tbody>
 </table>
+<p>This field is optional. If this is not provided, then the stream will return all metrics for the given component. If this is provided, then the stream will return only the metrics specified in the filter. |</p>
+<p><a name="frequenz-api-microgrid-v1-ReceiveSensorDataStreamRequest-SensorDataStreamFilter"></a></p>
+<h3 id="receivesensordatastreamrequestsensordatastreamfilter">ReceiveSensorDataStreamRequest.SensorDataStreamFilter<a class="headerlink" href="#receivesensordatastreamrequestsensordatastreamfilter" title="Permanent link">¤</a></h3>
+<p>A message for specifying a filter to apply to the stream.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>metrics</td>
+<td><a href="#frequenz-api-common-v1-metrics-Metric">frequenz.api.common.v1.metrics.Metric</a></td>
+<td>repeated</td>
+<td>List of metrics to return. Only the specified metrics will be returned.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! note At least one metric must be specified. If no metric is specified, then the stream will return an error.</p>
+<p>!!! note Sensors may not support all metrics. If a sensor does not support a given metric, then the returned data stream will not contain that metric. |</p>
 <p><a name="frequenz-api-microgrid-v1-ReceiveSensorDataStreamResponse"></a></p>
 <h3 id="receivesensordatastreamresponse">ReceiveSensorDataStreamResponse<a class="headerlink" href="#receivesensordatastreamresponse" title="Permanent link">¤</a></h3>
 <p>A data sample from a sensor in the microgrid.</p>
