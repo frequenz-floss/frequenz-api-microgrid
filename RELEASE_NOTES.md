@@ -42,6 +42,12 @@
   As a result, all files besides `microgrid.proto` became obsolete, and
   therefore, have been removed.
 
+- The request messages for receiving data streams have now been extended to
+  consist of a list of metrics to be streamed. This allows the user to request
+  only the metrics they are interested in, instead of receiving all of them.
+  If this list is empty, then no data will be streamed, and the service will
+  return an error.
+
 ## New Features
 
 <!-- Here goes the main new features and examples or instructions on how to use them -->
