@@ -2,7 +2,10 @@
 
 ## Summary
 
-<!-- Here goes a general summary of what this release is about -->
+This version of the API introduces a number of breaking changes, and is not
+backwards compatible with the previous version. The changes primarily include:
+* RPC renames
+* Upgrade to frequenz.api.common v0.5.0
 
 ## Upgrading
 
@@ -59,11 +62,3 @@
   after this timestamp, if the API receives no further requests to change it
   before then. By default, this timestamp will be the current time plus 60
   seconds.
-
-## New Features
-
-<!-- Here goes the main new features and examples or instructions on how to use them -->
-
-## Bug Fixes
-
-<!-- Here goes notable bug fixes that are worth a special mention or explanation -->
