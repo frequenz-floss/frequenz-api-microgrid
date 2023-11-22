@@ -863,8 +863,22 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#setcomponentpoweractiveresponse" class="md-nav__link">
+    SetComponentPowerActiveResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#setcomponentpowerreactiverequest" class="md-nav__link">
     SetComponentPowerReactiveRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setcomponentpowerreactiveresponse" class="md-nav__link">
+    SetComponentPowerReactiveResponse
   </a>
   
 </li>
@@ -1470,8 +1484,22 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#setcomponentpoweractiveresponse" class="md-nav__link">
+    SetComponentPowerActiveResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#setcomponentpowerreactiverequest" class="md-nav__link">
     SetComponentPowerReactiveRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setcomponentpowerreactiveresponse" class="md-nav__link">
+    SetComponentPowerReactiveResponse
   </a>
   
 </li>
@@ -1561,7 +1589,9 @@
 <li><a href="#frequenz-api-microgrid-v1-ReceiveSensorDataStreamRequest-SensorDataStreamFilter">ReceiveSensorDataStreamRequest.SensorDataStreamFilter</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ReceiveSensorDataStreamResponse">ReceiveSensorDataStreamResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-SetComponentPowerActiveRequest">SetComponentPowerActiveRequest</a></li>
+<li><a href="#frequenz-api-microgrid-v1-SetComponentPowerActiveResponse">SetComponentPowerActiveResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-SetComponentPowerReactiveRequest">SetComponentPowerReactiveRequest</a></li>
+<li><a href="#frequenz-api-microgrid-v1-SetComponentPowerReactiveResponse">SetComponentPowerReactiveResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-StartComponentRequest">StartComponentRequest</a></li>
 <li>
 <p><a href="#frequenz-api-microgrid-v1-StopComponentRequest">StopComponentRequest</a></p>
@@ -2076,6 +2106,27 @@ this message.</p>
 </tr>
 </tbody>
 </table>
+<p><a name="frequenz-api-microgrid-v1-SetComponentPowerActiveResponse"></a></p>
+<h3 id="setcomponentpoweractiveresponse">SetComponentPowerActiveResponse<a class="headerlink" href="#setcomponentpoweractiveresponse" title="Permanent link">¤</a></h3>
+<p>Response message for the RPC <code>SetComponentPowerActive</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>valid_until</td>
+<td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
+<td></td>
+<td>The timestamp until which the given power command will stay in effect. After this timestamp, the component power will be set to 0, if the API receives no further power commands. By default, this timestamp will be set to the current time plus 60 seconds.</td>
+</tr>
+</tbody>
+</table>
 <p><a name="frequenz-api-microgrid-v1-SetComponentPowerReactiveRequest"></a></p>
 <h3 id="setcomponentpowerreactiverequest">SetComponentPowerReactiveRequest<a class="headerlink" href="#setcomponentpowerreactiverequest" title="Permanent link">¤</a></h3>
 <p>Request parameters for the RPC <code>SetComponentPowerReactive</code>.</p>
@@ -2100,6 +2151,27 @@ this message.</p>
 <td><a href="#float">float</a></td>
 <td></td>
 <td>The output reactive power level, in VAr. -ve values are for inductive (lagging) power , and &#43;ve values are for capacitive (leading) power.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-microgrid-v1-SetComponentPowerReactiveResponse"></a></p>
+<h3 id="setcomponentpowerreactiveresponse">SetComponentPowerReactiveResponse<a class="headerlink" href="#setcomponentpowerreactiveresponse" title="Permanent link">¤</a></h3>
+<p>Response message for the RPC <code>SetComponentPowerReactive</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>valid_until</td>
+<td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
+<td></td>
+<td>The timestamp until which the given power command will stay in effect. After this timestamp, the component power will be set to 0, if the API receives no further power commands. By default, this timestamp will be set to the current time plus 60 seconds.</td>
 </tr>
 </tbody>
 </table>
@@ -2247,13 +2319,17 @@ this message.</p>
 <p>It is important to note that these bounds work together with <code>system_exclusion_bounds</code>.</p>
 <p>E.g., for the system to accept a charge command, clients need to request power values within the bounds <code>[system_inclusion_bounds.lower, system_exclusion_bounds.lower]</code>. This means that clients can only request charge commands with values that are within the <code>system_inclusion_bounds</code>, but not within <code>system_exclusion_bounds</code>. Similarly, for the system to accept a discharge command, clients need to request power values within the bounds <code>[system_exclusion_bounds.upper, system_inclusion_bounds.upper]</code>.</p>
 <p>The following diagram illustrates the relationship between the bounds. <code>inclusion.lower inclusion.upper &amp;lt;-------|============|------------------|============|---------&amp;gt; exclusion.lower exclusion.upper</code> ---- values here are disallowed and will be rejected ==== vales here are allowed and will be accepted |
-| SetComponentPowerActive | <a href="#frequenz-api-microgrid-v1-SetComponentPowerActiveRequest">SetComponentPowerActiveRequest</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the active power output of a component with a given ID, provided the component supports it.</p>
+| SetComponentPowerActive | <a href="#frequenz-api-microgrid-v1-SetComponentPowerActiveRequest">SetComponentPowerActiveRequest</a> | <a href="#frequenz-api-microgrid-v1-SetComponentPowerActiveResponse">SetComponentPowerActiveResponse</a> | Sets the active power output of a component with a given ID, provided the component supports it. The power output is specified in watts.</p>
+<p>The power output can be -ve or &#43;ve, depending on whether the component is supposed to be discharging or charging, respectively.</p>
+<p>The return value is the timestamp until which the given power command will stay in effect. After this timestamp, the component&#39;s active power will be set to 0, if the API receives no further command to change it before then. By default, this timestamp will be set to the current time plus 60 seconds.</p>
 <p>Note that the target component may have a resolution of more than 1 W. E.g., an inverter may have a resolution of 88 W. In such cases, the magnitude of power will be floored to the nearest multiple of the resolution.</p>
 <p>Performs the following sequence actions for the following component categories:</p>
 <ul>
 <li>Inverter: Sends the discharge command to the inverter, making it deliver AC power. |
-| SetComponentPowerReactive | <a href="#frequenz-api-microgrid-v1-SetComponentPowerReactiveRequest">SetComponentPowerReactiveRequest</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Sets the reactive power output of a component with a given ID, provided the component supports it.</li>
+| SetComponentPowerReactive | <a href="#frequenz-api-microgrid-v1-SetComponentPowerReactiveRequest">SetComponentPowerReactiveRequest</a> | <a href="#frequenz-api-microgrid-v1-SetComponentPowerReactiveResponse">SetComponentPowerReactiveResponse</a> | Sets the reactive power output of a component with a given ID, provided the component supports it. The power output is specified in VAr.</li>
 </ul>
+<p>The power output can be -ve or &#43;ve, depending on whether the component is supposed to be delivering inductive or capacitive power, respectively.</p>
+<p>The return value is the timestamp until which the given power command will stay in effect. After this timestamp, the component&#39;s reactive power will be set to 0, if the API receives no further command to change it before then. By default, this timestamp will be set to the current time plus 60 seconds.</p>
 <p>Note that the target component may have a resolution of more than 1 VAr. E.g., an inverter may have a resolution of 88 VAr. In such cases, the magnitude of power will be floored to the nearest multiple of the resolution. |
 | StartComponent | <a href="#frequenz-api-microgrid-v1-StartComponentRequest">StartComponentRequest</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Starts the component, and brings it into a state where it is immediately operational.</p>
 <p>Performs the following sequence of actions for the following component categories:</p>
