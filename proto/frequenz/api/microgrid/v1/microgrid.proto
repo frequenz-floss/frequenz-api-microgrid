@@ -220,7 +220,15 @@ service Microgrid {
     returns (AddComponentInclusionBoundsResponse);
 
   // Sets the active power output of a component with a given ID, provided the
-  // component supports it.
+  // component supports it. The power output is specified in watts.
+  //
+  // The power output can be -ve or +ve, depending on whether the component is
+  // supposed to be discharging or charging, respectively.
+  //
+  // The return value is the timestamp until which the given power command will
+  // stay in effect. After this timestamp, the component's active power will be
+  // set to 0, if the API receives no further command to change it before then.
+  // By default, this timestamp will be set to the current time plus 60 seconds.
   //
   // Note that the target component may have a resolution of more than 1 W.
   // E.g., an inverter may have a resolution of 88 W.
@@ -233,21 +241,30 @@ service Microgrid {
   // * Inverter: Sends the discharge command to the inverter, making it deliver
   //  AC power.
   rpc SetComponentPowerActive(SetComponentPowerActiveRequest)
-    returns (google.protobuf.Empty) {
+    returns (SetComponentPowerActiveResponse) {
     option (google.api.http) = {
       get : "/v1/components/{component_id}/setPowerActive/{power}"
     };
   }
 
   // Sets the reactive power output of a component with a given ID, provided the
-  // component supports it.
+  // component supports it. The power output is specified in VAr.
+  //
+  // The power output can be -ve or +ve, depending on whether the component is
+  // supposed to be delivering inductive or capacitive power, respectively.
+  //
+  // The return value is the timestamp until which the given power command will
+  // stay in effect. After this timestamp, the component's reactive power will
+  // be set to 0, if the API receives no further command to change it before
+  // then.
+  // By default, this timestamp will be set to the current time plus 60 seconds.
   //
   // Note that the target component may have a resolution of more than 1 VAr.
   // E.g., an inverter may have a resolution of 88 VAr.
   // In such cases, the magnitude of power will be floored to the nearest
   // multiple of the resolution.
   rpc SetComponentPowerReactive(SetComponentPowerReactiveRequest)
-    returns (google.protobuf.Empty) {
+    returns (SetComponentPowerReactiveResponse) {
     option (google.api.http) = {
       get : "/v1/components/{component_id}/setPowerReactive/{power}"
     };
@@ -538,6 +555,15 @@ message SetComponentPowerActiveRequest {
   float power = 2;
 }
 
+// Response message for the RPC `SetComponentPowerActive`.
+message SetComponentPowerActiveResponse {
+  // The timestamp until which the given power command will stay in effect.
+  // After this timestamp, the component power will be set to 0, if the API
+  // receives no further power commands. By default, this timestamp will be set
+  // to the current time plus 60 seconds.
+  google.protobuf.Timestamp valid_until = 1;
+}
+
 // Request parameters for the RPC `SetComponentPowerReactive`.
 message SetComponentPowerReactiveRequest {
   // The ID of the component to set the output reactive power of.
@@ -547,6 +573,15 @@ message SetComponentPowerReactiveRequest {
   // -ve values are for inductive (lagging) power , and +ve values are for
   //  capacitive (leading) power.
   float power = 2;
+}
+
+// Response message for the RPC `SetComponentPowerReactive`.
+message SetComponentPowerReactiveResponse {
+  // The timestamp until which the given power command will stay in effect.
+  // After this timestamp, the component power will be set to 0, if the API
+  // receives no further power commands. By default, this timestamp will be set
+  // to the current time plus 60 seconds.
+  google.protobuf.Timestamp valid_until = 1;
 }
 
 // Request parameters for the RPC `StartComponent`.
