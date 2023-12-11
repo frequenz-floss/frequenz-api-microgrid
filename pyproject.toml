@@ -44,17 +44,17 @@ dev-flake8 = [
   "pydoclint == 0.3.8",
   "pydocstyle == 6.3.0",
 ]
-dev-formatting = ["black == 23.11.0", "isort == 5.12.0"]
+dev-formatting = ["black == 23.11.0", "isort == 5.13.0"]
 dev-mkdocs = [
   "mike == 1.1.2",
   "mkdocs-gen-files == 0.5.0",
   "mkdocs-literate-nav == 0.6.1",
-  "mkdocs-material == 9.4.8",
+  "mkdocs-material == 9.5.1",
   "mkdocstrings[python] == 0.23.0",
   "frequenz-repo-config[api] == 0.7.5",
 ]
 dev-mypy = [
-  "mypy == 1.7.0",
+  "mypy == 1.7.1",
   "grpc-stubs == 1.53.0.3",
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
