@@ -37,7 +37,7 @@ jobs:
         # Only use hashes here, as we are passing the github token, we want to
         # make sure updates are done consciously to avoid security issues if the
         # action repo gets hacked
-        uses: yoheimuta/action-protolint@a7c658b971a0874e120e046edb6fd137fdbc92a7 # v1.1.0
+        uses: yoheimuta/action-protolint@14d53bef00d0e0c09f74d0f0c1b3ce639d86ca58 # v1.2.0
         with:
           fail_on_error: true
           filter_mode: nofilter
