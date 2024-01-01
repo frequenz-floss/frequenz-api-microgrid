@@ -55,7 +55,7 @@ dev-mkdocs = [
 ]
 dev-mypy = [
   "mypy == 1.8.0",
-  "grpc-stubs == 1.53.0.3",
+  "grpc-stubs == 1.53.0.5",
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
