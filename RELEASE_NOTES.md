@@ -2,4 +2,8 @@
 
 ## Summary
 
-This release doesn't introduce any visible changes, it's done mainly to be able to build the new [documentation website](https://frequenz-floss.github.io/frequenz-api-microgrid/).
+This release bumps the `frequenz-api-common` dependency to v0.5.3, allowing downstream projects to use a newer `frequenz-api-common` version too.
+
+Please note that the googleapis-common-protos dependency is also bumped to v1.56.4, which is the version that api-common v0.5.4 depends on.
+    
+Strictly speaking, this is a breaking change, as you might need to bump your googleapis-common-protos dependency to v1.56.4 too if it is specified explicitly, but this is highly unlikely to happen and very easy to fix.
