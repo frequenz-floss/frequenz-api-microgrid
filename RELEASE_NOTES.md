@@ -2,8 +2,16 @@
 
 ## Summary
 
-This release bumps the `frequenz-api-common` dependency to v0.5.3, allowing downstream projects to use a newer `frequenz-api-common` version too.
+<!-- Here goes a general summary of what this release is about -->
 
-Please note that the googleapis-common-protos dependency is also bumped to v1.56.4, which is the version that api-common v0.5.4 depends on.
-    
-Strictly speaking, this is a breaking change, as you might need to bump your googleapis-common-protos dependency to v1.56.4 too if it is specified explicitly, but this is highly unlikely to happen and very easy to fix.
+## Upgrading
+
+<!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
+
+## New Features
+
+<!-- Here goes the main new features and examples or instructions on how to use them -->
+
+## Bug Fixes
+
+<!-- Here goes notable bug fixes that are worth a special mention or explanation -->
