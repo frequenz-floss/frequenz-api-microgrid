@@ -7,34 +7,44 @@
 # https://github.com/marketplace/actions/labeler
 
 "part:docs":
-  - "**/*.md"
-  - "docs/**"
-  - "examples/**"
-  - LICENSE
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/*.md"
+      - "docs/**"
+      - "examples/**"
+      - LICENSE
 
 "part:tests":
-  - "**/conftest.py"
-  - "pytests/**"
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/conftest.py"
+      - "pytests/**"
 
 "part:tooling":
-  - "**/*.ini"
-  - "**/*.toml"
-  - "**/*.yaml"
-  - "**/*.yml"
-  - "**/conftest.py"
-  - ".editorconfig"
-  - ".git*"
-  - ".git*/**"
-  - "docs/*.py"
-  - CODEOWNERS
-  - MANIFEST.in
-  - noxfile.py
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/*.ini"
+      - "**/*.toml"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/conftest.py"
+      - ".editorconfig"
+      - ".git*"
+      - ".git*/**"
+      - "docs/*.py"
+      - CODEOWNERS
+      - MANIFEST.in
+      - noxfile.py
 
 "part:python":
-  - "py/**"
-  - "pytests/**"
-  - "**/*.py"
+  - changed-files:
+    - any-glob-to-any-file:
+      - "py/**"
+      - "pytests/**"
+      - "**/*.py"
 
 "part:protobuf":
-  - "proto/**"
-  - "**/*.proto"
+  - changed-files:
+    - any-glob-to-any-file:
+      - "proto/**"
+      - "**/*.proto"
