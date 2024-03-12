@@ -1337,6 +1337,7 @@ be the same.</p>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nb">cd</span><span class="w"> </span>-
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>sed<span class="w"> </span>s/<span class="s2">&quot;frequenz-api-common == [0-9]\.[0-9]\.[0-9]&quot;</span>/<span class="s2">&quot;frequenz-api-common == </span><span class="si">${</span><span class="nv">ver</span><span class="si">}</span><span class="s2">&quot;</span>/g<span class="w"> </span>-i<span class="w"> </span>pyproject.toml
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>sed<span class="w"> </span><span class="s1">&#39;s|https://frequenz-floss.github.io/frequenz-api-common/v[0-9].[0-9]/objects.inv|https://frequenz-floss.github.io/frequenz-api-common/v&#39;</span><span class="si">${</span><span class="nv">ver_minor</span><span class="si">}</span><span class="s1">&#39;/objects.inv|&#39;</span><span class="w"> </span>-i<span class="w"> </span>mkdocs.yml
 </span></code></pre></div></p>
 <h3 id="running-tests-checks-individually">Running tests / checks individually<a class="headerlink" href="#running-tests-checks-individually" title="Permanent link">¤</a></h3>
 <p>For a better development test cycle you can install the runtime and test
