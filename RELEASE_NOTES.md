@@ -15,3 +15,5 @@
 ## Bug Fixes
 
 - Removed unused imports
+
+- Fixed field names in HTTP annotations

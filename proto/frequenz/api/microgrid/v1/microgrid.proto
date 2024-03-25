@@ -118,7 +118,7 @@ service Microgrid {
   rpc ReceiveComponentDataStream(ReceiveComponentDataStreamRequest)
     returns (stream ReceiveComponentDataStreamResponse) {
     option (google.api.http) = {
-      get : "/v1/components/{id}/data"
+      get : "/v1/components/{component_id}/data"
     };
   }
 
@@ -126,7 +126,7 @@ service Microgrid {
   rpc ReceiveSensorDataStream(ReceiveSensorDataStreamRequest)
     returns (stream ReceiveSensorDataStreamResponse) {
     option (google.api.http) = {
-      get : "/v1/sensors/{id}/data"
+      get : "/v1/sensors/{sensor_id}/data"
     };
   }
 
@@ -295,7 +295,7 @@ service Microgrid {
   // skipped.
   rpc StartComponent(StartComponentRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{id}/start"
+      get : "/v1/components/{component_id}/start"
     };
   }
 
@@ -319,7 +319,7 @@ service Microgrid {
   rpc PutComponentInStandby(PutComponentInStandbyRequest)
     returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{id}/standby"
+      get : "/v1/components/{component_id}/standby"
     };
   }
 
@@ -352,7 +352,7 @@ service Microgrid {
   // skipped.
   rpc StopComponent(StopComponentRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{id}/stop"
+      get : "/v1/components/{component_id}/stop"
     };
   }
 
@@ -361,7 +361,7 @@ service Microgrid {
   rpc AckComponentError(AckComponentErrorRequest)
     returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{id}/errorAck"
+      get : "/v1/components/{component_id}/errorAck"
     };
   }
 }
