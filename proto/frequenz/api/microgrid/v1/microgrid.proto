@@ -12,7 +12,6 @@ syntax = "proto3";
 
 package frequenz.api.microgrid.v1;
 
-import "frequenz/api/common/v1/location.proto";
 import "frequenz/api/common/v1/metrics/bounds.proto";
 import "frequenz/api/common/v1/metrics/metric_sample.proto";
 import "frequenz/api/common/v1/microgrid/components/components.proto";
@@ -22,7 +21,6 @@ import "frequenz/api/common/v1/microgrid/sensors/sensors.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
 
 // The Frequenz Microgrid API
 service Microgrid {
