@@ -6,6 +6,10 @@
 
 ## Upgrading
 
+- This release upgrades `frequenz-api-common` to version `v0.6.0`. Please refer
+  to the [release notes](https://github.com/frequenz-floss/frequenz-api-common/releases/tag/v0.6.0)
+  of `frequenz-api-common` for more information.
+
 <!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
 
 ## New Features
