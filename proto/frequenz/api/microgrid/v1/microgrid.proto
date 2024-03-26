@@ -440,25 +440,13 @@ message ReceiveSensorDataStreamResponse {
   frequenz.api.common.v1.microgrid.sensors.SensorData data = 1;
 }
 
-// An enumerated list of metrics whose bounds can be set using the RPCs
-// `AddComponentExclusionBounds` and `AddComponentInclusionBounds`.
-enum ComponentBoundsTargetMetric {
-  COMPONENT_BOUNDS_TARGET_METRIC_UNSPECIFIED = 0;
-  COMPONENT_BOUNDS_TARGET_METRIC_POWER_ACTIVE = 1;
-  COMPONENT_BOUNDS_TARGET_METRIC_CURRENT = 2;
-  COMPONENT_BOUNDS_TARGET_METRIC_CURRENT_PHASE_1 = 3;
-  COMPONENT_BOUNDS_TARGET_METRIC_CURRENT_PHASE_2 = 4;
-  COMPONENT_BOUNDS_TARGET_METRIC_CURRENT_PHASE_3 = 5;
-  COMPONENT_BOUNDS_TARGET_METRIC_POWER_REACTIVE = 6;
-}
-
 // Request parameters for the RPC `AddComponentBounds`.
 message AddComponentBoundsRequest {
   // The ID of the target component.
   uint64 component_id = 1;
 
   // The target metric whose bounds have to be set.
-  ComponentBoundsTargetMetric target_metric = 2;
+  frequenz.api.common.v1.metrics.Metric target_metric = 2;
 
   // A list of bounds for the target metric.
   // While incorporating these bounds, the API will ensure that overlapping
