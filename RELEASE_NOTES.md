@@ -2,10 +2,20 @@
 
 ## Summary
 
-This release cleans up of unused imports and fixes field names in HTTP annotations.
+<!-- Here goes a general summary of what this release is about -->
+
+## Upgrading
+
+- This release upgrades `frequenz-api-common` to version `v0.6.0`. Please refer
+  to the [release notes](https://github.com/frequenz-floss/frequenz-api-common/releases/tag/v0.6.0)
+  of `frequenz-api-common` for more information.
+
+<!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
+
+## New Features
+
+<!-- Here goes the main new features and examples or instructions on how to use them -->
 
 ## Bug Fixes
 
-- Removed unused imports
-
-- Fixed field names in HTTP annotations
+<!-- Here goes notable bug fixes that are worth a special mention or explanation -->
