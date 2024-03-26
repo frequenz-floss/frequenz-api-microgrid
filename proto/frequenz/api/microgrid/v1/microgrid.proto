@@ -130,6 +130,38 @@ service Microgrid {
     };
   }
 
+  // Adds inclusion bounds for a given metric of a given component. Returns the
+  // time at which the bounds will expire (as a timestamp (UTC))
+  //
+  // Inclusion bounds give the range that the system will try to keep the
+  // metric within. If the metric goes outside of these bounds, the system will
+  // try to bring it back within the bounds.
+  // If the bounds for a metric are [[`lower_1`, `upper_1`],
+  // [`lower_2`, `upper_2`]], then this metric's `value` needs to comply with
+  // the constraints
+  // `lower_1 <= value <= upper_1` OR `lower_2 <= value <= upper_2`.
+  //
+  // If multiple inclusion bounds have been provided for a metric, then the
+  // overlapping bounds are merged into a single bound, and non-overlapping
+  // bounds are kept separate.
+  // E.g. if the bounds are [[0, 10], [5, 15], [20, 30]], then the resulting
+  // bounds will be [[0, 15], [20, 30]].
+  //
+  // The following diagram illustrates how bounds are applied:
+  // ```
+  //   lower_1  upper_1
+  // <----|========|--------|========|-------->
+  //                     lower_2  upper_2
+  // ```
+  // The bounds in this example are `[[lower_1, upper_1], [lower_2, upper_2]]`.
+  // ---- values here are considered out of range.
+  // ==== values here are considered within range.
+  //
+  // Note that for power metrics, regardless of the bounds, 0W is always
+  // allowed.
+  rpc AddComponentBounds(AddComponentBoundsRequest)
+    returns (AddComponentBoundsResponse);
+
   // Adds exclusion bounds for a given metric of a given component, and returns
   // the UTC timestamp until which the given exclusion bounds will stay in
   // effect.
@@ -505,6 +537,27 @@ enum ComponentBoundsTargetMetric {
   COMPONENT_BOUNDS_TARGET_METRIC_CURRENT_PHASE_2 = 4;
   COMPONENT_BOUNDS_TARGET_METRIC_CURRENT_PHASE_3 = 5;
   COMPONENT_BOUNDS_TARGET_METRIC_POWER_REACTIVE = 6;
+}
+
+// Request parameters for the RPC `AddComponentBounds`.
+message AddComponentBoundsRequest {
+  // The ID of the target component.
+  uint64 component_id = 1;
+
+  // The target metric whose bounds have to be set.
+  ComponentBoundsTargetMetric target_metric = 2;
+
+  // A list of bounds for the target metric.
+  // While incorporating these bounds, the API will ensure that overlapping
+  // pairs of bounds are merged into a single pair of bounds, and
+  // non-overlapping ones are kept separated.
+  repeated frequenz.api.common.v1.metrics.Bounds bounds = 3;
+}
+
+// Response message for the RPC `AddComponentBounds`.
+message AddComponentBoundsResponse {
+  // The timestamp until which the given bounds will stay in effect.
+  google.protobuf.Timestamp ts = 1;
 }
 
 // Request parameters for the RPC `AddComponentExclusionBounds`.
