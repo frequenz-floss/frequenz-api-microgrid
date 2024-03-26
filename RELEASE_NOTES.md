@@ -11,7 +11,8 @@
   of `frequenz-api-common` for more information.
 
 - A new RPC named `AddComponentBounds` has been introduced, which accepts only
-  inclusive bounds.
+  inclusive bounds. The old RPCs `AddComponentInclusionBounds` and
+  `AddComponentExclusionBounds` have been removed.
 
 <!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
 
