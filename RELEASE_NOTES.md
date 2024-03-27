@@ -10,6 +10,13 @@
   to the [release notes](https://github.com/frequenz-floss/frequenz-api-common/releases/tag/v0.6.0)
   of `frequenz-api-common` for more information.
 
+- A new RPC named `AddComponentBounds` has been introduced, which accepts only
+  inclusive bounds. The old RPCs `AddComponentInclusionBounds` and
+  `AddComponentExclusionBounds` have been removed.
+
+- The enum `ComponentBoundsTargetMetric` has been removed in favour of the
+  `Metric` enum from `frequenz-api-common`.
+
 <!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
 
 ## New Features

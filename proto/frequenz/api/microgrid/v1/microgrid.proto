@@ -130,92 +130,37 @@ service Microgrid {
     };
   }
 
-  // Adds exclusion bounds for a given metric of a given component, and returns
-  // the UTC timestamp until which the given exclusion bounds will stay in
-  // effect.
+  // Adds inclusion bounds for a given metric of a given component. Returns the
+  // time at which the bounds will expire (as a timestamp (UTC))
   //
-  // Exclusion bounds refer to the range of values that are disallowed for the
-  // metric. If these bounds for a metric are [`lower`, `upper`], then this
-  // metric's `value` needs to comply with the constraints
-  // `value <= lower` OR `upper <= value`.
+  // Inclusion bounds give the range that the system will try to keep the
+  // metric within. If the metric goes outside of these bounds, the system will
+  // try to bring it back within the bounds.
+  // If the bounds for a metric are [[`lower_1`, `upper_1`],
+  // [`lower_2`, `upper_2`]], then this metric's `value` needs to comply with
+  // the constraints
+  // `lower_1 <= value <= upper_1` OR `lower_2 <= value <= upper_2`.
   //
-  // Exclusion bounds are a useful tool for enhancing the performance of a
-  // system. They can be used to restrict the acceptance of commands that fall
-  // below a certain threshold, which can help ensure the smooth functioning of
-  // the system.
-  // E.g., exclusion bounds can be set to limit the minimum charging power to a
-  // sufficiently high level, preventing a peak-shaver client from sending
-  // charge powers that are too low when a DC heater client is executing a
-  // charge pulse. This can significantly improve the overall performance of the
-  // DC heating mechanism.
+  // If multiple inclusion bounds have been provided for a metric, then the
+  // overlapping bounds are merged into a single bound, and non-overlapping
+  // bounds are kept separate.
+  // E.g. if the bounds are [[0, 10], [5, 15], [20, 30]], then the resulting
+  // bounds will be [[0, 15], [20, 30]].
   //
-  //
-  // If multiple exclusion bounds have been provided bor a metric, then the
-  // aggregated lower and upper exclusion bounds are calculated as follows:
-  // lower: the minimum of all lower exclusion bounds
-  // upper: the maximum of all upper exclusion bounds
-  //
-  // It is important to note that these bounds work together with
-  // `system_inclusion_bounds`.
-  //
-  // E.g., for the system to accept a charge command,
-  // clients need to request power values within the bounds
-  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
-  // This means that clients can only request charge commands with values that
-  // are within the `system_inclusion_bounds`, but not within
-  // `system_exclusion_bounds`.
-  // Similarly, for the system to accept a discharge command,
-  // clients need to request power values within the bounds
-  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
-  //
-  // The following diagram illustrates the relationship between the bounds.
+  // The following diagram illustrates how bounds are applied:
   // ```
-  //   inclusion.lower                              inclusion.upper
-  // <-------|============|------------------|============|--------->
-  //                exclusion.lower    exclusion.upper
+  //   lower_1  upper_1
+  // <----|========|--------|========|-------->
+  //                     lower_2  upper_2
   // ```
-  // ---- values here are disallowed and will be rejected
-  // ==== vales here are allowed and will be accepted
-  rpc AddComponentExclusionBounds(AddComponentExclusionBoundsRequest)
-    returns (AddComponentExclusionBoundsResponse);
-
-  // Adds inclusion bounds for a given metric of a given component, and returns
-  // the UTC timestamp until which the given inclusion bounds will stay in
-  // effect.
+  // The bounds in this example are `[[lower_1, upper_1], [lower_2, upper_2]]`.
+  // ---- values here are considered out of range.
+  // ==== values here are considered within range.
   //
-  // Inclusion bounds refer to the range of values that are allowed for the
-  // metric. If these bounds for a metric are [`lower`, `upper`], then this
-  // metric's `value` needs to comply with the constraint
-  // `lower <= value <= upper`.
-  //
-  // If multiple inclusion bounds have been provided bor a metric, then the
-  // aggregated lower and upper inclusion bounds are calculated as follows:
-  // lower: the maximum of all lower inclusion bounds
-  // upper: the minimum of all upper inclusion bounds
-  //
-  // It is important to note that these bounds work together with
-  // `system_exclusion_bounds`.
-  //
-  // E.g., for the system to accept a charge command,
-  // clients need to request power values within the bounds
-  // `[system_inclusion_bounds.lower, system_exclusion_bounds.lower]`.
-  // This means that clients can only request charge commands with values that
-  // are within the `system_inclusion_bounds`, but not within
-  // `system_exclusion_bounds`.
-  // Similarly, for the system to accept a discharge command,
-  // clients need to request power values within the bounds
-  // `[system_exclusion_bounds.upper, system_inclusion_bounds.upper]`.
-  //
-  // The following diagram illustrates the relationship between the bounds.
-  // ```
-  //   inclusion.lower                              inclusion.upper
-  // <-------|============|------------------|============|--------->
-  //                exclusion.lower    exclusion.upper
-  // ```
-  // ---- values here are disallowed and will be rejected
-  // ==== vales here are allowed and will be accepted
-  rpc AddComponentInclusionBounds(AddComponentInclusionBoundsRequest)
-    returns (AddComponentInclusionBoundsResponse);
+  // Note that for power metrics, regardless of the bounds, 0W is always
+  // allowed.
+  rpc AddComponentBounds(AddComponentBoundsRequest)
+    returns (AddComponentBoundsResponse);
 
   // Sets the active power output of a component with a given ID, provided the
   // component supports it. The power output is specified in watts.
@@ -495,51 +440,24 @@ message ReceiveSensorDataStreamResponse {
   frequenz.api.common.v1.microgrid.sensors.SensorData data = 1;
 }
 
-// An enumerated list of metrics whose bounds can be set using the RPCs
-// `AddComponentExclusionBounds` and `AddComponentInclusionBounds`.
-enum ComponentBoundsTargetMetric {
-  COMPONENT_BOUNDS_TARGET_METRIC_UNSPECIFIED = 0;
-  COMPONENT_BOUNDS_TARGET_METRIC_POWER_ACTIVE = 1;
-  COMPONENT_BOUNDS_TARGET_METRIC_CURRENT = 2;
-  COMPONENT_BOUNDS_TARGET_METRIC_CURRENT_PHASE_1 = 3;
-  COMPONENT_BOUNDS_TARGET_METRIC_CURRENT_PHASE_2 = 4;
-  COMPONENT_BOUNDS_TARGET_METRIC_CURRENT_PHASE_3 = 5;
-  COMPONENT_BOUNDS_TARGET_METRIC_POWER_REACTIVE = 6;
-}
-
-// Request parameters for the RPC `AddComponentExclusionBounds`.
-message AddComponentExclusionBoundsRequest {
+// Request parameters for the RPC `AddComponentBounds`.
+message AddComponentBoundsRequest {
   // The ID of the target component.
   uint64 component_id = 1;
 
   // The target metric whose bounds have to be set.
-  ComponentBoundsTargetMetric target_metric = 2;
+  frequenz.api.common.v1.metrics.Metric target_metric = 2;
 
-  // The bounds for the target metric.
-  frequenz.api.common.v1.metrics.Bounds bounds = 3;
+  // A list of bounds for the target metric.
+  // While incorporating these bounds, the API will ensure that overlapping
+  // pairs of bounds are merged into a single pair of bounds, and
+  // non-overlapping ones are kept separated.
+  repeated frequenz.api.common.v1.metrics.Bounds bounds = 3;
 }
 
-// Response message for the RPC `AddComponentExclusionBounds`.
-message AddComponentExclusionBoundsResponse {
-  // The timestamp until which the given exclusion bounds will stay in effect.
-  google.protobuf.Timestamp ts = 1;
-}
-
-// Request parameters for the RPC `AddComponentInclusionBounds`.
-message AddComponentInclusionBoundsRequest {
-  // The ID of the target component.
-  uint64 component_id = 1;
-
-  // The target metric whose bounds have to be set.
-  ComponentBoundsTargetMetric target_metric = 2;
-
-  // The bounds for the target metric.
-  frequenz.api.common.v1.metrics.Bounds bounds = 3;
-}
-
-// Response message for the RPC `AddComponentInclusionBounds`.
-message AddComponentInclusionBoundsResponse {
-  // The timestamp until which the given inclusion bounds will stay in effect.
+// Response message for the RPC `AddComponentBounds`.
+message AddComponentBoundsResponse {
+  // The timestamp until which the given bounds will stay in effect.
   google.protobuf.Timestamp ts = 1;
 }
 
