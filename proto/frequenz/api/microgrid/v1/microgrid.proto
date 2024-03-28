@@ -131,7 +131,11 @@ service Microgrid {
   }
 
   // Adds inclusion bounds for a given metric of a given component. Returns the
-  // time at which the bounds will expire (as a timestamp (UTC))
+  // time at which the bounds will expire (as a timestamp (UTC)).
+  //
+  // The request parameters allows users to select a duration until
+  // which the bounds will stay in effect. If no duration is provided, then the
+  // bounds will be removed after a default duration of 5 seconds.
   //
   // Inclusion bounds give the range that the system will try to keep the
   // metric within. If the metric goes outside of these bounds, the system will
@@ -440,6 +444,15 @@ message ReceiveSensorDataStreamResponse {
   frequenz.api.common.v1.microgrid.sensors.SensorData data = 1;
 }
 
+// The duration for which a given list of bounds will stay in effect.
+enum ComponentBoundsValidityDuration {
+  COMPONENT_BOUNDS_VALIDITY_DURATION_UNSPECIFIED = 0;
+  COMPONENT_BOUNDS_VALIDITY_DURATION_5_SECONDS = 1;
+  COMPONENT_BOUNDS_VALIDITY_DURATION_1_MINUTE = 2;
+  COMPONENT_BOUNDS_VALIDITY_DURATION_5_MINUTES = 3;
+  COMPONENT_BOUNDS_VALIDITY_DURATION_15_MINUTES = 4;
+}
+
 // Request parameters for the RPC `AddComponentBounds`.
 message AddComponentBoundsRequest {
   // The ID of the target component.
@@ -453,6 +466,11 @@ message AddComponentBoundsRequest {
   // pairs of bounds are merged into a single pair of bounds, and
   // non-overlapping ones are kept separated.
   repeated frequenz.api.common.v1.metrics.Bounds bounds = 3;
+
+  // The duration for which the given bounds will stay in effect.
+  // If this field is not provided, then the bounds will be removed after a
+  // default duration of 5 seconds.
+  ComponentBoundsValidityDuration validity_duration = 4;
 }
 
 // Response message for the RPC `AddComponentBounds`.

@@ -17,11 +17,13 @@
 - The enum `ComponentBoundsTargetMetric` has been removed in favour of the
   `Metric` enum from `frequenz-api-common`.
 
-<!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
-
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+- The `AddComponentBoundsRequest` message has a field `validity_duration` which
+  allows the user to specify the duration for which the bounds are valid. The
+  bounds will be automatically removed after the specified duration. The client
+  can select between 5 seconds, 1 minute, 5 minutes, and 15 minutes. If set to
+  `UNSPECIFIED`, the bounds will be valid for a default duration of 5 seconds.
 
 ## Bug Fixes
 
