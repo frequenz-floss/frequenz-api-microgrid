@@ -446,15 +446,6 @@ message ReceiveSensorDataStreamResponse {
   frequenz.api.common.v1.microgrid.sensors.SensorData data = 1;
 }
 
-// The duration for which a given list of bounds will stay in effect.
-enum ComponentBoundsValidityDuration {
-  COMPONENT_BOUNDS_VALIDITY_DURATION_UNSPECIFIED = 0;
-  COMPONENT_BOUNDS_VALIDITY_DURATION_5_SECONDS = 1;
-  COMPONENT_BOUNDS_VALIDITY_DURATION_1_MINUTE = 2;
-  COMPONENT_BOUNDS_VALIDITY_DURATION_5_MINUTES = 3;
-  COMPONENT_BOUNDS_VALIDITY_DURATION_15_MINUTES = 4;
-}
-
 // Request parameters for the RPC `AddComponentBounds`.
 message AddComponentBoundsRequest {
   // The ID of the target component.
@@ -469,10 +460,11 @@ message AddComponentBoundsRequest {
   // non-overlapping ones are kept separated.
   repeated frequenz.api.common.v1.metrics.Bounds bounds = 3;
 
-  // The duration for which the given bounds will stay in effect.
-  // If this field is not provided, then the bounds will be removed after a
-  // default duration of 5 seconds.
-  ComponentBoundsValidityDuration validity_duration = 4;
+  // The duration, in seconds, until which the request will stay in effect.
+  // This duration has to be between 10 seconds and 15 minutes (including both
+  // limits), otherwise the request will be rejected.
+  // If not provided, it defaults to 60s.
+  optional uint64 request_lifetime = 4;
 }
 
 // Response message for the RPC `AddComponentBounds`.
