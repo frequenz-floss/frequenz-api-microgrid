@@ -8,6 +8,7 @@
 
 - The minimum supported version of `protobuf` was bumped to 5.28.1 and to 1.66.1 for `grpcio`. Make sure to update your dependencies accordingly.
 - The `AddComponentBoundsRequest.validity_duration` field was replaced by `AddComponentBoundsRequest.request_lifetime` to match the fields in `SetComponentPowerActiveRequest` and `SetComponentPowerReactiveRequest`. The default value was also changed from 5 to 60 seconds.
+- The `AddComponentBoundsResponse.ts` field was renamed to `AddComponentBoundsResponse.valid_until` for extra clarity and also to match the fields in `SetComponentPowerActiveResponse` and `SetComponentPowerReactiveResponse`.
 
 ## New Features
 

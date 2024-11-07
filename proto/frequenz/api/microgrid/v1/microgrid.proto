@@ -469,8 +469,11 @@ message AddComponentBoundsRequest {
 
 // Response message for the RPC `AddComponentBounds`.
 message AddComponentBoundsResponse {
-  // The timestamp until which the given bounds will stay in effect.
-  google.protobuf.Timestamp ts = 1;
+  // The timestamp until which the added bounds will stay in effect.
+  // After this timestamp, the component bounds added by this request will be
+  // removed. By default, this timestamp will be set to the current time plus
+  // 60 seconds.
+  google.protobuf.Timestamp valid_until = 1;
 }
 
 // Request parameters for the RPC `SetComponentPowerActive`.
