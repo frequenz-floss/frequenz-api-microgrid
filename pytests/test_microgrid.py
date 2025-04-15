@@ -3,6 +3,8 @@
 
 """Tests for the frequenz.api.microgrid package."""
 
+import pytest
+
 
 def test_package_import() -> None:
     """Test that the package can be imported."""
@@ -12,6 +14,10 @@ def test_package_import() -> None:
     assert v1 is not None
 
 
+@pytest.mark.filterwarnings(
+    r"ignore:.*Protobuf gencode version .* is exactly one major version older "
+    "than the runtime version.*:UserWarning"
+)
 def test_package_import_microgrid() -> None:
     """Test that the package can be imported."""
     # pylint: disable=import-outside-toplevel
