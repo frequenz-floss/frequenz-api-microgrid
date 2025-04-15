@@ -10,7 +10,7 @@ requires = [
   # sure the code is generated using the minimum supported versions, as older
   # versions can't work with code that was generated with newer versions.
   # https://protobuf.dev/support/cross-version-runtime-guarantee/#backwards
-  "protobuf == 5.29.3",
+  "protobuf == 6.30.2",
   "grpcio-tools == 1.70.0",
   "grpcio == 1.70.0",
 ]
