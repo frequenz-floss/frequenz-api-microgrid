@@ -25,7 +25,7 @@ env:
 jobs:
   protolint:
     name: Check proto files with protolint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Fetch sources
@@ -52,7 +52,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-20.04
+          - ubuntu-24.04
         python:
           - "3.11"
     runs-on: ${{ matrix.os }}
@@ -82,7 +82,7 @@ jobs:
 
   build:
     name: Build distribution packages
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Fetch sources
         uses: actions/checkout@v3
@@ -113,7 +113,7 @@ jobs:
   test-docs:
     name: Test documentation website generation
     if: github.event_name != 'push'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Fetch sources
         uses: actions/checkout@v3
@@ -152,7 +152,7 @@ jobs:
     name: Publish documentation website to GitHub pages
     needs: ["nox", "build", "protolint"]
     if: github.event_name == 'push'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
@@ -238,7 +238,7 @@ jobs:
       # discussions to create the release announcement in the discussion forums
       contents: write
       discussions: write
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Download distribution files
         uses: actions/download-artifact@v3
@@ -280,7 +280,7 @@ jobs:
   publish-to-pypi:
     name: Publish packages to PyPI
     needs: ["create-github-release"]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     permissions:
       # For trusted publishing. See:
       # https://blog.pypi.org/posts/2023-04-20-introducing-trusted-publishers/
