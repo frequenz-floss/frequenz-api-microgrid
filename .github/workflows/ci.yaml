@@ -104,7 +104,7 @@ jobs:
         run: python -m build
 
       - name: Upload distribution files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-packages
           path: dist/
@@ -142,7 +142,7 @@ jobs:
           mike set-default $MIKE_VERSION
 
       - name: Upload site
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docs-site
           path: site/
@@ -241,7 +241,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Download distribution files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist-packages
           path: dist
@@ -287,7 +287,7 @@ jobs:
       id-token: write
     steps:
       - name: Download distribution files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist-packages
           path: dist
