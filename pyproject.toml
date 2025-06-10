@@ -33,8 +33,8 @@ classifiers = [
 ]
 requires-python = ">= 3.11, < 4"
 dependencies = [
-  "frequenz-api-common >= 0.6.2, < 0.7",
-  "googleapis-common-protos >= 1.65.0, < 2",
+  "frequenz-api-common >= 0.6.5, < 0.7",
+  "googleapis-common-protos >= 1.70.0, < 2",
   # We can't widen beyond 6 because of protobuf cross-version runtime guarantees
   # https://protobuf.dev/support/cross-version-runtime-guarantee/#major
   "protobuf >= 6.31.1, < 8", # Do not widen beyond 8!
