@@ -1165,18 +1165,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.target_metric" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.request_lifetime" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;target_metric
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;request_lifetime
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.validity_duration" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.target_metric" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;validity_duration
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;target_metric
     </span>
   </a>
   
@@ -1213,9 +1213,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsResponse.ts" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsResponse.valid_until" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;ts
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;valid_until
     </span>
   </a>
   
@@ -1228,15 +1228,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ComponentBoundsValidityDuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ComponentBoundsValidityDuration
-    </span>
-  </a>
   
 </li>
         
@@ -2206,18 +2197,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.target_metric" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.request_lifetime" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;target_metric
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;request_lifetime
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.validity_duration" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.target_metric" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;validity_duration
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;target_metric
     </span>
   </a>
   
@@ -2254,9 +2245,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsResponse.ts" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsResponse.valid_until" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;ts
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;valid_until
     </span>
   </a>
   
@@ -2269,15 +2260,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ComponentBoundsValidityDuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ComponentBoundsValidityDuration
-    </span>
-  </a>
   
 </li>
         
@@ -3243,6 +3225,33 @@ non-overlapping ones are kept separated.</p>
 
 
 
+<h6 id="frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.request_lifetime" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">request_lifetime</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.request_lifetime" class="headerlink" title="Permanent link">¤</a></h6>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">request_lifetime</span><span class="p">:</span> <span class="n"><span title="builtins.int">int</span></span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>The duration, in seconds, until which the request will stay in effect.
+This duration has to be between 10 seconds and 15 minutes (including both
+limits), otherwise the request will be rejected.
+If not provided, it defaults to 60s.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
 <h6 id="frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.target_metric" class="doc doc-heading">
             <span class="doc doc-object-name doc-attribute-name">target_metric</span>
 
@@ -3258,32 +3267,6 @@ non-overlapping ones are kept separated.</p>
     <div class="doc doc-contents ">
 
         <p>The target metric whose bounds have to be set.</p>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h6 id="frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.validity_duration" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">validity_duration</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-<a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsRequest.validity_duration" class="headerlink" title="Permanent link">¤</a></h6>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">validity_duration</span><span class="p">:</span> <span class="n"><span title="frequenz.api.microgrid.v1.microgrid_pb2.global___ComponentBoundsValidityDuration.ValueType">ValueType</span></span>
-</span></code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>The duration for which the given bounds will stay in effect.
-If this field is not provided, then the bounds will be removed after a
-default duration of 5 seconds.</p>
 
     </div>
 
@@ -3338,77 +3321,28 @@ default duration of 5 seconds.</p>
 
 
 
-<h6 id="frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsResponse.ts" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">ts</span>
+<h6 id="frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsResponse.valid_until" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">valid_until</span>
 
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
-<a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsResponse.ts" class="headerlink" title="Permanent link">¤</a></h6>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">ts</span><span class="p">:</span> <span class="n"><span title="google.protobuf.timestamp_pb2.Timestamp">Timestamp</span></span>
+<a href="#frequenz.api.microgrid.v1.microgrid_pb2.AddComponentBoundsResponse.valid_until" class="headerlink" title="Permanent link">¤</a></h6>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">valid_until</span><span class="p">:</span> <span class="n"><span title="google.protobuf.timestamp_pb2.Timestamp">Timestamp</span></span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
 
-        <p>The timestamp until which the given bounds will stay in effect.</p>
+        <p>The timestamp until which the added bounds will stay in effect.
+After this timestamp, the component bounds added by this request will be
+removed. By default, this timestamp will be set to the current time plus
+60 seconds.</p>
 
     </div>
 
 </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-class">
-
-
-
-<h4 id="frequenz.api.microgrid.v1.microgrid_pb2.ComponentBoundsValidityDuration" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">frequenz.api.microgrid.v1.microgrid_pb2.ComponentBoundsValidityDuration</span>
-
-
-<a href="#frequenz.api.microgrid.v1.microgrid_pb2.ComponentBoundsValidityDuration" class="headerlink" title="Permanent link">¤</a></h4>
-
-
-    <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><span title="frequenz.api.microgrid.v1.microgrid_pb2._ComponentBoundsValidityDuration">_ComponentBoundsValidityDuration</span></code></p>
-
-
-        <p>The duration for which a given list of bounds will stay in effect.</p>
-
-
-
-
-
-
-
-              <details class="quote">
-                <summary>Source code in <code>frequenz/api/microgrid/v1/microgrid_pb2.py</code></summary>
-                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-47">47</a></span>
-<span class="normal"><a href="#__codelineno-0-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ListSensors&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002\r\022\013</span><span class="s1">/v1/sensors&#39;</span>
-</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ListConnections&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
-</span></code></pre></div></td></tr></table></div>
-              </details>
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
 
 
 
@@ -3446,41 +3380,41 @@ default duration of 5 seconds.</p>
 
               <details class="quote">
                 <summary>Source code in <code>frequenz/api/microgrid/v1/microgrid_pb2.py</code></summary>
-                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-57">57</a></span>
-<span class="normal"><a href="#__codelineno-0-58">58</a></span>
-<span class="normal"><a href="#__codelineno-0-59">59</a></span>
-<span class="normal"><a href="#__codelineno-0-60">60</a></span>
-<span class="normal"><a href="#__codelineno-0-61">61</a></span>
-<span class="normal"><a href="#__codelineno-0-62">62</a></span>
-<span class="normal"><a href="#__codelineno-0-63">63</a></span>
-<span class="normal"><a href="#__codelineno-0-64">64</a></span>
-<span class="normal"><a href="#__codelineno-0-65">65</a></span>
-<span class="normal"><a href="#__codelineno-0-66">66</a></span>
-<span class="normal"><a href="#__codelineno-0-67">67</a></span>
-<span class="normal"><a href="#__codelineno-0-68">68</a></span>
-<span class="normal"><a href="#__codelineno-0-69">69</a></span>
-<span class="normal"><a href="#__codelineno-0-70">70</a></span>
-<span class="normal"><a href="#__codelineno-0-71">71</a></span>
-<span class="normal"><a href="#__codelineno-0-72">72</a></span>
-<span class="normal"><a href="#__codelineno-0-73">73</a></span>
-<span class="normal"><a href="#__codelineno-0-74">74</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;SetComponentPowerReactive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">8</span><span class="se">\022</span><span class="s1">6/v1/components/</span><span class="si">{component_id}</span><span class="s1">/setPowerReactive/</span><span class="si">{power}</span><span class="s1">&#39;</span>
-</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;StartComponent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;StartComponent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">%</span><span class="se">\022</span><span class="s1">#/v1/components/</span><span class="si">{component_id}</span><span class="s1">/start&#39;</span>
-</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;PutComponentInStandby&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;PutComponentInStandby&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002\&#39;\022</span><span class="s1">%/v1/components/</span><span class="si">{component_id}</span><span class="s1">/standby&#39;</span>
-</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;StopComponent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;StopComponent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">$</span><span class="se">\022\&quot;</span><span class="s1">/v1/components/</span><span class="si">{component_id}</span><span class="s1">/stop&#39;</span>
-</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;AckComponentError&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;AckComponentError&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">(</span><span class="se">\022</span><span class="s1">&amp;/v1/components/</span><span class="si">{component_id}</span><span class="s1">/errorAck&#39;</span>
-</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_COMPONENTBOUNDSVALIDITYDURATION&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2783</span>
-</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_COMPONENTBOUNDSVALIDITYDURATION&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3068</span>
-</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_GETMICROGRIDMETADATARESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">429</span>
-</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_GETMICROGRIDMETADATARESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">523</span>
-</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCOMPONENTSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">526</span>
-</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCOMPONENTSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">656</span>
-</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCOMPONENTSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">658</span>
-</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCOMPONENTSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">758</span>
-</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTSENSORREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">760</span>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="kn">from</span><span class="w"> </span><span class="nn">frequenz.api.common.v1.microgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">microgrid_pb2</span> <span class="k">as</span> <span class="n">frequenz_dot_api_dot_common_dot_v1_dot_microgrid_dot_microgrid__pb2</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="kn">from</span><span class="w"> </span><span class="nn">frequenz.api.common.v1.microgrid.sensors</span><span class="w"> </span><span class="kn">import</span> <span class="n">sensors_pb2</span> <span class="k">as</span> <span class="n">frequenz_dot_api_dot_common_dot_v1_dot_microgrid_dot_sensors_dot_sensors__pb2</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="kn">from</span><span class="w"> </span><span class="nn">google.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations_pb2</span> <span class="k">as</span> <span class="n">google_dot_api_dot_annotations__pb2</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="kn">from</span><span class="w"> </span><span class="nn">google.protobuf</span><span class="w"> </span><span class="kn">import</span> <span class="n">empty_pb2</span> <span class="k">as</span> <span class="n">google_dot_protobuf_dot_empty__pb2</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="kn">from</span><span class="w"> </span><span class="nn">google.protobuf</span><span class="w"> </span><span class="kn">import</span> <span class="n">timestamp_pb2</span> <span class="k">as</span> <span class="n">google_dot_protobuf_dot_timestamp__pb2</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="n">DESCRIPTOR</span> <span class="o">=</span> <span class="n">_descriptor_pool</span><span class="o">.</span><span class="n">Default</span><span class="p">()</span><span class="o">.</span><span class="n">AddSerializedFile</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">)frequenz/api/microgrid/v1/microgrid.proto</span><span class="se">\x12\x19\x66</span><span class="s1">requenz.api.microgrid.v1</span><span class="se">\x1a</span><span class="s1">+frequenz/api/common/v1/metrics/bounds.proto</span><span class="se">\x1a\x32\x66</span><span class="s1">requenz/api/common/v1/metrics/metric_sample.proto</span><span class="se">\x1a</span><span class="s1">&lt;frequenz/api/common/v1/microgrid/components/components.proto</span><span class="se">\x1a\x30\x66</span><span class="s1">requenz/api/common/v1/microgrid/microgrid.proto</span><span class="se">\x1a\x36\x66</span><span class="s1">requenz/api/common/v1/microgrid/sensors/sensors.proto</span><span class="se">\x1a\x1c</span><span class="s1">google/api/annotations.proto</span><span class="se">\x1a\x1b</span><span class="s1">google/protobuf/empty.proto</span><span class="se">\x1a\x1f</span><span class="s1">google/protobuf/timestamp.proto</span><span class="se">\&quot;</span><span class="s1">^</span><span class="se">\n\x1c</span><span class="s1">GetMicrogridMetadataResponse</span><span class="se">\x12</span><span class="s1">&gt;</span><span class="se">\n\t</span><span class="s1">microgrid</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0b\x32</span><span class="s1">+.frequenz.api.common.v1.microgrid.Microgrid</span><span class="se">\&quot;\x82\x01\n\x15</span><span class="s1">ListComponentsRequest</span><span class="se">\x12\x15\n\r</span><span class="s1">component_ids</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x04\x12</span><span class="s1">R</span><span class="se">\n\n</span><span class="s1">categories</span><span class="se">\x18\x02</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x0e\x32</span><span class="s1">&gt;.frequenz.api.common.v1.microgrid.components.ComponentCategory</span><span class="se">\&quot;</span><span class="s1">d</span><span class="se">\n\x16</span><span class="s1">ListComponentsResponse</span><span class="se">\x12</span><span class="s1">J</span><span class="se">\n\n</span><span class="s1">components</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x0b\x32\x36</span><span class="s1">.frequenz.api.common.v1.microgrid.components.Component</span><span class="se">\&quot;</span><span class="s1">u</span><span class="se">\n\x11</span><span class="s1">ListSensorRequest</span><span class="se">\x12\x12\n\n</span><span class="s1">sensor_ids</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x04\x12</span><span class="s1">L</span><span class="se">\n\n</span><span class="s1">categories</span><span class="se">\x18\x02</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x0e\x32\x38</span><span class="s1">.frequenz.api.common.v1.microgrid.sensors.SensorCategory</span><span class="se">\&quot;</span><span class="s1">X</span><span class="se">\n\x13</span><span class="s1">ListSensorsResponse</span><span class="se">\x12\x41\n\x07</span><span class="s1">sensors</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x0b\x32\x30</span><span class="s1">.frequenz.api.common.v1.microgrid.sensors.Sensor</span><span class="se">\&quot;</span><span class="s1">6</span><span class="se">\n\x16</span><span class="s1">ListConnectionsRequest</span><span class="se">\x12\x0e\n\x06</span><span class="s1">starts</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x04\x12\x0c\n\x04\x65</span><span class="s1">nds</span><span class="se">\x18\x02</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x04\&quot;</span><span class="s1">p</span><span class="se">\n\x17</span><span class="s1">ListConnectionsResponse</span><span class="se">\x12</span><span class="s1">U</span><span class="se">\n\x0b\x63</span><span class="s1">onnections</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x0b\x32</span><span class="s1">@.frequenz.api.common.v1.microgrid.components.ComponentConnection</span><span class="se">\&quot;\xf7\x01\n</span><span class="s1">!ReceiveComponentDataStreamRequest</span><span class="se">\x12\x14\n\x0c\x63</span><span class="s1">omponent_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\x12\x66\n\x06\x66</span><span class="s1">ilter</span><span class="se">\x18\x02</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0b\x32</span><span class="s1">V.frequenz.api.microgrid.v1.ReceiveComponentDataStreamRequest.ComponentDataStreamFilter</span><span class="se">\x1a</span><span class="s1">T</span><span class="se">\n\x19\x43</span><span class="s1">omponentDataStreamFilter</span><span class="se">\x12\x37\n\x07</span><span class="s1">metrics</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x0e\x32</span><span class="s1">&amp;.frequenz.api.common.v1.metrics.Metric</span><span class="se">\&quot;</span><span class="s1">n</span><span class="se">\n\&quot;</span><span class="s1">ReceiveComponentDataStreamResponse</span><span class="se">\x12</span><span class="s1">H</span><span class="se">\n\x04\x64\x61</span><span class="s1">ta</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0b\x32</span><span class="s1">:.frequenz.api.common.v1.microgrid.components.ComponentData</span><span class="se">\&quot;\xe8\x01\n\x1e</span><span class="s1">ReceiveSensorDataStreamRequest</span><span class="se">\x12\x11\n\t</span><span class="s1">sensor_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\x12</span><span class="s1">`</span><span class="se">\n\x06\x66</span><span class="s1">ilter</span><span class="se">\x18\x02</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0b\x32</span><span class="s1">P.frequenz.api.microgrid.v1.ReceiveSensorDataStreamRequest.SensorDataStreamFilter</span><span class="se">\x1a</span><span class="s1">Q</span><span class="se">\n\x16</span><span class="s1">SensorDataStreamFilter</span><span class="se">\x12\x37\n\x07</span><span class="s1">metrics</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x0e\x32</span><span class="s1">&amp;.frequenz.api.common.v1.metrics.Metric</span><span class="se">\&quot;</span><span class="s1">e</span><span class="se">\n\x1f</span><span class="s1">ReceiveSensorDataStreamResponse</span><span class="se">\x12\x42\n\x04\x64\x61</span><span class="s1">ta</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0b\x32\x34</span><span class="s1">.frequenz.api.common.v1.microgrid.sensors.SensorData</span><span class="se">\&quot;\xdc\x01\n\x19\x41\x64\x64\x43</span><span class="s1">omponentBoundsRequest</span><span class="se">\x12\x14\n\x0c\x63</span><span class="s1">omponent_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\x12</span><span class="s1">=</span><span class="se">\n\r</span><span class="s1">target_metric</span><span class="se">\x18\x02</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0e\x32</span><span class="s1">&amp;.frequenz.api.common.v1.metrics.Metric</span><span class="se">\x12\x36\n\x06\x62</span><span class="s1">ounds</span><span class="se">\x18\x03</span><span class="s1"> </span><span class="se">\x03</span><span class="s1">(</span><span class="se">\x0b\x32</span><span class="s1">&amp;.frequenz.api.common.v1.metrics.Bounds</span><span class="se">\x12\x1d\n\x10</span><span class="s1">request_lifetime</span><span class="se">\x18\x04</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04</span><span class="s1">H</span><span class="se">\x00\x88\x01\x01\x42\x13\n\x11</span><span class="s1">_request_lifetime</span><span class="se">\&quot;</span><span class="s1">M</span><span class="se">\n\x1a\x41\x64\x64\x43</span><span class="s1">omponentBoundsResponse</span><span class="se">\x12</span><span class="s1">/</span><span class="se">\n\x0b</span><span class="s1">valid_until</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0b\x32\x1a</span><span class="s1">.google.protobuf.Timestamp</span><span class="se">\&quot;</span><span class="s1">y</span><span class="se">\n\x1e</span><span class="s1">SetComponentPowerActiveRequest</span><span class="se">\x12\x14\n\x0c\x63</span><span class="s1">omponent_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\x12\r\n\x05</span><span class="s1">power</span><span class="se">\x18\x02</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x02\x12\x1d\n\x10</span><span class="s1">request_lifetime</span><span class="se">\x18\x03</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04</span><span class="s1">H</span><span class="se">\x00\x88\x01\x01\x42\x13\n\x11</span><span class="s1">_request_lifetime</span><span class="se">\&quot;</span><span class="s1">R</span><span class="se">\n\x1f</span><span class="s1">SetComponentPowerActiveResponse</span><span class="se">\x12</span><span class="s1">/</span><span class="se">\n\x0b</span><span class="s1">valid_until</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0b\x32\x1a</span><span class="s1">.google.protobuf.Timestamp</span><span class="se">\&quot;</span><span class="s1">{</span><span class="se">\n</span><span class="s1"> SetComponentPowerReactiveRequest</span><span class="se">\x12\x14\n\x0c\x63</span><span class="s1">omponent_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\x12\r\n\x05</span><span class="s1">power</span><span class="se">\x18\x02</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x02\x12\x1d\n\x10</span><span class="s1">request_lifetime</span><span class="se">\x18\x03</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04</span><span class="s1">H</span><span class="se">\x00\x88\x01\x01\x42\x13\n\x11</span><span class="s1">_request_lifetime</span><span class="se">\&quot;</span><span class="s1">T</span><span class="se">\n</span><span class="s1">!SetComponentPowerReactiveResponse</span><span class="se">\x12</span><span class="s1">/</span><span class="se">\n\x0b</span><span class="s1">valid_until</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x0b\x32\x1a</span><span class="s1">.google.protobuf.Timestamp</span><span class="se">\&quot;</span><span class="s1">-</span><span class="se">\n\x15</span><span class="s1">StartComponentRequest</span><span class="se">\x12\x14\n\x0c\x63</span><span class="s1">omponent_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\&quot;</span><span class="s1">4</span><span class="se">\n\x1c</span><span class="s1">PutComponentInStandbyRequest</span><span class="se">\x12\x14\n\x0c\x63</span><span class="s1">omponent_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\&quot;</span><span class="s1">,</span><span class="se">\n\x14</span><span class="s1">StopComponentRequest</span><span class="se">\x12\x14\n\x0c\x63</span><span class="s1">omponent_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\&quot;</span><span class="s1">0</span><span class="se">\n\x18\x41\x63</span><span class="s1">kComponentErrorRequest</span><span class="se">\x12\x14\n\x0c\x63</span><span class="s1">omponent_id</span><span class="se">\x18\x01</span><span class="s1"> </span><span class="se">\x01</span><span class="s1">(</span><span class="se">\x04\x32\xa2\x10\n\t</span><span class="s1">Microgrid</span><span class="se">\x12</span><span class="s1">}</span><span class="se">\n\x14</span><span class="s1">GetMicrogridMetadata</span><span class="se">\x12\x16</span><span class="s1">.google.protobuf.Empty</span><span class="se">\x1a\x37</span><span class="s1">.frequenz.api.microgrid.v1.GetMicrogridMetadataResponse</span><span class="se">\&quot;\x14\x82\xd3\xe4\x93\x02\x0e\x12\x0c</span><span class="s1">/v1/metadata</span><span class="se">\x12\x8d\x01\n\x0e</span><span class="s1">ListComponents</span><span class="se">\x12\x30</span><span class="s1">.frequenz.api.microgrid.v1.ListComponentsRequest</span><span class="se">\x1a\x31</span><span class="s1">.frequenz.api.microgrid.v1.ListComponentsResponse</span><span class="se">\&quot;\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e</span><span class="s1">/v1/components</span><span class="se">\x12\x80\x01\n\x0b</span><span class="s1">ListSensors</span><span class="se">\x12</span><span class="s1">,.frequenz.api.microgrid.v1.ListSensorRequest</span><span class="se">\x1a</span><span class="s1">..frequenz.api.microgrid.v1.ListSensorsResponse</span><span class="se">\&quot;\x13\x82\xd3\xe4\x93\x02\r\x12\x0b</span><span class="s1">/v1/sensors</span><span class="se">\x12\x91\x01\n\x0f</span><span class="s1">ListConnections</span><span class="se">\x12\x31</span><span class="s1">.frequenz.api.microgrid.v1.ListConnectionsRequest</span><span class="se">\x1a\x32</span><span class="s1">.frequenz.api.microgrid.v1.ListConnectionsResponse</span><span class="se">\&quot;\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f</span><span class="s1">/v1/connections</span><span class="se">\x12\xc7\x01\n\x1a</span><span class="s1">ReceiveComponentDataStream</span><span class="se">\x12</span><span class="s1">&lt;.frequenz.api.microgrid.v1.ReceiveComponentDataStreamRequest</span><span class="se">\x1a</span><span class="s1">=.frequenz.api.microgrid.v1.ReceiveComponentDataStreamResponse</span><span class="se">\&quot;</span><span class="s1">*</span><span class="se">\x82\xd3\xe4\x93\x02</span><span class="s1">$</span><span class="se">\x12\&quot;</span><span class="s1">/v1/components/</span><span class="si">{component_id}</span><span class="s1">/data0</span><span class="se">\x01\x12\xb8\x01\n\x17</span><span class="s1">ReceiveSensorDataStream</span><span class="se">\x12\x39</span><span class="s1">.frequenz.api.microgrid.v1.ReceiveSensorDataStreamRequest</span><span class="se">\x1a</span><span class="s1">:.frequenz.api.microgrid.v1.ReceiveSensorDataStreamResponse</span><span class="se">\&quot;</span><span class="s1">$</span><span class="se">\x82\xd3\xe4\x93\x02\x1e\x12\x1c</span><span class="s1">/v1/sensors/</span><span class="si">{sensor_id}</span><span class="s1">/data0</span><span class="se">\x01\x12\x81\x01\n\x12\x41\x64\x64\x43</span><span class="s1">omponentBounds</span><span class="se">\x12\x34</span><span class="s1">.frequenz.api.microgrid.v1.AddComponentBoundsRequest</span><span class="se">\x1a\x35</span><span class="s1">.frequenz.api.microgrid.v1.AddComponentBoundsResponse</span><span class="se">\x12\xce\x01\n\x17</span><span class="s1">SetComponentPowerActive</span><span class="se">\x12\x39</span><span class="s1">.frequenz.api.microgrid.v1.SetComponentPowerActiveRequest</span><span class="se">\x1a</span><span class="s1">:.frequenz.api.microgrid.v1.SetComponentPowerActiveResponse</span><span class="se">\&quot;</span><span class="s1">&lt;</span><span class="se">\x82\xd3\xe4\x93\x02\x36\x12\x34</span><span class="s1">/v1/components/</span><span class="si">{component_id}</span><span class="s1">/setPowerActive/</span><span class="si">{power}</span><span class="se">\x12\xd6\x01\n\x19</span><span class="s1">SetComponentPowerReactive</span><span class="se">\x12</span><span class="s1">;.frequenz.api.microgrid.v1.SetComponentPowerReactiveRequest</span><span class="se">\x1a</span><span class="s1">&lt;.frequenz.api.microgrid.v1.SetComponentPowerReactiveResponse</span><span class="se">\&quot;</span><span class="s1">&gt;</span><span class="se">\x82\xd3\xe4\x93\x02\x38\x12\x36</span><span class="s1">/v1/components/</span><span class="si">{component_id}</span><span class="s1">/setPowerReactive/</span><span class="si">{power}</span><span class="se">\x12\x87\x01\n\x0e</span><span class="s1">StartComponent</span><span class="se">\x12\x30</span><span class="s1">.frequenz.api.microgrid.v1.StartComponentRequest</span><span class="se">\x1a\x16</span><span class="s1">.google.protobuf.Empty</span><span class="se">\&quot;</span><span class="s1">+</span><span class="se">\x82\xd3\xe4\x93\x02</span><span class="s1">%</span><span class="se">\x12</span><span class="s1">#/v1/components/</span><span class="si">{component_id}</span><span class="s1">/start</span><span class="se">\x12\x97\x01\n\x15</span><span class="s1">PutComponentInStandby</span><span class="se">\x12\x37</span><span class="s1">.frequenz.api.microgrid.v1.PutComponentInStandbyRequest</span><span class="se">\x1a\x16</span><span class="s1">.google.protobuf.Empty</span><span class="se">\&quot;</span><span class="s1">-</span><span class="se">\x82\xd3\xe4\x93\x02\&#39;\x12</span><span class="s1">%/v1/components/</span><span class="si">{component_id}</span><span class="s1">/standby</span><span class="se">\x12\x84\x01\n\r</span><span class="s1">StopComponent</span><span class="se">\x12</span><span class="s1">/.frequenz.api.microgrid.v1.StopComponentRequest</span><span class="se">\x1a\x16</span><span class="s1">.google.protobuf.Empty</span><span class="se">\&quot;</span><span class="s1">*</span><span class="se">\x82\xd3\xe4\x93\x02</span><span class="s1">$</span><span class="se">\x12\&quot;</span><span class="s1">/v1/components/</span><span class="si">{component_id}</span><span class="s1">/stop</span><span class="se">\x12\x90\x01\n\x11\x41\x63</span><span class="s1">kComponentError</span><span class="se">\x12\x33</span><span class="s1">.frequenz.api.microgrid.v1.AckComponentErrorRequest</span><span class="se">\x1a\x16</span><span class="s1">.google.protobuf.Empty</span><span class="se">\&quot;</span><span class="s1">.</span><span class="se">\x82\xd3\xe4\x93\x02</span><span class="s1">(</span><span class="se">\x12</span><span class="s1">&amp;/v1/components/</span><span class="si">{component_id}</span><span class="s1">/errorAckb</span><span class="se">\x06</span><span class="s1">proto3&#39;</span><span class="p">)</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36"></a>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="n">_globals</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="n">_builder</span><span class="o">.</span><span class="n">BuildMessageAndEnumDescriptors</span><span class="p">(</span><span class="n">DESCRIPTOR</span><span class="p">,</span> <span class="n">_globals</span><span class="p">)</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="n">_builder</span><span class="o">.</span><span class="n">BuildTopDescriptorsAndMessages</span><span class="p">(</span><span class="n">DESCRIPTOR</span><span class="p">,</span> <span class="s1">&#39;frequenz.api.microgrid.v1.microgrid_pb2&#39;</span><span class="p">,</span> <span class="n">_globals</span><span class="p">)</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">_descriptor</span><span class="o">.</span><span class="n">_USE_C_DESCRIPTORS</span><span class="p">:</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41"></a>  <span class="n">DESCRIPTOR</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;GetMicrogridMetadata&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;GetMicrogridMetadata&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002\016\022\014</span><span class="s1">/v1/metadata&#39;</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ListComponents&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ListComponents&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002\020\022\016</span><span class="s1">/v1/components&#39;</span>
 </span></code></pre></div></td></tr></table></div>
               </details>
 
@@ -3555,55 +3489,55 @@ Contains filtering parameters for listing components.</p>
 
               <details class="quote">
                 <summary>Source code in <code>frequenz/api/microgrid/v1/microgrid_pb2.py</code></summary>
-                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-78"> 78</a></span>
-<span class="normal"><a href="#__codelineno-0-79"> 79</a></span>
-<span class="normal"><a href="#__codelineno-0-80"> 80</a></span>
-<span class="normal"><a href="#__codelineno-0-81"> 81</a></span>
-<span class="normal"><a href="#__codelineno-0-82"> 82</a></span>
-<span class="normal"><a href="#__codelineno-0-83"> 83</a></span>
-<span class="normal"><a href="#__codelineno-0-84"> 84</a></span>
-<span class="normal"><a href="#__codelineno-0-85"> 85</a></span>
-<span class="normal"><a href="#__codelineno-0-86"> 86</a></span>
-<span class="normal"><a href="#__codelineno-0-87"> 87</a></span>
-<span class="normal"><a href="#__codelineno-0-88"> 88</a></span>
-<span class="normal"><a href="#__codelineno-0-89"> 89</a></span>
-<span class="normal"><a href="#__codelineno-0-90"> 90</a></span>
-<span class="normal"><a href="#__codelineno-0-91"> 91</a></span>
-<span class="normal"><a href="#__codelineno-0-92"> 92</a></span>
-<span class="normal"><a href="#__codelineno-0-93"> 93</a></span>
-<span class="normal"><a href="#__codelineno-0-94"> 94</a></span>
-<span class="normal"><a href="#__codelineno-0-95"> 95</a></span>
-<span class="normal"><a href="#__codelineno-0-96"> 96</a></span>
-<span class="normal"><a href="#__codelineno-0-97"> 97</a></span>
-<span class="normal"><a href="#__codelineno-0-98"> 98</a></span>
-<span class="normal"><a href="#__codelineno-0-99"> 99</a></span>
-<span class="normal"><a href="#__codelineno-0-100">100</a></span>
-<span class="normal"><a href="#__codelineno-0-101">101</a></span>
-<span class="normal"><a href="#__codelineno-0-102">102</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCONNECTIONSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">969</span>
-</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCONNECTIONSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1023</span>
-</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCONNECTIONSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1025</span>
-</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCONNECTIONSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1137</span>
-</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1140</span>
-</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1387</span>
-</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMREQUEST_COMPONENTDATASTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1303</span>
-</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMREQUEST_COMPONENTDATASTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1387</span>
-</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1389</span>
-</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1499</span>
-</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1502</span>
-</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1734</span>
-</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMREQUEST_SENSORDATASTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1653</span>
-</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMREQUEST_SENSORDATASTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1734</span>
-</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1736</span>
-</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1837</span>
-</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ADDCOMPONENTBOUNDSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1840</span>
-</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ADDCOMPONENTBOUNDSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2095</span>
-</span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ADDCOMPONENTBOUNDSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2097</span>
-</span><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ADDCOMPONENTBOUNDSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2165</span>
-</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERACTIVEREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2167</span>
-</span><span id="__span-0-99"><a id="__codelineno-0-99" name="__codelineno-0-99"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERACTIVEREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2288</span>
-</span><span id="__span-0-100"><a id="__codelineno-0-100" name="__codelineno-0-100"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERACTIVERESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2290</span>
-</span><span id="__span-0-101"><a id="__codelineno-0-101" name="__codelineno-0-101"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERACTIVERESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2372</span>
-</span><span id="__span-0-102"><a id="__codelineno-0-102" name="__codelineno-0-102"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERREACTIVEREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2374</span>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#__codelineno-0-62">62</a></span>
+<span class="normal"><a href="#__codelineno-0-63">63</a></span>
+<span class="normal"><a href="#__codelineno-0-64">64</a></span>
+<span class="normal"><a href="#__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#__codelineno-0-66">66</a></span>
+<span class="normal"><a href="#__codelineno-0-67">67</a></span>
+<span class="normal"><a href="#__codelineno-0-68">68</a></span>
+<span class="normal"><a href="#__codelineno-0-69">69</a></span>
+<span class="normal"><a href="#__codelineno-0-70">70</a></span>
+<span class="normal"><a href="#__codelineno-0-71">71</a></span>
+<span class="normal"><a href="#__codelineno-0-72">72</a></span>
+<span class="normal"><a href="#__codelineno-0-73">73</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ListConnections&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002\021\022\017</span><span class="s1">/v1/connections&#39;</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ReceiveComponentDataStream&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ReceiveComponentDataStream&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">$</span><span class="se">\022\&quot;</span><span class="s1">/v1/components/</span><span class="si">{component_id}</span><span class="s1">/data&#39;</span>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ReceiveSensorDataStream&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;ReceiveSensorDataStream&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002\036\022\034</span><span class="s1">/v1/sensors/</span><span class="si">{sensor_id}</span><span class="s1">/data&#39;</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;SetComponentPowerActive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;SetComponentPowerActive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">6</span><span class="se">\022</span><span class="s1">4/v1/components/</span><span class="si">{component_id}</span><span class="s1">/setPowerActive/</span><span class="si">{power}</span><span class="s1">&#39;</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;SetComponentPowerReactive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;SetComponentPowerReactive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">8</span><span class="se">\022</span><span class="s1">6/v1/components/</span><span class="si">{component_id}</span><span class="s1">/setPowerReactive/</span><span class="si">{power}</span><span class="s1">&#39;</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;StartComponent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;StartComponent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">%</span><span class="se">\022</span><span class="s1">#/v1/components/</span><span class="si">{component_id}</span><span class="s1">/start&#39;</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;PutComponentInStandby&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;PutComponentInStandby&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002\&#39;\022</span><span class="s1">%/v1/components/</span><span class="si">{component_id}</span><span class="s1">/standby&#39;</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;StopComponent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;StopComponent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">$</span><span class="se">\022\&quot;</span><span class="s1">/v1/components/</span><span class="si">{component_id}</span><span class="s1">/stop&#39;</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;AckComponentError&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_loaded_options</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">methods_by_name</span><span class="p">[</span><span class="s1">&#39;AckComponentError&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_options</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\202\323\344\223\002</span><span class="s1">(</span><span class="se">\022</span><span class="s1">&amp;/v1/components/</span><span class="si">{component_id}</span><span class="s1">/errorAck&#39;</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_GETMICROGRIDMETADATARESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">429</span>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_GETMICROGRIDMETADATARESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">523</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCOMPONENTSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">526</span>
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCOMPONENTSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">656</span>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCOMPONENTSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">658</span>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCOMPONENTSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">758</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTSENSORREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">760</span>
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTSENSORREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">877</span>
 </span></code></pre></div></td></tr></table></div>
               </details>
 
@@ -3702,27 +3636,39 @@ Used as the return type in the RPC <code>ListComponents</code>.</p>
 
               <details class="quote">
                 <summary>Source code in <code>frequenz/api/microgrid/v1/microgrid_pb2.py</code></summary>
-                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-106">106</a></span>
-<span class="normal"><a href="#__codelineno-0-107">107</a></span>
-<span class="normal"><a href="#__codelineno-0-108">108</a></span>
-<span class="normal"><a href="#__codelineno-0-109">109</a></span>
-<span class="normal"><a href="#__codelineno-0-110">110</a></span>
-<span class="normal"><a href="#__codelineno-0-111">111</a></span>
-<span class="normal"><a href="#__codelineno-0-112">112</a></span>
-<span class="normal"><a href="#__codelineno-0-113">113</a></span>
-<span class="normal"><a href="#__codelineno-0-114">114</a></span>
-<span class="normal"><a href="#__codelineno-0-115">115</a></span>
-<span class="normal"><a href="#__codelineno-0-116">116</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-106"><a id="__codelineno-0-106" name="__codelineno-0-106"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_STARTCOMPONENTREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2585</span>
-</span><span id="__span-0-107"><a id="__codelineno-0-107" name="__codelineno-0-107"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_STARTCOMPONENTREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2630</span>
-</span><span id="__span-0-108"><a id="__codelineno-0-108" name="__codelineno-0-108"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_PUTCOMPONENTINSTANDBYREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2632</span>
-</span><span id="__span-0-109"><a id="__codelineno-0-109" name="__codelineno-0-109"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_PUTCOMPONENTINSTANDBYREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2684</span>
-</span><span id="__span-0-110"><a id="__codelineno-0-110" name="__codelineno-0-110"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_STOPCOMPONENTREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2686</span>
-</span><span id="__span-0-111"><a id="__codelineno-0-111" name="__codelineno-0-111"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_STOPCOMPONENTREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2730</span>
-</span><span id="__span-0-112"><a id="__codelineno-0-112" name="__codelineno-0-112"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ACKCOMPONENTERRORREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2732</span>
-</span><span id="__span-0-113"><a id="__codelineno-0-113" name="__codelineno-0-113"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ACKCOMPONENTERRORREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2780</span>
-</span><span id="__span-0-114"><a id="__codelineno-0-114" name="__codelineno-0-114"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3071</span>
-</span><span id="__span-0-115"><a id="__codelineno-0-115" name="__codelineno-0-115"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">5153</span>
-</span><span id="__span-0-116"><a id="__codelineno-0-116" name="__codelineno-0-116"></a><span class="c1"># @@protoc_insertion_point(module_scope)</span>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-77">77</a></span>
+<span class="normal"><a href="#__codelineno-0-78">78</a></span>
+<span class="normal"><a href="#__codelineno-0-79">79</a></span>
+<span class="normal"><a href="#__codelineno-0-80">80</a></span>
+<span class="normal"><a href="#__codelineno-0-81">81</a></span>
+<span class="normal"><a href="#__codelineno-0-82">82</a></span>
+<span class="normal"><a href="#__codelineno-0-83">83</a></span>
+<span class="normal"><a href="#__codelineno-0-84">84</a></span>
+<span class="normal"><a href="#__codelineno-0-85">85</a></span>
+<span class="normal"><a href="#__codelineno-0-86">86</a></span>
+<span class="normal"><a href="#__codelineno-0-87">87</a></span>
+<span class="normal"><a href="#__codelineno-0-88">88</a></span>
+<span class="normal"><a href="#__codelineno-0-89">89</a></span>
+<span class="normal"><a href="#__codelineno-0-90">90</a></span>
+<span class="normal"><a href="#__codelineno-0-91">91</a></span>
+<span class="normal"><a href="#__codelineno-0-92">92</a></span>
+<span class="normal"><a href="#__codelineno-0-93">93</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCONNECTIONSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1023</span>
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCONNECTIONSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1025</span>
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTCONNECTIONSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1137</span>
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1140</span>
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1387</span>
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMREQUEST_COMPONENTDATASTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1303</span>
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMREQUEST_COMPONENTDATASTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1387</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1389</span>
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVECOMPONENTDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1499</span>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1502</span>
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1734</span>
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMREQUEST_SENSORDATASTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1653</span>
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMREQUEST_SENSORDATASTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1734</span>
+</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1736</span>
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1837</span>
+</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ADDCOMPONENTBOUNDSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1840</span>
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ADDCOMPONENTBOUNDSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2060</span>
 </span></code></pre></div></td></tr></table></div>
               </details>
 
@@ -3939,6 +3885,45 @@ Contains filtering parameters for listing sensors.</p>
 
 
 
+              <details class="quote">
+                <summary>Source code in <code>frequenz/api/microgrid/v1/microgrid_pb2.py</code></summary>
+                <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-0-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-0-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-0-100">100</a></span>
+<span class="normal"><a href="#__codelineno-0-101">101</a></span>
+<span class="normal"><a href="#__codelineno-0-102">102</a></span>
+<span class="normal"><a href="#__codelineno-0-103">103</a></span>
+<span class="normal"><a href="#__codelineno-0-104">104</a></span>
+<span class="normal"><a href="#__codelineno-0-105">105</a></span>
+<span class="normal"><a href="#__codelineno-0-106">106</a></span>
+<span class="normal"><a href="#__codelineno-0-107">107</a></span>
+<span class="normal"><a href="#__codelineno-0-108">108</a></span>
+<span class="normal"><a href="#__codelineno-0-109">109</a></span>
+<span class="normal"><a href="#__codelineno-0-110">110</a></span>
+<span class="normal"><a href="#__codelineno-0-111">111</a></span>
+<span class="normal"><a href="#__codelineno-0-112">112</a></span>
+<span class="normal"><a href="#__codelineno-0-113">113</a></span>
+<span class="normal"><a href="#__codelineno-0-114">114</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERACTIVEREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2262</span>
+</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERACTIVERESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2264</span>
+</span><span id="__span-0-99"><a id="__codelineno-0-99" name="__codelineno-0-99"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERACTIVERESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2346</span>
+</span><span id="__span-0-100"><a id="__codelineno-0-100" name="__codelineno-0-100"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERREACTIVEREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2348</span>
+</span><span id="__span-0-101"><a id="__codelineno-0-101" name="__codelineno-0-101"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERREACTIVEREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2471</span>
+</span><span id="__span-0-102"><a id="__codelineno-0-102" name="__codelineno-0-102"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERREACTIVERESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2473</span>
+</span><span id="__span-0-103"><a id="__codelineno-0-103" name="__codelineno-0-103"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_SETCOMPONENTPOWERREACTIVERESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2557</span>
+</span><span id="__span-0-104"><a id="__codelineno-0-104" name="__codelineno-0-104"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_STARTCOMPONENTREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2559</span>
+</span><span id="__span-0-105"><a id="__codelineno-0-105" name="__codelineno-0-105"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_STARTCOMPONENTREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2604</span>
+</span><span id="__span-0-106"><a id="__codelineno-0-106" name="__codelineno-0-106"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_PUTCOMPONENTINSTANDBYREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2606</span>
+</span><span id="__span-0-107"><a id="__codelineno-0-107" name="__codelineno-0-107"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_PUTCOMPONENTINSTANDBYREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2658</span>
+</span><span id="__span-0-108"><a id="__codelineno-0-108" name="__codelineno-0-108"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_STOPCOMPONENTREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2660</span>
+</span><span id="__span-0-109"><a id="__codelineno-0-109" name="__codelineno-0-109"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_STOPCOMPONENTREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2704</span>
+</span><span id="__span-0-110"><a id="__codelineno-0-110" name="__codelineno-0-110"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ACKCOMPONENTERRORREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2706</span>
+</span><span id="__span-0-111"><a id="__codelineno-0-111" name="__codelineno-0-111"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_ACKCOMPONENTERRORREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2754</span>
+</span><span id="__span-0-112"><a id="__codelineno-0-112" name="__codelineno-0-112"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2757</span>
+</span><span id="__span-0-113"><a id="__codelineno-0-113" name="__codelineno-0-113"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_MICROGRID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">4839</span>
+</span><span id="__span-0-114"><a id="__codelineno-0-114" name="__codelineno-0-114"></a><span class="c1"># @@protoc_insertion_point(module_scope)</span>
+</span></code></pre></div></td></tr></table></div>
+              </details>
 
 
 

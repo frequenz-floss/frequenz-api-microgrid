@@ -985,15 +985,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#componentboundsvalidityduration" class="md-nav__link">
-    <span class="md-ellipsis">
-      ComponentBoundsValidityDuration
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#microgrid" class="md-nav__link">
     <span class="md-ellipsis">
       Microgrid
@@ -1677,15 +1668,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#componentboundsvalidityduration" class="md-nav__link">
-    <span class="md-ellipsis">
-      ComponentBoundsValidityDuration
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#microgrid" class="md-nav__link">
     <span class="md-ellipsis">
       Microgrid
@@ -1760,9 +1742,6 @@
 <p><a href="#frequenz-api-microgrid-v1-StopComponentRequest">StopComponentRequest</a></p>
 </li>
 <li>
-<p><a href="#frequenz-api-microgrid-v1-ComponentBoundsValidityDuration">ComponentBoundsValidityDuration</a></p>
-</li>
-<li>
 <p><a href="#frequenz-api-microgrid-v1-Microgrid">Microgrid</a></p>
 </li>
 </ul>
@@ -1828,10 +1807,10 @@
 <td>A list of bounds for the target metric. While incorporating these bounds, the API will ensure that overlapping pairs of bounds are merged into a single pair of bounds, and non-overlapping ones are kept separated.</td>
 </tr>
 <tr>
-<td>validity_duration</td>
-<td><a href="#frequenz-api-microgrid-v1-ComponentBoundsValidityDuration">ComponentBoundsValidityDuration</a></td>
-<td></td>
-<td>The duration for which the given bounds will stay in effect. If this field is not provided, then the bounds will be removed after a default duration of 5 seconds.</td>
+<td>request_lifetime</td>
+<td><a href="#uint64">uint64</a></td>
+<td>optional</td>
+<td>The duration, in seconds, until which the request will stay in effect. This duration has to be between 10 seconds and 15 minutes (including both limits), otherwise the request will be rejected. If not provided, it defaults to 60s.</td>
 </tr>
 </tbody>
 </table>
@@ -1849,10 +1828,10 @@
 </thead>
 <tbody>
 <tr>
-<td>ts</td>
+<td>valid_until</td>
 <td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
 <td></td>
-<td>The timestamp until which the given bounds will stay in effect.</td>
+<td>The timestamp until which the added bounds will stay in effect. After this timestamp, the component bounds added by this request will be removed. By default, this timestamp will be set to the current time plus 60 seconds.</td>
 </tr>
 </tbody>
 </table>
@@ -2337,45 +2316,6 @@ this message.</p>
 <td><a href="#uint64">uint64</a></td>
 <td></td>
 <td>The component ID to stop.</td>
-</tr>
-</tbody>
-</table>
-<p><a name="frequenz-api-microgrid-v1-ComponentBoundsValidityDuration"></a></p>
-<h3 id="componentboundsvalidityduration">ComponentBoundsValidityDuration<a class="headerlink" href="#componentboundsvalidityduration" title="Permanent link">¤</a></h3>
-<p>The duration for which a given list of bounds will stay in effect.</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Number</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>COMPONENT_BOUNDS_VALIDITY_DURATION_UNSPECIFIED</td>
-<td>0</td>
-<td></td>
-</tr>
-<tr>
-<td>COMPONENT_BOUNDS_VALIDITY_DURATION_5_SECONDS</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>COMPONENT_BOUNDS_VALIDITY_DURATION_1_MINUTE</td>
-<td>2</td>
-<td></td>
-</tr>
-<tr>
-<td>COMPONENT_BOUNDS_VALIDITY_DURATION_5_MINUTES</td>
-<td>3</td>
-<td></td>
-</tr>
-<tr>
-<td>COMPONENT_BOUNDS_VALIDITY_DURATION_15_MINUTES</td>
-<td>4</td>
-<td></td>
 </tr>
 </tbody>
 </table>
