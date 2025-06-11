@@ -3,7 +3,7 @@
 
 [build-system]
 requires = [
-  "setuptools == 78.1.0",
+  "setuptools == 80.9.0",
   "setuptools_scm[toml] == 8.3.1",
   "frequenz-repo-config[api] == 0.13.4",
   # We need to pin the protobuf, grpcio and  grpcio-tools dependencies to make
