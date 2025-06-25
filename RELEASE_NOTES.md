@@ -10,6 +10,7 @@
 - The `AddComponentBoundsRequest.validity_duration` field was replaced by `AddComponentBoundsRequest.request_lifetime` to match the fields in `SetComponentPowerActiveRequest` and `SetComponentPowerReactiveRequest`. The default value was also changed from 5 to 60 seconds.
 - The `AddComponentBoundsResponse.ts` field was renamed to `AddComponentBoundsResponse.valid_until` for extra clarity and also to match the fields in `SetComponentPowerActiveResponse` and `SetComponentPowerReactiveResponse`.
 - The version of `frequenz-api-common` has been updated to v0.7.0. Please refer to the [release notes](https://github.com/frequenz-floss/frequenz-api-common/releases/tag/v0.7.0) and update your code accordingly.
+  - Sensor categories have been removed from `frequenz-api-common`, and are therefore removed from the Microgrid API as well.
 
 ## New Features
 

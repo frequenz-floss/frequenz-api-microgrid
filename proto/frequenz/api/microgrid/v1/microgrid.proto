@@ -63,7 +63,7 @@ service Microgrid {
   }
 
   // Returns a list of sensors in the local microgrid, optionally filtered by a
-  // given list of sensor IDs and sensor categories.
+  // given list of sensor IDs.
   //
   // Sensors measure physical metrics in the microgrid's surroundings, and are
   // not classified as electrical components.
@@ -72,14 +72,9 @@ service Microgrid {
   // relationship with one another, meaning that they are applied serially,
   // but the elements within a single filter list have an `OR` relationship with
   // each other.
-  // E.g., if `ids` = [1, 2, 3], and `categories` = [
-  //  `SensorCategory::SENSOR_CATEGORY_THERMOMETER`,
-  //  `SensorCategory::SENSOR_CATEGORY_HYGROMETER`],
+  // E.g., if `ids` = [1, 2, 3],
   // then the results will consist of elements that
   // have the IDs 1, OR 2, OR 3,
-  // AND
-  // are of the categories `SensorCategory::SENSOR_CATEGORY_THERMOMETER` OR
-  // `SensorCategory::SENSOR_CATEGORY_HYGROMETER`.
   //
   // If a filter list is empty, then that filter is not applied.
   rpc ListSensors(ListSensorRequest) returns (ListSensorsResponse) {
