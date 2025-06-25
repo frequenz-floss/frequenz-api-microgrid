@@ -42,10 +42,10 @@ service Microgrid {
   // are can be connected to each other to form an electrical circuit, which can
   // then be represented as a graph.
   //
-  // If provided, the filters for electrical component IDs and categories have an `AND`
-  // relationship with one another, meaning that they are applied serially,
-  // but the elements within a single filter list have an `OR` relationship with
-  // each other.
+  // If provided, the filters for electrical component IDs and categories have
+  // an `AND` relationship with one another, meaning that they are applied
+  // serially, but the elements within a single filter list have an `OR`
+  // relationship with each other.
   // E.g., if `ids` = [1, 2, 3], and `categories` = [
   //  `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_INVERTER`,
   //  `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_BATTERY`],
@@ -57,7 +57,8 @@ service Microgrid {
   // `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_BATTERY`.
   //
   // If a filter list is empty, then that filter is not applied.
-  rpc ListElectricalComponents(ListElectricalComponentsRequest) returns (ListElectricalComponentsResponse) {
+  rpc ListElectricalComponents(ListElectricalComponentsRequest)
+    returns (ListElectricalComponentsResponse) {
     option (google.api.http) = {
       get : "/v1/components"
     };
@@ -88,16 +89,16 @@ service Microgrid {
   // are can be connected to each other to form an electrical circuit, which can
   // then be represented as a graph.
   //
-  // This RPC return a list of the connections between two electrical components, denoted
-  // by `(start, end)`. The direction of a connection is always away from the
-  // grid endpoint, i.e. aligned with the direction of positive current
-  // according to the passive sign convention:
+  // This RPC return a list of the connections between two electrical
+  // components, denoted by `(start, end)`. The direction of a connection is
+  // always away from the grid endpoint, i.e. aligned with the direction of
+  // positive current according to the passive sign convention:
   // https://en.wikipedia.org/wiki/Passive_sign_convention
   //
-  // The request may be filtered by `start`/`end` electrical component(s) of individual
-  // connections.  If provided, the `start` and `end` filters have an `AND`
-  // relationship between each other, meaning that they are applied serially,
-  // but an `OR` relationship with other elements in the same list.
+  // The request may be filtered by `start`/`end` electrical component(s) of
+  // individual connections.  If provided, the `start` and `end` filters have an
+  // `AND` relationship between each other, meaning that they are applied
+  // serially, but an `OR` relationship with other elements in the same list.
   // For example, if `start` = `[1, 2, 3]`, and `end` = `[4, 5, 6]`, then the
   // result should have all the connections where
   // * each `start` electrical component ID is either `1`, `2`, OR `3`,
@@ -126,8 +127,8 @@ service Microgrid {
     };
   }
 
-  // Adds inclusion bounds for a given metric of a given electrical component. Returns the
-  // time at which the bounds will expire (as a timestamp (UTC)).
+  // Adds inclusion bounds for a given metric of a given electrical component.
+  // Returns the time at which the bounds will expire (as a timestamp (UTC)).
   //
   // The request parameters allows users to select a duration until
   // which the bounds will stay in effect. If no duration is provided, then the
@@ -162,24 +163,26 @@ service Microgrid {
   rpc AddElectricalComponentBounds(AddElectricalComponentBoundsRequest)
     returns (AddElectricalComponentBoundsResponse);
 
-  // Sets the active power output of a electrical component with a given ID, provided the
-  // electrical component supports it. The power output is specified in watts.
+  // Sets the active power output of a electrical component with a given ID,
+  // provided the electrical component supports it. The power output is
+  // specified in watts.
   //
-  // The power output can be -ve or +ve, depending on whether the electrical component is
-  // supposed to be discharging or charging, respectively.
+  // The power output can be -ve or +ve, depending on whether the electrical
+  // component is supposed to be discharging or charging, respectively.
   //
   // The return value is the timestamp until which the given power command will
-  // stay in effect. After this timestamp, the electrical component's active power will be
-  // set to 0, if the API receives no further command to change it before then.
-  // By default, this timestamp will be set to the current time plus 60 seconds.
+  // stay in effect. After this timestamp, the electrical component's active
+  // power will be set to 0, if the API receives no further command to change
+  // it before then. By default, this timestamp will be set to the current time
+  // plus 60 seconds.
   //
-  // Note that the target electrical component may have a resolution of more than 1 W.
-  // E.g., an inverter may have a resolution of 88 W.
+  // Note that the target electrical component may have a resolution of more
+  // than 1 W. E.g., an inverter may have a resolution of 88 W.
   // In such cases, the magnitude of power will be floored to the nearest
   // multiple of the resolution.
   //
-  // Performs the following sequence actions for the following electrical component
-  // categories:
+  // Performs the following sequence actions for the following electrical
+  // component categories:
   //
   // * Inverter: Sends the discharge command to the inverter, making it deliver
   //  AC power.
@@ -190,8 +193,9 @@ service Microgrid {
     };
   }
 
-  // Sets the reactive power output of a electrical component with a given ID, provided the
-  // electrical component supports it. The power output is specified in VAr.
+  // Sets the reactive power output of a electrical component with a given ID,
+  // provided the electrical component supports it. The power output is
+  // specified in VAr.
   //
   // We follow the polarity specified in the IEEE 1459-2010 standard
   // definitions, where
@@ -199,12 +203,13 @@ service Microgrid {
   //- negative reactive is capacitive (current is leading the voltage)
   //
   // The return value is the timestamp until which the given power command will
-  // stay in effect. After this timestamp, the electrical component's reactive power will
-  // be set to 0, if the API receives no further command to change it before
-  // then.
+  // stay in effect. After this timestamp, the electrical component's reactive
+  // power will be set to 0, if the API receives no further command to change it
+  // before then.
   // By default, this timestamp will be set to the current time plus 60 seconds.
   //
-  // Note that the target electrical component may have a resolution of more than 1 VAr.
+  // Note that the target electrical component may have a resolution of more
+  // than 1 VAr.
   // E.g., an inverter may have a resolution of 88 VAr.
   // In such cases, the magnitude of power will be floored to the nearest
   // multiple of the resolution.
@@ -215,11 +220,11 @@ service Microgrid {
     };
   }
 
-  // Starts the electrical component, and brings it into a state where it is immediately
-  // operational.
+  // Starts the electrical component, and brings it into a state where it is
+  // immediately operational.
   //
-  // Performs the following sequence of actions for the following electrical component
-  // categories:
+  // Performs the following sequence of actions for the following electrical
+  // component categories:
   //
   // * Inverter:
   //  * closes DC relays, if the feature is available
@@ -235,8 +240,9 @@ service Microgrid {
   // * Precharge Modules:
   //  * starts the precharge process, and eventually closes the DC relays.
   //
-  // If any of the above mentioned actions for a given electrical component has already
-  // been performed, then this method call effectively skips that action.
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
   //
   // If a feature required to perform an action is missing, then that action is
   // skipped.
@@ -246,13 +252,14 @@ service Microgrid {
     };
   }
 
-  // Sets the given electrical component into a standby state, from which it can take a
-  // few minutes to return to an operational state. A transition to an
-  // operational state can be triggered by calling the `StartElectricalComponent` RPC, or
-  // the `SetElectricalComponentPowerActive` RPC.
+  // Sets the given electrical component into a standby state, from which it can
+  // take a few minutes to return to an operational state. A transition to an
+  // operational state can be triggered by calling the
+  // `StartElectricalComponent` RPC, or the `SetElectricalComponentPowerActive`
+  // RPC.
   //
-  // Performs the following sequence actions for the following electrical component
-  // categories:
+  // Performs the following sequence actions for the following electrical
+  // component categories:
   //
   // * Inverter: Checks if AC and DC relays are closed, then
   //  * sets power to 0, and
@@ -261,8 +268,9 @@ service Microgrid {
   // If any of the checks mentioned above fails, then the method call returns an
   // error.
   //
-  // If any of the above mentioned actions for a given electrical component has already
-  // been performed, then this method call efffectively skips that action.
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
   rpc PutElectricalComponentInStandby(PutElectricalComponentInStandbyRequest)
     returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -270,11 +278,11 @@ service Microgrid {
     };
   }
 
-  // Stops the electrical component completely, potentially disengaging its power
-  // electronics controller(s).
+  // Stops the electrical component completely, potentially disengaging its
+  // power electronics controller(s).
   //
-  // Performs the following sequence actions for the following electrical component
-  // categories:
+  // Performs the following sequence actions for the following electrical
+  // component categories:
   //
   // * Inverter:
   //  * Brings electrical component to the cold-standby state
@@ -292,19 +300,21 @@ service Microgrid {
   // If any of the checks mentioned above fails, then the method call returns an
   // error.
   //
-  // If any of the above mentioned actions for a given electrical component has already
-  // been performed, then this method call effectively skips that action.
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
   //
   // If a feature required to perform an action is missing, then that action is
   // skipped.
-  rpc StopElectricalComponent(StopElectricalComponentRequest) returns (google.protobuf.Empty) {
+  rpc StopElectricalComponent(StopElectricalComponentRequest)
+    returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get : "/v1/components/{electrical_component_id}/stop"
     };
   }
 
-  // Acknowledges any recoverable error reported by the electrical component, and brings it
-  // back to the stopped or cold-standby state.
+  // Acknowledges any recoverable error reported by the electrical component,
+  // and brings it back to the stopped or cold-standby state.
   rpc AckElectricalComponentError(AckElectricalComponentErrorRequest)
     returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -353,12 +363,14 @@ message ListSensorsResponse {
 // Request parameters for the RPC `ListElectricalComponentConnections`.
 // Contains filtering parameters for listing connections.
 message ListElectricalComponentConnectionsRequest {
-  // Only return connections that start from the specified electrical component ID(s):
-  // if empty, connections with any `start` will be returned
+  // Only return connections that start from the specified electrical
+  // component ID(s).
+  // If empty, connections with any `start` will be returned.
   repeated uint64 starts = 1;
 
-  // Only return connections that end at the specified electrical component ID(s):
-  // if empty, connections with any `end` will be returned
+  // Only return connections that end at the specified electrical
+  // component ID(s).
+  // if empty, connections with any `end` will be returned.
   repeated uint64 ends = 2;
 }
 
@@ -381,9 +393,9 @@ message ReceiveElectricalComponentDataStreamRequest {
     //     then the stream will return an error.
     //
     // !!! note
-    //     Components may not support all metrics. If a electrical component does not
-    //     support a given metric, then the returned data stream will not
-    //     contain that metric.
+    //     Components may not support all metrics. If a electrical component
+    //     does not support a given metric, then the returned data stream will
+    //     not contain that metric.
     repeated frequenz.api.common.v1alpha7.metrics.Metric metrics = 1;
   }
 
@@ -393,14 +405,14 @@ message ReceiveElectricalComponentDataStreamRequest {
   // The filter to apply to the stream.
   //
   // This field is optional. If this is not provided, then the stream will
-  // return all metrics for the given electrical component. If this is provided, then the
-  // stream will return only the metrics specified in the filter.
+  // return all metrics for the given electrical component. If this is provided,
+  // then the stream will return only the metrics specified in the filter.
   ComponentDataStreamFilter filter = 2;
 }
 
 // A data sample from a electrical component in the microgrid.
-// Electrical Components belonging to all categories and types can be represented using
-// this message.
+// Electrical Components belonging to all categories and types can be
+// represented using this message.
 message ReceiveElectricalComponentDataStreamResponse {
   frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentTelemetry data = 1;
 }
@@ -463,9 +475,9 @@ message AddElectricalComponentBoundsRequest {
 // Response message for the RPC `AddElectricalComponentBounds`.
 message AddElectricalComponentBoundsResponse {
   // The timestamp until which the added bounds will stay in effect.
-  // After this timestamp, the electrical component bounds added by this request will be
-  // removed. By default, this timestamp will be set to the current time plus
-  // 60 seconds.
+  // After this timestamp, the electrical component bounds added by this request
+  // will be removed. By default, this timestamp will be set to the current
+  // time plus 60 seconds.
   google.protobuf.Timestamp valid_until = 1;
 }
 
@@ -488,9 +500,9 @@ message SetElectricalComponentPowerActiveRequest {
 // Response message for the RPC `SetElectricalComponentPowerActive`.
 message SetElectricalComponentPowerActiveResponse {
   // The timestamp until which the given power command will stay in effect.
-  // After this timestamp, the electrical component power will be set to 0, if the API
-  // receives no further power commands. By default, this timestamp will be set
-  // to the current time plus 60 seconds.
+  // After this timestamp, the electrical component power will be set to 0, if
+  // the API receives no further power commands. By default, this timestamp will
+  // be set to the current time plus 60 seconds.
   google.protobuf.Timestamp valid_until = 1;
 }
 
@@ -517,9 +529,9 @@ message SetElectricalComponentPowerReactiveRequest {
 // Response message for the RPC `SetElectricalComponentPowerReactive`.
 message SetElectricalComponentPowerReactiveResponse {
   // The timestamp until which the given power command will stay in effect.
-  // After this timestamp, the electrical component power will be set to 0, if the API
-  // receives no further power commands. By default, this timestamp will be set
-  // to the current time plus 60 seconds.
+  // After this timestamp, the electrical component power will be set to 0, if
+  // the API receives no further power commands. By default, this timestamp will
+  // be set to the current time plus 60 seconds.
   google.protobuf.Timestamp valid_until = 1;
 }
 
