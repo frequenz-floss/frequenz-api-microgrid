@@ -414,7 +414,8 @@ message ReceiveElectricalComponentDataStreamRequest {
 // Electrical Components belonging to all categories and types can be
 // represented using this message.
 message ReceiveElectricalComponentDataStreamResponse {
-  frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentTelemetry data = 1;
+  frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentTelemetry
+    telemetry = 1;
 }
 
 // Request parameters for the RPC `ReceiveSensorDataStream`.
@@ -448,7 +449,7 @@ message ReceiveSensorDataStreamRequest {
 // A data sample from a sensor in the microgrid.
 message ReceiveSensorDataStreamResponse {
   // The sensor data.
-  frequenz.api.common.v1alpha7.microgrid.sensors.SensorTelemetry data = 1;
+  frequenz.api.common.v1alpha7.microgrid.sensors.SensorTelemetry telemetry = 1;
 }
 
 // Request parameters for the RPC `AddElectricalComponentBounds`.

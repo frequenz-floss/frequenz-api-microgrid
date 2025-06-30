@@ -13,6 +13,8 @@
   - Sensor categories have been removed from `frequenz-api-common`, and are therefore removed from the Microgrid API as well.
   - `component` and `Component` have been renamed to `electrical_component` and `ElectricalComponent`, respectively. This is keep in line with the naming conventions used in `frequenz-api-common`.
   - `ListComponentConnectionsResponse.connections` has been renamed to `ListElectricalComponentConnectionsResponse.electrical_component_connections` to match the naming conventions used in `frequenz-api-common`.
+  - `ReceiveComponentDataStreamResponse.data` has been renamed to `ReceiveElectricalComponentDataStreamResponse.telemetry` to match the naming conventions used in `frequenz-api-common`.
+  - `ReceiveSensorDataStreamResponse.data` has been renamed to `ReceiveSensorDataStreamResponse.telemetry` to match the naming conventions used in `frequenz-api-common`.
 
 ## New Features
 
