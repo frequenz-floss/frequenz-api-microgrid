@@ -12,11 +12,11 @@ syntax = "proto3";
 
 package frequenz.api.microgrid.v1;
 
-import "frequenz/api/common/v1/metrics/bounds.proto";
-import "frequenz/api/common/v1/metrics/metric_sample.proto";
-import "frequenz/api/common/v1/microgrid/components/components.proto";
-import "frequenz/api/common/v1/microgrid/microgrid.proto";
-import "frequenz/api/common/v1/microgrid/sensors/sensors.proto";
+import "frequenz/api/common/v1alpha7/metrics/bounds.proto";
+import "frequenz/api/common/v1alpha7/metrics/metrics.proto";
+import "frequenz/api/common/v1alpha7/microgrid/electrical_components/electrical_components.proto";
+import "frequenz/api/common/v1alpha7/microgrid/microgrid.proto";
+import "frequenz/api/common/v1alpha7/microgrid/sensors/sensors.proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -320,7 +320,7 @@ service Microgrid {
 // Metadata that describes a microgrid.
 message GetMicrogridMetadataResponse {
   // The location of the microgrid, in geographical co-ordinates.
-  frequenz.api.common.v1.microgrid.Microgrid  microgrid= 1;
+  frequenz.api.common.v1alpha7.microgrid.Microgrid  microgrid= 1;
 }
 
 // Request parameters for the RPC `ListComponents`.
@@ -330,14 +330,14 @@ message ListComponentsRequest {
   repeated uint64 component_ids = 1;
 
   // Return components that have the specified categories only.
-  repeated frequenz.api.common.v1.microgrid.components.ComponentCategory
+  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentCategory
     categories = 2;
 }
 
 // A message containing a list of components.
 // Used as the return type in the RPC `ListComponents`.
 message ListComponentsResponse {
-  repeated frequenz.api.common.v1.microgrid.components.Component components = 1;
+  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponent components = 1;
 }
 
 // Request parameters for the RPC `ListSensors`.
@@ -345,16 +345,12 @@ message ListComponentsResponse {
 message ListSensorRequest {
   // Return sensors that have the specified IDs only.
   repeated uint64 sensor_ids = 1;
-
-  // Return sensors that have the specified categories only.
-  repeated frequenz.api.common.v1.microgrid.sensors.SensorCategory
-    categories = 2;
 }
 
 // Response message for the RPC `ListSensors`.
 // A message containing a list of sensors.
 message ListSensorsResponse {
-  repeated frequenz.api.common.v1.microgrid.sensors.Sensor sensors = 1;
+  repeated frequenz.api.common.v1alpha7.microgrid.sensors.Sensor sensors = 1;
 }
 
 // Request parameters for the RPC `ListConnections`.
@@ -373,7 +369,7 @@ message ListConnectionsRequest {
 // Contains a list of connections.
 message ListConnectionsResponse {
   // The list of connections.
-  repeated frequenz.api.common.v1.microgrid.components.ComponentConnection
+  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentConnection
     connections = 1;
 };
 
@@ -391,7 +387,7 @@ message ReceiveComponentDataStreamRequest {
     //     Components may not support all metrics. If a component does not
     //     support a given metric, then the returned data stream will not
     //     contain that metric.
-    repeated frequenz.api.common.v1.metrics.Metric metrics = 1;
+    repeated frequenz.api.common.v1alpha7.metrics.Metric metrics = 1;
   }
 
   // The component ID to subscribe to.
@@ -409,7 +405,7 @@ message ReceiveComponentDataStreamRequest {
 // Components belonging to all categories and types can be represented using
 // this message.
 message ReceiveComponentDataStreamResponse {
-  frequenz.api.common.v1.microgrid.components.ComponentData data = 1;
+  frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentTelemetry data = 1;
 }
 
 // Request parameters for the RPC `ReceiveSensorDataStream`.
@@ -426,7 +422,7 @@ message ReceiveSensorDataStreamRequest {
     //     Sensors may not support all metrics. If a sensor does not support a
     //     given metric, then the returned data stream will not contain that
     //     metric.
-    repeated frequenz.api.common.v1.metrics.Metric metrics = 1;
+    repeated frequenz.api.common.v1alpha7.metrics.Metric metrics = 1;
   }
 
   // The sensor ID to subscribe to.
@@ -443,7 +439,7 @@ message ReceiveSensorDataStreamRequest {
 // A data sample from a sensor in the microgrid.
 message ReceiveSensorDataStreamResponse {
   // The sensor data.
-  frequenz.api.common.v1.microgrid.sensors.SensorData data = 1;
+  frequenz.api.common.v1alpha7.microgrid.sensors.SensorTelemetry data = 1;
 }
 
 // Request parameters for the RPC `AddComponentBounds`.
@@ -452,13 +448,13 @@ message AddComponentBoundsRequest {
   uint64 component_id = 1;
 
   // The target metric whose bounds have to be set.
-  frequenz.api.common.v1.metrics.Metric target_metric = 2;
+  frequenz.api.common.v1alpha7.metrics.Metric target_metric = 2;
 
   // A list of bounds for the target metric.
   // While incorporating these bounds, the API will ensure that overlapping
   // pairs of bounds are merged into a single pair of bounds, and
   // non-overlapping ones are kept separated.
-  repeated frequenz.api.common.v1.metrics.Bounds bounds = 3;
+  repeated frequenz.api.common.v1alpha7.metrics.Bounds bounds = 3;
 
   // The duration, in seconds, until which the request will stay in effect.
   // This duration has to be between 10 seconds and 15 minutes (including both
