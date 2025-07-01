@@ -15,6 +15,12 @@
   - `ListComponentConnectionsResponse.connections` has been renamed to `ListElectricalComponentConnectionsResponse.electrical_component_connections` to match the naming conventions used in `frequenz-api-common`.
   - `ReceiveComponentDataStreamResponse.data` has been renamed to `ReceiveElectricalComponentDataStreamResponse.telemetry` to match the naming conventions used in `frequenz-api-common`.
   - `ReceiveSensorDataStreamResponse.data` has been renamed to `ReceiveSensorDataStreamResponse.telemetry` to match the naming conventions used in `frequenz-api-common`.
+  - `ReceiveElectricalComponentDataStream` RPC method has been renamed to `ReceiveElectricalComponentTelemetryStream` to match the naming conventions used in `frequenz-api-common`.
+  - `ReceiveElectricalComponentDataStreamRequest` RPC method has been renamed to `ReceiveElectricalComponentTelemetryStreamRequest` to match the naming conventions used in `frequenz-api-common`.
+  - `ReceiveElectricalComponentDataStreamResponse` RPC method has been renamed to `ReceiveElectricalComponentTelemetryStreamResponse` to match the naming conventions used in `frequenz-api-common`.
+  - `ReceiveSensorDataStream` RPC method has been renamed to `ReceiveSensorTelemetryStream` to match the naming conventions used in `frequenz-api-common`.
+  - `ReceiveSensorDataStreamRequest` RPC method has been renamed to `ReceiveSensorTelemetryStreamRequest` to match the naming conventions used in `frequenz-api-common`.
+  - `ReceiveSensorDataStreamResponse` RPC method has been renamed to `ReceiveSensorTelemetryStreamResponse` to match the naming conventions used in `frequenz-api-common`.
 
 ## New Features
 
