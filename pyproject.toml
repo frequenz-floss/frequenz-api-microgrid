@@ -11,8 +11,8 @@ requires = [
   # versions can't work with code that was generated with newer versions.
   # https://protobuf.dev/support/cross-version-runtime-guarantee/#backwards
   "protobuf == 6.31.1",
-  "grpcio-tools == 1.72.1",
-  "grpcio == 1.72.1",
+  "grpcio-tools == 1.73.1",
+  "grpcio == 1.73.1",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -51,7 +51,7 @@ email = "floss@frequenz.com"
 
 [project.optional-dependencies]
 dev-flake8 = [
-  "flake8 == 7.2.0",
+  "flake8 == 7.3.0",
   "flake8-docstrings == 1.7.0",
   "flake8-pyproject == 1.2.3", # For reading the flake8 config from pyproject.toml
   "pydoclint == 0.6.6",
