@@ -66,8 +66,8 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      time: "06:00"
+      interval: "monthly"
+      day: "monday"
     labels:
       - "part:tooling"
       - "type:tech-debt"
@@ -92,8 +92,8 @@ updates:
     ignore:
       - dependency-name: "submodules/frequenz-api-common"
     schedule:
-      interval: "weekly"
-      time: "06:00"
+      interval: "monthly"
+      day: "monday"
     labels:
       - "part:tooling"
       - "type:tech-debt"
