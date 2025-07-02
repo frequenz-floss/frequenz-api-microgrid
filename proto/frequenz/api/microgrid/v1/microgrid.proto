@@ -12,11 +12,11 @@ syntax = "proto3";
 
 package frequenz.api.microgrid.v1;
 
-import "frequenz/api/common/v1/metrics/bounds.proto";
-import "frequenz/api/common/v1/metrics/metric_sample.proto";
-import "frequenz/api/common/v1/microgrid/components/components.proto";
-import "frequenz/api/common/v1/microgrid/microgrid.proto";
-import "frequenz/api/common/v1/microgrid/sensors/sensors.proto";
+import "frequenz/api/common/v1alpha7/metrics/bounds.proto";
+import "frequenz/api/common/v1alpha7/metrics/metrics.proto";
+import "frequenz/api/common/v1alpha7/microgrid/electrical_components/electrical_components.proto";
+import "frequenz/api/common/v1alpha7/microgrid/microgrid.proto";
+import "frequenz/api/common/v1alpha7/microgrid/sensors/sensors.proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -36,34 +36,36 @@ service Microgrid {
   }
 
   // List electrical components in the local microgrid, optionally filtered by a
-  // given list of component IDs and component categories.
+  // given list of electrical component IDs and their categories.
   //
   // Electrical components are a part of a microgrid's electrical infrastructure
   // are can be connected to each other to form an electrical circuit, which can
   // then be represented as a graph.
   //
-  // If provided, the filters for component IDs and categories have an `AND`
-  // relationship with one another, meaning that they are applied serially,
-  // but the elements within a single filter list have an `OR` relationship with
-  // each other.
+  // If provided, the filters for electrical component IDs and categories have
+  // an `AND` relationship with one another, meaning that they are applied
+  // serially, but the elements within a single filter list have an `OR`
+  // relationship with each other.
   // E.g., if `ids` = [1, 2, 3], and `categories` = [
-  //  `ComponentCategory::COMPONENT_CATEGORY_INVERTER`,
-  //  `ComponentCategory::COMPONENT_CATEGORY_BATTERY`],
+  //  `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_INVERTER`,
+  //  `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_BATTERY`],
   // then the results will consist of elements that
   // have the IDs 1, OR 2, OR 3,
   // AND
-  // are of the categories `ComponentCategory::COMPONENT_CATEGORY_INVERTER` OR
-  // `ComponentCategory::COMPONENT_CATEGORY_BATTERY`.
+  // are of the categories
+  // `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_INVERTER` OR
+  // `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_BATTERY`.
   //
   // If a filter list is empty, then that filter is not applied.
-  rpc ListComponents(ListComponentsRequest) returns (ListComponentsResponse) {
+  rpc ListElectricalComponents(ListElectricalComponentsRequest)
+    returns (ListElectricalComponentsResponse) {
     option (google.api.http) = {
       get : "/v1/components"
     };
   }
 
   // Returns a list of sensors in the local microgrid, optionally filtered by a
-  // given list of sensor IDs and sensor categories.
+  // given list of sensor IDs.
   //
   // Sensors measure physical metrics in the microgrid's surroundings, and are
   // not classified as electrical components.
@@ -72,14 +74,9 @@ service Microgrid {
   // relationship with one another, meaning that they are applied serially,
   // but the elements within a single filter list have an `OR` relationship with
   // each other.
-  // E.g., if `ids` = [1, 2, 3], and `categories` = [
-  //  `SensorCategory::SENSOR_CATEGORY_THERMOMETER`,
-  //  `SensorCategory::SENSOR_CATEGORY_HYGROMETER`],
+  // E.g., if `ids` = [1, 2, 3],
   // then the results will consist of elements that
   // have the IDs 1, OR 2, OR 3,
-  // AND
-  // are of the categories `SensorCategory::SENSOR_CATEGORY_THERMOMETER` OR
-  // `SensorCategory::SENSOR_CATEGORY_HYGROMETER`.
   //
   // If a filter list is empty, then that filter is not applied.
   rpc ListSensors(ListSensorRequest) returns (ListSensorsResponse) {
@@ -92,46 +89,46 @@ service Microgrid {
   // are can be connected to each other to form an electrical circuit, which can
   // then be represented as a graph.
   //
-  // This RPC return a list of the connections between two components, denoted
-  // by `(start, end)`. The direction of a connection is always away from the
-  // grid endpoint, i.e. aligned with the direction of positive current
-  // according to the passive sign convention:
+  // This RPC return a list of the connections between two electrical
+  // components, denoted by `(start, end)`. The direction of a connection is
+  // always away from the grid endpoint, i.e. aligned with the direction of
+  // positive current according to the passive sign convention:
   // https://en.wikipedia.org/wiki/Passive_sign_convention
   //
-  // The request may be filtered by `start`/`end` component(s) of individual
-  // connections.  If provided, the `start` and `end` filters have an `AND`
-  // relationship between each other, meaning that they are applied serially,
-  // but an `OR` relationship with other elements in the same list.
+  // The request may be filtered by `start`/`end` electrical component(s) of
+  // individual connections.  If provided, the `start` and `end` filters have an
+  // `AND` relationship between each other, meaning that they are applied
+  // serially, but an `OR` relationship with other elements in the same list.
   // For example, if `start` = `[1, 2, 3]`, and `end` = `[4, 5, 6]`, then the
   // result should have all the connections where
-  // * each `start` component ID is either `1`, `2`, OR `3`,
+  // * each `start` electrical component ID is either `1`, `2`, OR `3`,
   //  AND
-  // * each `end` component ID is either `4`, `5`, OR `6`.
-  rpc ListConnections(ListConnectionsRequest)
-    returns (ListConnectionsResponse) {
+  // * each `end` electrical component ID is either `4`, `5`, OR `6`.
+  rpc ListElectricalComponentConnections(ListElectricalComponentConnectionsRequest)
+    returns (ListElectricalComponentConnectionsResponse) {
     option (google.api.http) = {
       get : "/v1/connections"
     };
   }
 
-  // Returns a stream containing data from a component with a given ID.
-  rpc ReceiveComponentDataStream(ReceiveComponentDataStreamRequest)
-    returns (stream ReceiveComponentDataStreamResponse) {
+  // Returns a stream containing data from a electrical component with a given ID.
+  rpc ReceiveElectricalComponentTelemetryStream(ReceiveElectricalComponentTelemetryStreamRequest)
+    returns (stream ReceiveElectricalComponentTelemetryStreamResponse) {
     option (google.api.http) = {
-      get : "/v1/components/{component_id}/data"
+      get : "/v1/components/{electrical_component_id}/data"
     };
   }
 
   // Returns a stream containing data from a sensor with a given ID.
-  rpc ReceiveSensorDataStream(ReceiveSensorDataStreamRequest)
-    returns (stream ReceiveSensorDataStreamResponse) {
+  rpc ReceiveSensorTelemetryStream(ReceiveSensorTelemetryStreamRequest)
+    returns (stream ReceiveSensorTelemetryStreamResponse) {
     option (google.api.http) = {
       get : "/v1/sensors/{sensor_id}/data"
     };
   }
 
-  // Adds inclusion bounds for a given metric of a given component. Returns the
-  // time at which the bounds will expire (as a timestamp (UTC)).
+  // Adds inclusion bounds for a given metric of a given electrical component.
+  // Returns the time at which the bounds will expire (as a timestamp (UTC)).
   //
   // The request parameters allows users to select a duration until
   // which the bounds will stay in effect. If no duration is provided, then the
@@ -163,39 +160,42 @@ service Microgrid {
   //
   // Note that for power metrics, regardless of the bounds, 0W is always
   // allowed.
-  rpc AddComponentBounds(AddComponentBoundsRequest)
-    returns (AddComponentBoundsResponse);
+  rpc AddElectricalComponentBounds(AddElectricalComponentBoundsRequest)
+    returns (AddElectricalComponentBoundsResponse);
 
-  // Sets the active power output of a component with a given ID, provided the
-  // component supports it. The power output is specified in watts.
+  // Sets the active power output of a electrical component with a given ID,
+  // provided the electrical component supports it. The power output is
+  // specified in watts.
   //
-  // The power output can be -ve or +ve, depending on whether the component is
-  // supposed to be discharging or charging, respectively.
+  // The power output can be -ve or +ve, depending on whether the electrical
+  // component is supposed to be discharging or charging, respectively.
   //
   // The return value is the timestamp until which the given power command will
-  // stay in effect. After this timestamp, the component's active power will be
-  // set to 0, if the API receives no further command to change it before then.
-  // By default, this timestamp will be set to the current time plus 60 seconds.
+  // stay in effect. After this timestamp, the electrical component's active
+  // power will be set to 0, if the API receives no further command to change
+  // it before then. By default, this timestamp will be set to the current time
+  // plus 60 seconds.
   //
-  // Note that the target component may have a resolution of more than 1 W.
-  // E.g., an inverter may have a resolution of 88 W.
+  // Note that the target electrical component may have a resolution of more
+  // than 1 W. E.g., an inverter may have a resolution of 88 W.
   // In such cases, the magnitude of power will be floored to the nearest
   // multiple of the resolution.
   //
-  // Performs the following sequence actions for the following component
-  // categories:
+  // Performs the following sequence actions for the following electrical
+  // component categories:
   //
   // * Inverter: Sends the discharge command to the inverter, making it deliver
   //  AC power.
-  rpc SetComponentPowerActive(SetComponentPowerActiveRequest)
-    returns (SetComponentPowerActiveResponse) {
+  rpc SetElectricalComponentPowerActive(SetElectricalComponentPowerActiveRequest)
+    returns (SetElectricalComponentPowerActiveResponse) {
     option (google.api.http) = {
-      get : "/v1/components/{component_id}/setPowerActive/{power}"
+      get : "/v1/components/{electrical_component_id}/setPowerActive/{power}"
     };
   }
 
-  // Sets the reactive power output of a component with a given ID, provided the
-  // component supports it. The power output is specified in VAr.
+  // Sets the reactive power output of a electrical component with a given ID,
+  // provided the electrical component supports it. The power output is
+  // specified in VAr.
   //
   // We follow the polarity specified in the IEEE 1459-2010 standard
   // definitions, where
@@ -203,27 +203,28 @@ service Microgrid {
   //- negative reactive is capacitive (current is leading the voltage)
   //
   // The return value is the timestamp until which the given power command will
-  // stay in effect. After this timestamp, the component's reactive power will
-  // be set to 0, if the API receives no further command to change it before
-  // then.
+  // stay in effect. After this timestamp, the electrical component's reactive
+  // power will be set to 0, if the API receives no further command to change it
+  // before then.
   // By default, this timestamp will be set to the current time plus 60 seconds.
   //
-  // Note that the target component may have a resolution of more than 1 VAr.
+  // Note that the target electrical component may have a resolution of more
+  // than 1 VAr.
   // E.g., an inverter may have a resolution of 88 VAr.
   // In such cases, the magnitude of power will be floored to the nearest
   // multiple of the resolution.
-  rpc SetComponentPowerReactive(SetComponentPowerReactiveRequest)
-    returns (SetComponentPowerReactiveResponse) {
+  rpc SetElectricalComponentPowerReactive(SetElectricalComponentPowerReactiveRequest)
+    returns (SetElectricalComponentPowerReactiveResponse) {
     option (google.api.http) = {
-      get : "/v1/components/{component_id}/setPowerReactive/{power}"
+      get : "/v1/components/{electrical_component_id}/setPowerReactive/{power}"
     };
   }
 
-  // Starts the component, and brings it into a state where it is immediately
-  // operational.
+  // Starts the electrical component, and brings it into a state where it is
+  // immediately operational.
   //
-  // Performs the following sequence of actions for the following component
-  // categories:
+  // Performs the following sequence of actions for the following electrical
+  // component categories:
   //
   // * Inverter:
   //  * closes DC relays, if the feature is available
@@ -239,24 +240,26 @@ service Microgrid {
   // * Precharge Modules:
   //  * starts the precharge process, and eventually closes the DC relays.
   //
-  // If any of the above mentioned actions for a given component has already
-  // been performed, then this method call effectively skips that action.
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
   //
   // If a feature required to perform an action is missing, then that action is
   // skipped.
-  rpc StartComponent(StartComponentRequest) returns (google.protobuf.Empty) {
+  rpc StartElectricalComponent(StartElectricalComponentRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{component_id}/start"
+      get : "/v1/components/{electrical_component_id}/start"
     };
   }
 
-  // Sets the given component into a standby state, from which it can take a
-  // few minutes to return to an operational state. A transition to an
-  // operational state can be triggered by calling the `StartComponent` RPC, or
-  // the `SetComponentPowerActive` RPC.
+  // Sets the given electrical component into a standby state, from which it can
+  // take a few minutes to return to an operational state. A transition to an
+  // operational state can be triggered by calling the
+  // `StartElectricalComponent` RPC, or the `SetElectricalComponentPowerActive`
+  // RPC.
   //
-  // Performs the following sequence actions for the following component
-  // categories:
+  // Performs the following sequence actions for the following electrical
+  // component categories:
   //
   // * Inverter: Checks if AC and DC relays are closed, then
   //  * sets power to 0, and
@@ -265,23 +268,24 @@ service Microgrid {
   // If any of the checks mentioned above fails, then the method call returns an
   // error.
   //
-  // If any of the above mentioned actions for a given component has already
-  // been performed, then this method call efffectively skips that action.
-  rpc PutComponentInStandby(PutComponentInStandbyRequest)
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
+  rpc PutElectricalComponentInStandby(PutElectricalComponentInStandbyRequest)
     returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{component_id}/standby"
+      get : "/v1/components/{electrical_component_id}/standby"
     };
   }
 
-  // Stops the component completely, potentially disengaging its power
-  // electronics controller(s).
+  // Stops the electrical component completely, potentially disengaging its
+  // power electronics controller(s).
   //
-  // Performs the following sequence actions for the following component
-  // categories:
+  // Performs the following sequence actions for the following electrical
+  // component categories:
   //
   // * Inverter:
-  //  * Brings component to the cold-standby state
+  //  * Brings electrical component to the cold-standby state
   //  * opens DC relays
   //
   // * Battery: Checks if the power output is 0, then
@@ -296,23 +300,25 @@ service Microgrid {
   // If any of the checks mentioned above fails, then the method call returns an
   // error.
   //
-  // If any of the above mentioned actions for a given component has already
-  // been performed, then this method call effectively skips that action.
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
   //
   // If a feature required to perform an action is missing, then that action is
   // skipped.
-  rpc StopComponent(StopComponentRequest) returns (google.protobuf.Empty) {
+  rpc StopElectricalComponent(StopElectricalComponentRequest)
+    returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{component_id}/stop"
+      get : "/v1/components/{electrical_component_id}/stop"
     };
   }
 
-  // Acknowledges any recoverable error reported by the component, and brings it
-  // back to the stopped or cold-standby state.
-  rpc AckComponentError(AckComponentErrorRequest)
+  // Acknowledges any recoverable error reported by the electrical component,
+  // and brings it back to the stopped or cold-standby state.
+  rpc AckElectricalComponentError(AckElectricalComponentErrorRequest)
     returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get : "/v1/components/{component_id}/errorAck"
+      get : "/v1/components/{electrical_component_id}/errorAck"
     };
   }
 }
@@ -320,24 +326,25 @@ service Microgrid {
 // Metadata that describes a microgrid.
 message GetMicrogridMetadataResponse {
   // The location of the microgrid, in geographical co-ordinates.
-  frequenz.api.common.v1.microgrid.Microgrid  microgrid= 1;
+  frequenz.api.common.v1alpha7.microgrid.Microgrid  microgrid= 1;
 }
 
-// Request parameters for the RPC `ListComponents`.
-// Contains filtering parameters for listing components.
-message ListComponentsRequest {
-  // Return components that have the specified IDs only.
-  repeated uint64 component_ids = 1;
+// Request parameters for the RPC `ListElectricalComponents`.
+// Contains filtering parameters for listing electrical components.
+message ListElectricalComponentsRequest {
+  // Return electrical components that have the specified IDs only.
+  repeated uint64 electrical_component_ids = 1;
 
-  // Return components that have the specified categories only.
-  repeated frequenz.api.common.v1.microgrid.components.ComponentCategory
-    categories = 2;
+  // Return electrical components that have the specified categories only.
+  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentCategory
+    electrical_component_categories = 2;
 }
 
-// A message containing a list of components.
-// Used as the return type in the RPC `ListComponents`.
-message ListComponentsResponse {
-  repeated frequenz.api.common.v1.microgrid.components.Component components = 1;
+// A message containing a list of electrical components.
+// Used as the return type in the RPC `ListElectricalComponents`.
+message ListElectricalComponentsResponse {
+  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponent
+    electrical_components = 1;
 }
 
 // Request parameters for the RPC `ListSensors`.
@@ -345,42 +352,40 @@ message ListComponentsResponse {
 message ListSensorRequest {
   // Return sensors that have the specified IDs only.
   repeated uint64 sensor_ids = 1;
-
-  // Return sensors that have the specified categories only.
-  repeated frequenz.api.common.v1.microgrid.sensors.SensorCategory
-    categories = 2;
 }
 
 // Response message for the RPC `ListSensors`.
 // A message containing a list of sensors.
 message ListSensorsResponse {
-  repeated frequenz.api.common.v1.microgrid.sensors.Sensor sensors = 1;
+  repeated frequenz.api.common.v1alpha7.microgrid.sensors.Sensor sensors = 1;
 }
 
-// Request parameters for the RPC `ListConnections`.
+// Request parameters for the RPC `ListElectricalComponentConnections`.
 // Contains filtering parameters for listing connections.
-message ListConnectionsRequest {
-  // Only return connections that start from the specified component ID(s):
-  // if empty, connections with any `start` will be returned
+message ListElectricalComponentConnectionsRequest {
+  // Only return connections that start from the specified electrical
+  // component ID(s).
+  // If empty, connections with any `start` will be returned.
   repeated uint64 starts = 1;
 
-  // Only return connections that end at the specified component ID(s):
-  // if empty, connections with any `end` will be returned
+  // Only return connections that end at the specified electrical
+  // component ID(s).
+  // if empty, connections with any `end` will be returned.
   repeated uint64 ends = 2;
 }
 
-// Response message for the RPC `ListConnections`.
+// Response message for the RPC `ListElectricalComponentConnections`.
 // Contains a list of connections.
-message ListConnectionsResponse {
+message ListElectricalComponentConnectionsResponse {
   // The list of connections.
-  repeated frequenz.api.common.v1.microgrid.components.ComponentConnection
-    connections = 1;
+  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentConnection
+    electrical_component_connections = 1;
 };
 
-// Request parameters for the RPC `ReceiveComponentDataStream`.
-message ReceiveComponentDataStreamRequest {
+// Request parameters for the RPC `ReceiveElectricalComponentTelemetryStream`.
+message ReceiveElectricalComponentTelemetryStreamRequest {
   // A message for specifying a filter to apply to the stream.
-  message ComponentDataStreamFilter {
+  message ComponentTelemetryStreamFilter {
     // List of metrics to return. Only the specified metrics will be returned.
     //
     // !!! note
@@ -388,34 +393,35 @@ message ReceiveComponentDataStreamRequest {
     //     then the stream will return an error.
     //
     // !!! note
-    //     Components may not support all metrics. If a component does not
-    //     support a given metric, then the returned data stream will not
-    //     contain that metric.
-    repeated frequenz.api.common.v1.metrics.Metric metrics = 1;
+    //     Components may not support all metrics. If a electrical component
+    //     does not support a given metric, then the returned data stream will
+    //     not contain that metric.
+    repeated frequenz.api.common.v1alpha7.metrics.Metric metrics = 1;
   }
 
-  // The component ID to subscribe to.
-  uint64 component_id = 1;
+  // The electrical component ID to subscribe to.
+  uint64 electrical_component_id = 1;
 
   // The filter to apply to the stream.
   //
   // This field is optional. If this is not provided, then the stream will
-  // return all metrics for the given component. If this is provided, then the
-  // stream will return only the metrics specified in the filter.
-  ComponentDataStreamFilter filter = 2;
+  // return all metrics for the given electrical component. If this is provided,
+  // then the stream will return only the metrics specified in the filter.
+  ComponentTelemetryStreamFilter filter = 2;
 }
 
-// A data sample from a component in the microgrid.
-// Components belonging to all categories and types can be represented using
-// this message.
-message ReceiveComponentDataStreamResponse {
-  frequenz.api.common.v1.microgrid.components.ComponentData data = 1;
+// A data sample from a electrical component in the microgrid.
+// Electrical Components belonging to all categories and types can be
+// represented using this message.
+message ReceiveElectricalComponentTelemetryStreamResponse {
+  frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentTelemetry
+    telemetry = 1;
 }
 
-// Request parameters for the RPC `ReceiveSensorDataStream`.
-message ReceiveSensorDataStreamRequest {
+// Request parameters for the RPC `ReceiveSensorTelemetryStream`.
+message ReceiveSensorTelemetryStreamRequest {
   // A message for specifying a filter to apply to the stream.
-  message SensorDataStreamFilter {
+  message SensorTelemetryStreamFilter {
     // List of metrics to return. Only the specified metrics will be returned.
     //
     // !!! note
@@ -426,7 +432,7 @@ message ReceiveSensorDataStreamRequest {
     //     Sensors may not support all metrics. If a sensor does not support a
     //     given metric, then the returned data stream will not contain that
     //     metric.
-    repeated frequenz.api.common.v1.metrics.Metric metrics = 1;
+    repeated frequenz.api.common.v1alpha7.metrics.Metric metrics = 1;
   }
 
   // The sensor ID to subscribe to.
@@ -435,30 +441,30 @@ message ReceiveSensorDataStreamRequest {
   // The filter to apply to the stream.
   //
   // This field is optional. If this is not provided, then the stream will
-  // return all metrics for the given component. If this is provided, then the
+  // return all metrics for the given sensor. If this is provided, then the
   // stream will return only the metrics specified in the filter.
-  SensorDataStreamFilter filter = 2;
+  SensorTelemetryStreamFilter filter = 2;
 }
 
 // A data sample from a sensor in the microgrid.
-message ReceiveSensorDataStreamResponse {
+message ReceiveSensorTelemetryStreamResponse {
   // The sensor data.
-  frequenz.api.common.v1.microgrid.sensors.SensorData data = 1;
+  frequenz.api.common.v1alpha7.microgrid.sensors.SensorTelemetry telemetry = 1;
 }
 
-// Request parameters for the RPC `AddComponentBounds`.
-message AddComponentBoundsRequest {
-  // The ID of the target component.
-  uint64 component_id = 1;
+// Request parameters for the RPC `AddElectricalComponentBounds`.
+message AddElectricalComponentBoundsRequest {
+  // The ID of the target electrical component.
+  uint64 electrical_component_id = 1;
 
   // The target metric whose bounds have to be set.
-  frequenz.api.common.v1.metrics.Metric target_metric = 2;
+  frequenz.api.common.v1alpha7.metrics.Metric target_metric = 2;
 
   // A list of bounds for the target metric.
   // While incorporating these bounds, the API will ensure that overlapping
   // pairs of bounds are merged into a single pair of bounds, and
   // non-overlapping ones are kept separated.
-  repeated frequenz.api.common.v1.metrics.Bounds bounds = 3;
+  repeated frequenz.api.common.v1alpha7.metrics.Bounds bounds = 3;
 
   // The duration, in seconds, until which the request will stay in effect.
   // This duration has to be between 10 seconds and 15 minutes (including both
@@ -467,19 +473,19 @@ message AddComponentBoundsRequest {
   optional uint64 request_lifetime = 4;
 }
 
-// Response message for the RPC `AddComponentBounds`.
-message AddComponentBoundsResponse {
+// Response message for the RPC `AddElectricalComponentBounds`.
+message AddElectricalComponentBoundsResponse {
   // The timestamp until which the added bounds will stay in effect.
-  // After this timestamp, the component bounds added by this request will be
-  // removed. By default, this timestamp will be set to the current time plus
-  // 60 seconds.
+  // After this timestamp, the electrical component bounds added by this request
+  // will be removed. By default, this timestamp will be set to the current
+  // time plus 60 seconds.
   google.protobuf.Timestamp valid_until = 1;
 }
 
-// Request parameters for the RPC `SetComponentPowerActive`.
-message SetComponentPowerActiveRequest {
-  // The ID of the component to set the output active power of.
-  uint64 component_id = 1;
+// Request parameters for the RPC `SetElectricalComponentPowerActive`.
+message SetElectricalComponentPowerActiveRequest {
+  // The ID of the electrical component to set the output active power of.
+  uint64 electrical_component_id = 1;
 
   // The output active power level, in watts.
   // -ve values are for discharging, and +ve values are for charging.
@@ -492,19 +498,19 @@ message SetComponentPowerActiveRequest {
   optional uint64 request_lifetime = 3;
 }
 
-// Response message for the RPC `SetComponentPowerActive`.
-message SetComponentPowerActiveResponse {
+// Response message for the RPC `SetElectricalComponentPowerActive`.
+message SetElectricalComponentPowerActiveResponse {
   // The timestamp until which the given power command will stay in effect.
-  // After this timestamp, the component power will be set to 0, if the API
-  // receives no further power commands. By default, this timestamp will be set
-  // to the current time plus 60 seconds.
+  // After this timestamp, the electrical component power will be set to 0, if
+  // the API receives no further power commands. By default, this timestamp will
+  // be set to the current time plus 60 seconds.
   google.protobuf.Timestamp valid_until = 1;
 }
 
-// Request parameters for the RPC `SetComponentPowerReactive`.
-message SetComponentPowerReactiveRequest {
-  // The ID of the component to set the output reactive power of.
-  uint64 component_id = 1;
+// Request parameters for the RPC `SetElectricalComponentPowerReactive`.
+message SetElectricalComponentPowerReactiveRequest {
+  // The ID of the electrical component to set the output reactive power of.
+  uint64 electrical_component_id = 1;
 
   // The output reactive power level, in VAr.
   //
@@ -521,35 +527,35 @@ message SetComponentPowerReactiveRequest {
   optional uint64 request_lifetime = 3;
 }
 
-// Response message for the RPC `SetComponentPowerReactive`.
-message SetComponentPowerReactiveResponse {
+// Response message for the RPC `SetElectricalComponentPowerReactive`.
+message SetElectricalComponentPowerReactiveResponse {
   // The timestamp until which the given power command will stay in effect.
-  // After this timestamp, the component power will be set to 0, if the API
-  // receives no further power commands. By default, this timestamp will be set
-  // to the current time plus 60 seconds.
+  // After this timestamp, the electrical component power will be set to 0, if
+  // the API receives no further power commands. By default, this timestamp will
+  // be set to the current time plus 60 seconds.
   google.protobuf.Timestamp valid_until = 1;
 }
 
-// Request parameters for the RPC `StartComponent`.
-message StartComponentRequest {
-  // The component ID to start.
-  uint64 component_id = 1;
+// Request parameters for the RPC `StartElectricalComponent`.
+message StartElectricalComponentRequest {
+  // The electrical component ID to start.
+  uint64 electrical_component_id = 1;
 }
 
-// Request parameters for the RPC `PutComponentInStandby`.
-message PutComponentInStandbyRequest {
-  // The component ID to set to standby.
-  uint64 component_id = 1;
+// Request parameters for the RPC `PutElectricalComponentInStandby`.
+message PutElectricalComponentInStandbyRequest {
+  // The electrical component ID to set to standby.
+  uint64 electrical_component_id = 1;
 }
 
-// Request parameters for the RPC `StopComponent`.
-message StopComponentRequest {
-  // The component ID to stop.
-  uint64 component_id = 1;
+// Request parameters for the RPC `StopElectricalComponent`.
+message StopElectricalComponentRequest {
+  // The electrical component ID to stop.
+  uint64 electrical_component_id = 1;
 }
 
-// Request parameters for the RPC `AckComponentError`.
-message AckComponentErrorRequest {
-  // The component ID to acknowledge the error for.
-  uint64 component_id = 1;
+// Request parameters for the RPC `AckElectricalComponentError`.
+message AckElectricalComponentErrorRequest {
+  // The electrical component ID to acknowledge the error for.
+  uint64 electrical_component_id = 1;
 }
