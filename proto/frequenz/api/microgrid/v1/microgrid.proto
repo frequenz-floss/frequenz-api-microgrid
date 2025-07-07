@@ -24,12 +24,11 @@ import "google/protobuf/timestamp.proto";
 
 // The Frequenz Microgrid API
 service Microgrid {
-  // Returns the microgrid metadata
-  // The metadata consists of information that describes the overall
-  // microgrid, as opposed to its electrical components or sensors,
-  // e.g., the microgrid ID, location.
-  rpc GetMicrogridMetadata(google.protobuf.Empty)
-    returns (GetMicrogridMetadataResponse) {
+  // Returns information about the local microgrid.
+  // This information that describes the overall microgrid, as opposed to its
+  // electrical components or sensors, e.g., the microgrid ID, location.
+  rpc GetMicrogrid(google.protobuf.Empty)
+    returns (GetMicrogridResponse) {
     option (google.api.http) = {
       get : "/v1/metadata"
     };
@@ -323,9 +322,9 @@ service Microgrid {
   }
 }
 
-// Metadata that describes a microgrid.
-message GetMicrogridMetadataResponse {
-  // The location of the microgrid, in geographical co-ordinates.
+// Information describing a microgrid.
+message GetMicrogridResponse {
+  // The information about the local microgrid.
   frequenz.api.common.v1alpha7.microgrid.Microgrid  microgrid= 1;
 }
 

@@ -21,6 +21,8 @@
   - `ReceiveSensorDataStream` RPC method has been renamed to `ReceiveSensorTelemetryStream` to match the naming conventions used in `frequenz-api-common`.
   - `ReceiveSensorDataStreamRequest` RPC method has been renamed to `ReceiveSensorTelemetryStreamRequest` to match the naming conventions used in `frequenz-api-common`.
   - `ReceiveSensorDataStreamResponse` RPC method has been renamed to `ReceiveSensorTelemetryStreamResponse` to match the naming conventions used in `frequenz-api-common`.
+- The RPC `GetMicrogridMetadata` has been renamed to `GetMicrogrid` to better align with the naming convention in `frequenz-api-common`.
+- The `GetMicrogridMetadataResponse` message has been renamed to `GetMicrogridResponse` to better align with the naming convention in `frequenz-api-common`.
 
 ## New Features
 
