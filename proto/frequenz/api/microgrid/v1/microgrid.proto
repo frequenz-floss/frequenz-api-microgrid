@@ -450,7 +450,6 @@ message ReceiveSensorTelemetryStreamResponse {
   // The sensor data.
   frequenz.api.common.v1alpha7.microgrid.sensors.SensorTelemetry telemetry = 1;
 }
-
 // Request parameters for the RPC `AddElectricalComponentBounds`.
 message AddElectricalComponentBoundsRequest {
   // The ID of the target electrical component.
@@ -495,6 +494,27 @@ message SetElectricalComponentPowerActiveRequest {
   // limits), otherwise the request will be rejected.
   // If not provided, it defaults to 60s.
   optional uint64 request_lifetime = 3;
+
+  // The desired rate of change for the power output, in watts per second.
+  // This is useful in scenarios where the rate of change of the power output
+  // of the electrical component is critical to the use-case of the client.
+  //
+  // This value represents the magnitude of the ramp and must always be a
+  // positive integer. The service automatically applies it in the correct
+  // direction (ramping up or down) to reach the target `power`.
+  //
+  // This rate is capped to the component's own configured maximum ramp rate.
+  // The actual rate of change will be the lesser of the requested rate and the
+  // component's limit.
+  //
+  // Edge-cases and precedence:
+  // - The ramping is applied only if the component supports it.
+  // - If `request_lifetime` ends before the ramp is complete, the ramp is
+  //   halted, and the component is set to its standby state.
+  // - If a new command arrives mid-ramp, the current ramp is interrupted and
+  //   a new one begins according to the new command's parameters.
+  // - If not provided, the component uses its configured maximum ramp rate.
+  optional uint32 ramp_rate = 4;
 }
 
 // Response message for the RPC `SetElectricalComponentPowerActive`.
@@ -524,6 +544,26 @@ message SetElectricalComponentPowerReactiveRequest {
   // limits), otherwise the request will be rejected.
   // If not provided, it defaults to 60s.
   optional uint64 request_lifetime = 3;
+
+  // The desired rate of change for the power output, in volt-amperes per
+  // second.
+  //
+  // This value represents the magnitude of the ramp and must always be a
+  // positive integer. The service automatically applies it in the correct
+  // direction (ramping up or down) to reach the target `power`.
+  //
+  // This rate is capped to the component's own configured maximum ramp rate.
+  // The actual rate of change will be the lesser of the requested rate and the
+  // component's limit.
+  //
+  // Edge-cases and precedence:
+  // - The ramping is applied only if the component supports it.
+  // - If `request_lifetime` ends before the ramp is complete, the ramp is
+  //   halted, and the component is set to its standby state.
+  // - If a new command arrives mid-ramp, the current ramp is interrupted and
+  //   a new one begins according to the new command's parameters.
+  // - If not provided, the component uses its configured maximum ramp rate.
+  optional uint32 ramp_rate = 4;
 }
 
 // Response message for the RPC `SetElectricalComponentPowerReactive`.

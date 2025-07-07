@@ -23,6 +23,7 @@
   - `ReceiveSensorDataStreamResponse` RPC method has been renamed to `ReceiveSensorTelemetryStreamResponse` to match the naming conventions used in `frequenz-api-common`.
 - The RPC `GetMicrogridMetadata` has been renamed to `GetMicrogrid` to better align with the naming convention in `frequenz-api-common`.
 - The `GetMicrogridMetadataResponse` message has been renamed to `GetMicrogridResponse` to better align with the naming convention in `frequenz-api-common`.
+- Add `ramp_rate` to `SetElectricalComponentPowerActiveRequest` and `SetElectricalComponentPowerReactiveRequest` messages to allow setting the desired ramp rate for active and reactive power changes.
 
 ## New Features
 
