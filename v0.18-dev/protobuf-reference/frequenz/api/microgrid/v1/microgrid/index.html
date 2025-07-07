@@ -805,9 +805,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#getmicrogridmetadataresponse" class="md-nav__link">
+  <a href="#getmicrogridresponse" class="md-nav__link">
     <span class="md-ellipsis">
-      GetMicrogridMetadataResponse
+      GetMicrogridResponse
     </span>
   </a>
   
@@ -1488,9 +1488,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#getmicrogridmetadataresponse" class="md-nav__link">
+  <a href="#getmicrogridresponse" class="md-nav__link">
     <span class="md-ellipsis">
-      GetMicrogridMetadataResponse
+      GetMicrogridResponse
     </span>
   </a>
   
@@ -1719,7 +1719,7 @@
 <li><a href="#frequenz-api-microgrid-v1-AckElectricalComponentErrorRequest">AckElectricalComponentErrorRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1-AddElectricalComponentBoundsRequest">AddElectricalComponentBoundsRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1-AddElectricalComponentBoundsResponse">AddElectricalComponentBoundsResponse</a></li>
-<li><a href="#frequenz-api-microgrid-v1-GetMicrogridMetadataResponse">GetMicrogridMetadataResponse</a></li>
+<li><a href="#frequenz-api-microgrid-v1-GetMicrogridResponse">GetMicrogridResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ListElectricalComponentConnectionsRequest">ListElectricalComponentConnectionsRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ListElectricalComponentConnectionsResponse">ListElectricalComponentConnectionsResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ListElectricalComponentsRequest">ListElectricalComponentsRequest</a></li>
@@ -1835,9 +1835,9 @@
 </tr>
 </tbody>
 </table>
-<p><a name="frequenz-api-microgrid-v1-GetMicrogridMetadataResponse"></a></p>
-<h3 id="getmicrogridmetadataresponse">GetMicrogridMetadataResponse<a class="headerlink" href="#getmicrogridmetadataresponse" title="Permanent link">¤</a></h3>
-<p>Metadata that describes a microgrid.</p>
+<p><a name="frequenz-api-microgrid-v1-GetMicrogridResponse"></a></p>
+<h3 id="getmicrogridresponse">GetMicrogridResponse<a class="headerlink" href="#getmicrogridresponse" title="Permanent link">¤</a></h3>
+<p>Information describing a microgrid.</p>
 <table>
 <thead>
 <tr>
@@ -1852,7 +1852,7 @@
 <td>microgrid</td>
 <td><a href="#frequenz-api-common-v1alpha7-microgrid-Microgrid">frequenz.api.common.v1alpha7.microgrid.Microgrid</a></td>
 <td></td>
-<td>The location of the microgrid, in geographical co-ordinates.</td>
+<td>The information about the local microgrid.</td>
 </tr>
 </tbody>
 </table>
@@ -2327,10 +2327,10 @@ represented using this message.</p>
 </thead>
 <tbody>
 <tr>
-<td>GetMicrogridMetadata</td>
+<td>GetMicrogrid</td>
 <td><a href="#google-protobuf-Empty">.google.protobuf.Empty</a></td>
-<td><a href="#frequenz-api-microgrid-v1-GetMicrogridMetadataResponse">GetMicrogridMetadataResponse</a></td>
-<td>Returns the microgrid metadata The metadata consists of information that describes the overall microgrid, as opposed to its electrical components or sensors, e.g., the microgrid ID, location.</td>
+<td><a href="#frequenz-api-microgrid-v1-GetMicrogridResponse">GetMicrogridResponse</a></td>
+<td>Returns information about the local microgrid. This information that describes the overall microgrid, as opposed to its electrical components or sensors, e.g., the microgrid ID, location.</td>
 </tr>
 <tr>
 <td>ListElectricalComponents</td>
