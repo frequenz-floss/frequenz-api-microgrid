@@ -25,6 +25,7 @@
 - The `GetMicrogridMetadataResponse` message has been renamed to `GetMicrogridResponse` to better align with the naming convention in `frequenz-api-common`.
 - The response messages for the `SetElectricalComponentPowerActive` and
 `SetElectricalComponentPowerReactive` RPCs have been changed to return a stream of responses instead of a single response. This allows the server to provide ongoing status updates for the request, which is useful when the electrical component cannot immediately set its output power to the requested value.
+- The RPC `AddComponentBounds` has been renamed to `AugmentElectricalComponentBounds`.
 
 ## New Features
 
