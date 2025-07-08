@@ -580,7 +580,7 @@ message SetElectricalComponentPowerActiveResponse {
   // When the request status is `REJECTED`, `FAILED`, or `OVERRIDDEN`, the
   // `valid_until` timestamp will not be set, and the electrical component
   // will not change its power output.
-  optional google.protobuf.Timestamp valid_until = 1;
+  google.protobuf.Timestamp valid_until = 1;
 
   // The current status of the request to set the power of the electrical
   // component.
