@@ -787,18 +787,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#addelectricalcomponentboundsrequest" class="md-nav__link">
+  <a href="#augmentelectricalcomponentboundsrequest" class="md-nav__link">
     <span class="md-ellipsis">
-      AddElectricalComponentBoundsRequest
+      AugmentElectricalComponentBoundsRequest
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#addelectricalcomponentboundsresponse" class="md-nav__link">
+  <a href="#augmentelectricalcomponentboundsresponse" class="md-nav__link">
     <span class="md-ellipsis">
-      AddElectricalComponentBoundsResponse
+      AugmentElectricalComponentBoundsResponse
     </span>
   </a>
   
@@ -1479,18 +1479,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#addelectricalcomponentboundsrequest" class="md-nav__link">
+  <a href="#augmentelectricalcomponentboundsrequest" class="md-nav__link">
     <span class="md-ellipsis">
-      AddElectricalComponentBoundsRequest
+      AugmentElectricalComponentBoundsRequest
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#addelectricalcomponentboundsresponse" class="md-nav__link">
+  <a href="#augmentelectricalcomponentboundsresponse" class="md-nav__link">
     <span class="md-ellipsis">
-      AddElectricalComponentBoundsResponse
+      AugmentElectricalComponentBoundsResponse
     </span>
   </a>
   
@@ -1735,8 +1735,8 @@
 <p><a href="#frequenz_api_microgrid_v1_microgrid-proto">frequenz/api/microgrid/v1/microgrid.proto</a></p>
 <ul>
 <li><a href="#frequenz-api-microgrid-v1-AckElectricalComponentErrorRequest">AckElectricalComponentErrorRequest</a></li>
-<li><a href="#frequenz-api-microgrid-v1-AddElectricalComponentBoundsRequest">AddElectricalComponentBoundsRequest</a></li>
-<li><a href="#frequenz-api-microgrid-v1-AddElectricalComponentBoundsResponse">AddElectricalComponentBoundsResponse</a></li>
+<li><a href="#frequenz-api-microgrid-v1-AugmentElectricalComponentBoundsRequest">AugmentElectricalComponentBoundsRequest</a></li>
+<li><a href="#frequenz-api-microgrid-v1-AugmentElectricalComponentBoundsResponse">AugmentElectricalComponentBoundsResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-GetMicrogridResponse">GetMicrogridResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ListElectricalComponentConnectionsRequest">ListElectricalComponentConnectionsRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1-ListElectricalComponentConnectionsResponse">ListElectricalComponentConnectionsResponse</a></li>
@@ -1796,9 +1796,9 @@
 </tr>
 </tbody>
 </table>
-<p><a name="frequenz-api-microgrid-v1-AddElectricalComponentBoundsRequest"></a></p>
-<h3 id="addelectricalcomponentboundsrequest">AddElectricalComponentBoundsRequest<a class="headerlink" href="#addelectricalcomponentboundsrequest" title="Permanent link">¤</a></h3>
-<p>Request parameters for the RPC <code>AddElectricalComponentBounds</code>.</p>
+<p><a name="frequenz-api-microgrid-v1-AugmentElectricalComponentBoundsRequest"></a></p>
+<h3 id="augmentelectricalcomponentboundsrequest">AugmentElectricalComponentBoundsRequest<a class="headerlink" href="#augmentelectricalcomponentboundsrequest" title="Permanent link">¤</a></h3>
+<p>Request parameters for the RPC <code>AugmentElectricalComponentBounds</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1835,9 +1835,9 @@
 </tr>
 </tbody>
 </table>
-<p><a name="frequenz-api-microgrid-v1-AddElectricalComponentBoundsResponse"></a></p>
-<h3 id="addelectricalcomponentboundsresponse">AddElectricalComponentBoundsResponse<a class="headerlink" href="#addelectricalcomponentboundsresponse" title="Permanent link">¤</a></h3>
-<p>Response message for the RPC <code>AddElectricalComponentBounds</code>.</p>
+<p><a name="frequenz-api-microgrid-v1-AugmentElectricalComponentBoundsResponse"></a></p>
+<h3 id="augmentelectricalcomponentboundsresponse">AugmentElectricalComponentBoundsResponse<a class="headerlink" href="#augmentelectricalcomponentboundsresponse" title="Permanent link">¤</a></h3>
+<p>Response message for the RPC <code>AugmentElectricalComponentBounds</code>.</p>
 <table>
 <thead>
 <tr>
@@ -2422,7 +2422,7 @@ indicating the ongoing status of the request.</p>
 <p>The request may be filtered by <code>start</code>/<code>end</code> electrical component(s) of individual connections. If provided, the <code>start</code> and <code>end</code> filters have an <code>AND</code> relationship between each other, meaning that they are applied serially, but an <code>OR</code> relationship with other elements in the same list. For example, if <code>start</code> = <code>[1, 2, 3]</code>, and <code>end</code> = <code>[4, 5, 6]</code>, then the result should have all the connections where * each <code>start</code> electrical component ID is either <code>1</code>, <code>2</code>, OR <code>3</code>, AND * each <code>end</code> electrical component ID is either <code>4</code>, <code>5</code>, OR <code>6</code>. |
 | ReceiveElectricalComponentTelemetryStream | <a href="#frequenz-api-microgrid-v1-ReceiveElectricalComponentTelemetryStreamRequest">ReceiveElectricalComponentTelemetryStreamRequest</a> | <a href="#frequenz-api-microgrid-v1-ReceiveElectricalComponentTelemetryStreamResponse">ReceiveElectricalComponentTelemetryStreamResponse</a> stream | Returns a stream containing data from a electrical component with a given ID. |
 | ReceiveSensorTelemetryStream | <a href="#frequenz-api-microgrid-v1-ReceiveSensorTelemetryStreamRequest">ReceiveSensorTelemetryStreamRequest</a> | <a href="#frequenz-api-microgrid-v1-ReceiveSensorTelemetryStreamResponse">ReceiveSensorTelemetryStreamResponse</a> stream | Returns a stream containing data from a sensor with a given ID. |
-| AddElectricalComponentBounds | <a href="#frequenz-api-microgrid-v1-AddElectricalComponentBoundsRequest">AddElectricalComponentBoundsRequest</a> | <a href="#frequenz-api-microgrid-v1-AddElectricalComponentBoundsResponse">AddElectricalComponentBoundsResponse</a> | Adds inclusion bounds for a given metric of a given electrical component. Returns the time at which the bounds will expire (as a timestamp (UTC)).</p>
+| AugmentElectricalComponentBounds | <a href="#frequenz-api-microgrid-v1-AugmentElectricalComponentBoundsRequest">AugmentElectricalComponentBoundsRequest</a> | <a href="#frequenz-api-microgrid-v1-AugmentElectricalComponentBoundsResponse">AugmentElectricalComponentBoundsResponse</a> | Augments the overall bounds for a given metric of a given electrical component with the provided bounds. Returns the UTC time at which the provided bounds will expire and its effects will no longer be visible in the overall bounds for the given metric.</p>
 <p>The request parameters allows users to select a duration until which the bounds will stay in effect. If no duration is provided, then the bounds will be removed after a default duration of 5 seconds.</p>
 <p>Inclusion bounds give the range that the system will try to keep the metric within. If the metric goes outside of these bounds, the system will try to bring it back within the bounds. If the bounds for a metric are [[<code>lower_1</code>, <code>upper_1</code>], [<code>lower_2</code>, <code>upper_2</code>]], then this metric&#39;s <code>value</code> needs to comply with the constraints <code>lower_1 &amp;lt;= value &amp;lt;= upper_1</code> OR <code>lower_2 &amp;lt;= value &amp;lt;= upper_2</code>.</p>
 <p>If multiple inclusion bounds have been provided for a metric, then the overlapping bounds are merged into a single bound, and non-overlapping bounds are kept separate. E.g. if the bounds are [[0, 10], [5, 15], [20, 30]], then the resulting bounds will be [[0, 15], [20, 30]].</p>
