@@ -985,6 +985,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#setelectricalcomponentpowerrequeststatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetElectricalComponentPowerRequestStatus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#microgrid" class="md-nav__link">
     <span class="md-ellipsis">
       Microgrid
@@ -1668,6 +1677,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#setelectricalcomponentpowerrequeststatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetElectricalComponentPowerRequestStatus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#microgrid" class="md-nav__link">
     <span class="md-ellipsis">
       Microgrid
@@ -1740,6 +1758,9 @@
 <li><a href="#frequenz-api-microgrid-v1-StartElectricalComponentRequest">StartElectricalComponentRequest</a></li>
 <li>
 <p><a href="#frequenz-api-microgrid-v1-StopElectricalComponentRequest">StopElectricalComponentRequest</a></p>
+</li>
+<li>
+<p><a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerRequestStatus">SetElectricalComponentPowerRequestStatus</a></p>
 </li>
 <li>
 <p><a href="#frequenz-api-microgrid-v1-Microgrid">Microgrid</a></p>
@@ -2216,11 +2237,13 @@ represented using this message.</p>
 <tr>
 <td>valid_until</td>
 <td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
-<td></td>
-<td>The timestamp until which the given power command will stay in effect. After this timestamp, the electrical component power will be set to 0, if the API receives no further power commands. By default, this timestamp will be set to the current time plus 60 seconds.</td>
+<td>optional</td>
+<td>The timestamp until which the given power command will stay in effect. After this timestamp, the electrical component power will be set to its standby state, if the API receives no further power commands. By default, this timestamp will be set to the current time plus 60 seconds.</td>
 </tr>
 </tbody>
 </table>
+<p>When the request status is <code>REJECTED</code>, <code>FAILED</code>, or <code>OVERRIDDEN</code>, the <code>valid_until</code> timestamp will not be set, and the electrical component will not change its power output. |
+| status | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerRequestStatus">SetElectricalComponentPowerRequestStatus</a> |  | The current status of the request to set the power of the electrical component. |</p>
 <p><a name="frequenz-api-microgrid-v1-SetElectricalComponentPowerReactiveRequest"></a></p>
 <h3 id="setelectricalcomponentpowerreactiverequest">SetElectricalComponentPowerReactiveRequest<a class="headerlink" href="#setelectricalcomponentpowerreactiverequest" title="Permanent link">¤</a></h3>
 <p>Request parameters for the RPC <code>SetElectricalComponentPowerReactive</code>.</p>
@@ -2266,11 +2289,13 @@ represented using this message.</p>
 <tr>
 <td>valid_until</td>
 <td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
-<td></td>
-<td>The timestamp until which the given power command will stay in effect. After this timestamp, the electrical component power will be set to 0, if the API receives no further power commands. By default, this timestamp will be set to the current time plus 60 seconds.</td>
+<td>optional</td>
+<td>The timestamp until which the given power command will stay in effect. After this timestamp, the electrical component power will be set to its standby state, if the API receives no further power commands. By default, this timestamp will be set to the current time plus 60 seconds.</td>
 </tr>
 </tbody>
 </table>
+<p>When the request status is <code>REJECTED</code>, <code>FAILED</code>, or <code>OVERRIDDEN</code>, the <code>valid_until</code> timestamp will not be set, and the electrical component will not change its power output. |
+| status | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerRequestStatus">SetElectricalComponentPowerRequestStatus</a> |  | The current status of the request to set the power of the electrical component. |</p>
 <p><a name="frequenz-api-microgrid-v1-StartElectricalComponentRequest"></a></p>
 <h3 id="startelectricalcomponentrequest">StartElectricalComponentRequest<a class="headerlink" href="#startelectricalcomponentrequest" title="Permanent link">¤</a></h3>
 <p>Request parameters for the RPC <code>StartElectricalComponent</code>.</p>
@@ -2313,6 +2338,51 @@ represented using this message.</p>
 </tr>
 </tbody>
 </table>
+<p><a name="frequenz-api-microgrid-v1-SetElectricalComponentPowerRequestStatus"></a></p>
+<h3 id="setelectricalcomponentpowerrequeststatus">SetElectricalComponentPowerRequestStatus<a class="headerlink" href="#setelectricalcomponentpowerrequeststatus" title="Permanent link">¤</a></h3>
+<p>Response codes for the <code>SetElectricalComponentPowerActive</code> and
+<code>SetElectricalComponentPowerReactive</code> RPCs. These codes indicate the ongoing
+status of the request to set the power of an electrical component.</p>
+<p>Often, electrical components are not able to immediately set their output
+power to the requested value. This can happen due to several reasons,
+including, but not limited to:
+- having to ramp up or down the power output from the current output.
+- having to wait for the electrical component to reach a stable state before
+  applying the new power set-point.
+- communication latency between the API service and the electrical
+  component.</p>
+<p>In such cases, an initial response is sent to the client, indicating that the
+request has been accepted, and it is followed by a stream of responses
+indicating the ongoing status of the request.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Number</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_UNSPECIFIED</td>
+<td>0</td>
+<td>Default value. Users are discouraged from using this value.</td>
+</tr>
+<tr>
+<td>SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_ACCEPTED</td>
+<td>1</td>
+<td>The request has been accepted, and the target power set-point will be applied to the electrical component.</td>
+</tr>
+</tbody>
+</table>
+<p>Once the API service has received a request to set the power of an electrical component, it will validate the input parameters immediately. If the parameters are valid, the service will return this code immediately, and then proceed to apply the power set-point to the electrical component. |
+| SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_REJECTED | 2 | The request has been rejected because of invalid input parameters.</p>
+<p>Once the API service has received a request to set the power of an electrical component, it will validate the input parameters immediately. If the parameters are invalid, the service will return this code immediately, and will not apply the power set-point to the electrical component. |
+| SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_FAILED | 3 | The request has failed midway, and the electrical component is not at the desired power level.</p>
+<p>This code indicates that the request to set the power of an electrical component has been accepted, but the service encountered an error while applying the power set-point to the electrical component. |
+| SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_SUCCESS | 4 | The request has been successfully processed. |
+| SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_OVERRIDDEN | 5 | The request has been overridden by another request.</p>
+<p>This could happen if a new request to set the power of an electrical component arrives while the previous request is still being processed. |</p>
 <p><a name="frequenz-api-microgrid-v1-Microgrid"></a></p>
 <h3 id="microgrid">Microgrid<a class="headerlink" href="#microgrid" title="Permanent link">¤</a></h3>
 <p>The Frequenz Microgrid API</p>
@@ -2358,17 +2428,17 @@ represented using this message.</p>
 <p>If multiple inclusion bounds have been provided for a metric, then the overlapping bounds are merged into a single bound, and non-overlapping bounds are kept separate. E.g. if the bounds are [[0, 10], [5, 15], [20, 30]], then the resulting bounds will be [[0, 15], [20, 30]].</p>
 <p>The following diagram illustrates how bounds are applied: <code>lower_1 upper_1 &amp;lt;----|========|--------|========|--------&amp;gt; lower_2 upper_2</code> The bounds in this example are <code>[[lower_1, upper_1], [lower_2, upper_2]]</code>. ---- values here are considered out of range. ==== values here are considered within range.</p>
 <p>Note that for power metrics, regardless of the bounds, 0W is always allowed. |
-| SetElectricalComponentPowerActive | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerActiveRequest">SetElectricalComponentPowerActiveRequest</a> | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerActiveResponse">SetElectricalComponentPowerActiveResponse</a> | Sets the active power output of a electrical component with a given ID, provided the electrical component supports it. The power output is specified in watts.</p>
+| SetElectricalComponentPowerActive | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerActiveRequest">SetElectricalComponentPowerActiveRequest</a> | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerActiveResponse">SetElectricalComponentPowerActiveResponse</a> stream | Sets the active power output of a electrical component with a given ID, provided the electrical component supports it. The power output is specified in watts.</p>
 <p>The power output can be -ve or &#43;ve, depending on whether the electrical component is supposed to be discharging or charging, respectively.</p>
-<p>The return value is the timestamp until which the given power command will stay in effect. After this timestamp, the electrical component&#39;s active power will be set to 0, if the API receives no further command to change it before then. By default, this timestamp will be set to the current time plus 60 seconds.</p>
+<p>The server provides a stream of responses in return. Each response will contain the current status of the request. <strong>Initial response:</strong> The initial response will be sent immediately after the request is received, and will indicate whether the request was accepted or rejected. If the request was accepted, this response will also contain the timestamp until which the given power command will stay in effect, after which the electrical component will be returned to its default state. <strong>Subsequent response:</strong> After the initial response, the server will send another response in the stream, which will be the final response. It will indicate whether the request was successful, failed, or overridden by another request. If the request was successful, it will also contain the timestamp until which the given power command will stay in effect, after which the electrical component will be returned to its default state.</p>
 <p>Note that the target electrical component may have a resolution of more than 1 W. E.g., an inverter may have a resolution of 88 W. In such cases, the magnitude of power will be floored to the nearest multiple of the resolution.</p>
 <p>Performs the following sequence actions for the following electrical component categories:</p>
 <ul>
 <li>Inverter: Sends the discharge command to the inverter, making it deliver AC power. |
-| SetElectricalComponentPowerReactive | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerReactiveRequest">SetElectricalComponentPowerReactiveRequest</a> | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerReactiveResponse">SetElectricalComponentPowerReactiveResponse</a> | Sets the reactive power output of a electrical component with a given ID, provided the electrical component supports it. The power output is specified in VAr.</li>
+| SetElectricalComponentPowerReactive | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerReactiveRequest">SetElectricalComponentPowerReactiveRequest</a> | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerReactiveResponse">SetElectricalComponentPowerReactiveResponse</a> stream | Sets the reactive power output of a electrical component with a given ID, provided the electrical component supports it. The power output is specified in VAr.</li>
 </ul>
 <p>We follow the polarity specified in the IEEE 1459-2010 standard definitions, where - positive reactive is inductive (current is lagging the voltage) - negative reactive is capacitive (current is leading the voltage)</p>
-<p>The return value is the timestamp until which the given power command will stay in effect. After this timestamp, the electrical component&#39;s reactive power will be set to 0, if the API receives no further command to change it before then. By default, this timestamp will be set to the current time plus 60 seconds.</p>
+<p>The server provides a stream of responses in return. Each response will contain the current status of the request. <strong>Initial response:</strong> The initial response will be sent immediately after the request is received, and will indicate whether the request was accepted or rejected. If the request was accepted, this response will also contain the timestamp until which the given power command will stay in effect, after which the electrical component will be returned to its default state. <strong>Subsequent response:</strong> After the initial response, the server will send another response in the stream, which will be the final response. It will indicate whether the request was successful, failed, or overridden by another request. If the request was successful, it will also contain the timestamp until which the given power command will stay in effect, after which the electrical component will be returned to its default state.</p>
 <p>Note that the target electrical component may have a resolution of more than 1 VAr. E.g., an inverter may have a resolution of 88 VAr. In such cases, the magnitude of power will be floored to the nearest multiple of the resolution. |
 | StartElectricalComponent | <a href="#frequenz-api-microgrid-v1-StartElectricalComponentRequest">StartElectricalComponentRequest</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | Starts the electrical component, and brings it into a state where it is immediately operational.</p>
 <p>Performs the following sequence of actions for the following electrical component categories:</p>
