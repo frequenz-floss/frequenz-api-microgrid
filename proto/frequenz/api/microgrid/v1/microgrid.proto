@@ -126,8 +126,11 @@ service Microgrid {
     };
   }
 
-  // Adds inclusion bounds for a given metric of a given electrical component.
-  // Returns the time at which the bounds will expire (as a timestamp (UTC)).
+  // Augments the overall bounds for a given metric of a given electrical
+  // component with the provided bounds.
+  // Returns the UTC time at which the provided bounds will expire and its
+  // effects will no longer be visible in the overall bounds for the
+  // given metric.
   //
   // The request parameters allows users to select a duration until
   // which the bounds will stay in effect. If no duration is provided, then the
@@ -159,8 +162,8 @@ service Microgrid {
   //
   // Note that for power metrics, regardless of the bounds, 0W is always
   // allowed.
-  rpc AddElectricalComponentBounds(AddElectricalComponentBoundsRequest)
-    returns (AddElectricalComponentBoundsResponse);
+  rpc AugmentElectricalComponentBounds(AugmentElectricalComponentBoundsRequest)
+    returns (AugmentElectricalComponentBoundsResponse);
 
   // Sets the active power output of a electrical component with a given ID,
   // provided the electrical component supports it. The power output is
@@ -467,8 +470,8 @@ message ReceiveSensorTelemetryStreamResponse {
   frequenz.api.common.v1alpha7.microgrid.sensors.SensorTelemetry telemetry = 1;
 }
 
-// Request parameters for the RPC `AddElectricalComponentBounds`.
-message AddElectricalComponentBoundsRequest {
+// Request parameters for the RPC `AugmentElectricalComponentBounds`.
+message AugmentElectricalComponentBoundsRequest {
   // The ID of the target electrical component.
   uint64 electrical_component_id = 1;
 
@@ -488,8 +491,8 @@ message AddElectricalComponentBoundsRequest {
   optional uint64 request_lifetime = 4;
 }
 
-// Response message for the RPC `AddElectricalComponentBounds`.
-message AddElectricalComponentBoundsResponse {
+// Response message for the RPC `AugmentElectricalComponentBounds`.
+message AugmentElectricalComponentBoundsResponse {
   // The timestamp until which the added bounds will stay in effect.
   // After this timestamp, the electrical component bounds added by this request
   // will be removed. By default, this timestamp will be set to the current
