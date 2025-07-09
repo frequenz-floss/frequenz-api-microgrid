@@ -383,13 +383,15 @@ message ListSensorsResponse {
 message ListElectricalComponentConnectionsRequest {
   // Only return connections that start from the specified electrical
   // component ID(s).
-  // If empty, connections with any `start` will be returned.
-  repeated uint64 starts = 1;
+  // If this list is empty, connections with any `source_component_id` will be
+  // returned.
+  repeated uint64 source_component_ids = 1;
 
-  // Only return connections that end at the specified electrical
-  // component ID(s).
-  // if empty, connections with any `end` will be returned.
-  repeated uint64 ends = 2;
+  // Only return connections that end at the specified electrical component
+  // ID(s).
+  // If this list is empty, connections with any `destination_component_id`
+  // will be returned.
+  repeated uint64 destination_component_ids = 2;
 }
 
 // Response message for the RPC `ListElectricalComponentConnections`.
