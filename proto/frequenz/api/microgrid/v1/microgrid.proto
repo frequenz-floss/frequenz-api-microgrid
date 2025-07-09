@@ -367,13 +367,13 @@ message ListElectricalComponentConnectionsRequest {
   // component ID(s).
   // If this list is empty, connections with any `source_component_id` will be
   // returned.
-  repeated uint64 source_component_ids = 1;
+  repeated uint64 source_electrical_component_ids = 1;
 
   // Only return connections that end at the specified electrical component
   // ID(s).
   // If this list is empty, connections with any `destination_component_id`
   // will be returned.
-  repeated uint64 destination_component_ids = 2;
+  repeated uint64 destination_electrical_component_ids = 2;
 }
 
 // Response message for the RPC `ListElectricalComponentConnections`.
