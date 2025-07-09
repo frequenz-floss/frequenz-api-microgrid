@@ -165,12 +165,31 @@ service Microgrid {
   rpc AugmentElectricalComponentBounds(AugmentElectricalComponentBoundsRequest)
     returns (AugmentElectricalComponentBoundsResponse);
 
-  // Sets the active power output of a electrical component with a given ID,
-  // provided the electrical component supports it. The power output is
-  // specified in watts.
+  // Sets the active or reactive power output of a electrical component to a
+  // specified target.
+  // This RPC allows setting either active or reactive power in a single
+  // request. Setting both simultaneously is not supported; clients must issue
+  // separate requests for each power type.
   //
-  // The power output can be -ve or +ve, depending on whether the electrical
-  // component is supposed to be discharging or charging, respectively.
+  // Clients are expected to provide the target power in the request parameters.
+  // The target power is specified in watts (W) for active power, and in
+  // volt-amperes reactive (VAR) for reactive power. The sign-convention for the
+  // target power is as follows:
+  //
+  // For active power:
+  // - Negative values (-) indicate discharge towards the grid.
+  // - Positive values (+) indicate charge from the direction of the grid.
+  //
+  // For reactive power:
+  // - Negative values (-) indicate capacitive reactive power, where the
+  //   current leads the voltage.
+  // - Positive values (+) indicate inductive reactive power, where the
+  //   current lags the voltage.
+  //
+  // Note that the target electrical component may have a resolution of more
+  // than 1 W or 1 VAr. E.g., an inverter may have a resolution of 88 W.
+  // In such cases, the target power's magnitude will be floored to the nearest
+  // multiple of the resolution.
   //
   // The server provides a stream of responses in return. Each response will
   // contain the current status of the request.
@@ -186,55 +205,18 @@ service Microgrid {
   // timestamp until which the given power command will stay in effect, after
   // which the electrical component will be returned to its default state.
   //
-  // Note that the target electrical component may have a resolution of more
-  // than 1 W. E.g., an inverter may have a resolution of 88 W.
-  // In such cases, the magnitude of power will be floored to the nearest
-  // multiple of the resolution.
-  //
-  // Performs the following sequence actions for the following electrical
-  // component categories:
-  //
-  // * Inverter: Sends the discharge command to the inverter, making it deliver
-  //  AC power.
-  rpc SetElectricalComponentPowerActive(SetElectricalComponentPowerActiveRequest)
-    returns (stream SetElectricalComponentPowerActiveResponse) {
+  // This command is supported for the following electrical component
+  // categories, provided the specific model also supports it:
+  // - `ELECTRICAL_COMPONENT_CATEGORY_CAPACITOR_BANK`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_CHP`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_ELECTROLYZER`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_EV_CHARGER`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_INVERTER`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_WIND_TURBINE`
+  rpc SetElectricalComponentPower(SetElectricalComponentPowerRequest)
+    returns (stream SetElectricalComponentPowerResponse) {
     option (google.api.http) = {
-      get : "/v1/components/{electrical_component_id}/setPowerActive/{power}"
-    };
-  }
-
-  // Sets the reactive power output of a electrical component with a given ID,
-  // provided the electrical component supports it. The power output is
-  // specified in VAr.
-  //
-  // We follow the polarity specified in the IEEE 1459-2010 standard
-  // definitions, where
-  //- positive reactive is inductive (current is lagging the voltage)
-  //- negative reactive is capacitive (current is leading the voltage)
-  //
-  // The server provides a stream of responses in return. Each response will
-  // contain the current status of the request.
-  // **Initial response:** The initial response will be sent immediately after
-  // the request is received, and will indicate whether the request was accepted
-  // or rejected. If the request was accepted, this response will also contain
-  // the timestamp until which the given power command will stay in effect,
-  // after which the electrical component will be returned to its default state.
-  // **Subsequent response:** After the initial response, the server will send
-  // another response in the stream, which will be the final response. It will
-  // indicate whether the request was successful, failed, or overridden by
-  // another request. If the request was successful, it will also contain the
-  // timestamp until which the given power command will stay in effect, after
-  // which the electrical component will be returned to its default state.
-  //
-  // Note that the target electrical component may have a resolution of more
-  // than 1 VAr.
-  // E.g., an inverter may have a resolution of 88 VAr.
-  // In such cases, the magnitude of power will be floored to the nearest
-  // multiple of the resolution.
-  rpc SetElectricalComponentPowerReactive(SetElectricalComponentPowerReactiveRequest)
-    returns (stream SetElectricalComponentPowerReactiveResponse) {
-    option (google.api.http) = {
-      get : "/v1/components/{electrical_component_id}/setPowerReactive/{power}"
+      get : "/v1/components/{electrical_component_id}/setPower/{power}"
     };
   }
 
@@ -502,20 +484,17 @@ message AugmentElectricalComponentBoundsResponse {
   google.protobuf.Timestamp valid_until = 1;
 }
 
-// Request parameters for the RPC `SetElectricalComponentPowerActive`.
-message SetElectricalComponentPowerActiveRequest {
-  // The ID of the electrical component to set the output active power of.
-  uint64 electrical_component_id = 1;
+// The type of power requested for an electrical component.
+enum PowerType {
+  // Default value. Users are discouraged from using this value. Using this will
+  // result in an error.
+  POWER_TYPE_UNSPECIFIED = 0;
 
-  // The output active power level, in watts.
-  // -ve values are for discharging, and +ve values are for charging.
-  float power = 2;
+  // The requested power is active power.
+  POWER_TYPE_ACTIVE = 1;
 
-  // The duration, in seconds, until which the request will stay in effect.
-  // This duration has to be between 10 seconds and 15 minutes (including both
-  // limits), otherwise the request will be rejected.
-  // If not provided, it defaults to 60s.
-  optional uint64 request_lifetime = 3;
+  // The requested power is reactive power.
+  POWER_TYPE_REACTIVE = 2;
 }
 
 // Response codes for the `SetElectricalComponentPowerActive` and
@@ -575,54 +554,51 @@ enum SetElectricalComponentPowerRequestStatus {
   SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_OVERRIDDEN = 5;
 }
 
-// Response message for the RPC `SetElectricalComponentPowerActive`.
-message SetElectricalComponentPowerActiveResponse {
-  // The timestamp until which the given power command will stay in effect.
-  // After this timestamp, the electrical component power will be set to its
-  // standby state, if the API receives no further power commands.
-  // By default, this timestamp will be set to the current time plus 60 seconds.
-  //
-  // When the request status is `REJECTED`, `FAILED`, or `OVERRIDDEN`, the
-  // `valid_until` timestamp will not be set, and the electrical component
-  // will not change its power output.
-  google.protobuf.Timestamp valid_until = 1;
-
-  // The current status of the request to set the power of the electrical
-  // component.
-  SetElectricalComponentPowerRequestStatus status = 2;
-}
-
-// Request parameters for the RPC `SetElectricalComponentPowerReactive`.
-message SetElectricalComponentPowerReactiveRequest {
-  // The ID of the electrical component to set the output reactive power of.
+// Request parameters for the RPC `SetElectricalComponentPower`.
+message SetElectricalComponentPowerRequest {
+  // The ID of the electrical component to set the output power of.
   uint64 electrical_component_id = 1;
 
-  // The output reactive power level, in VAr.
+  // The requested power type.
+  PowerType power_type = 2;
+
+  // The requested power output.
   //
-  // The standard of polarity is as per the IEEE 1459-2010 standard
-  // definitions:
-  // - positive reactive is inductive (current is lagging the voltage)
-  // - negative reactive is capacitive (current is leading the voltage)
-  float power = 2;
+  // For Active power:
+  // - This value is in watts (W).
+  // - Negative values indicate discharge, i.e., supplying power towards the
+  //   direction of the root node of the component graph.
+  // - Positive values indicate charge, i.e., consuming power from the
+  //   direction of the root node of the component graph.
+  //
+  // For Reactive power:
+  // - This value is in volt-amperes reactive (VAR).
+  // - Negative values indicate capacitive reactive power, i.e., the current
+  //   is leading the voltage when viewed from the perspective of the
+  //   electrical component.
+  // - Positive values indicate inductive reactive power, i.e., the current
+  //   is lagging the voltage when viewed from the perspective of the
+  //   electrical component.
+  float power = 3;
 
   // The duration, in seconds, until which the request will stay in effect.
   // This duration has to be between 10 seconds and 15 minutes (including both
   // limits), otherwise the request will be rejected.
   // If not provided, it defaults to 60s.
-  optional uint64 request_lifetime = 3;
+  optional uint64 request_lifetime = 4;
 }
 
-// Response message for the RPC `SetElectricalComponentPowerReactive`.
-message SetElectricalComponentPowerReactiveResponse {
+// Response message for the RPC `SetElectricalComponentPower`.
+message SetElectricalComponentPowerResponse {
   // The timestamp until which the given power command will stay in effect.
-  // After this timestamp, the electrical component power will be set to its
-  // standby state, if the API receives no further power commands.
+  // After this timestamp, the electrical component will be set to its standby
+  // state, if the API receives no further power commands.
   // By default, this timestamp will be set to the current time plus 60 seconds.
   //
   // When the request status is `REJECTED`, `FAILED`, or `OVERRIDDEN`, the
-  // `valid_until` timestamp will not be set, and the electrical component
-  // will not change its power output.
-  optional google.protobuf.Timestamp valid_until = 1;
+  // `valid_until` timestamp will not be set, and the request will no longer
+  // remain in effect.
+  google.protobuf.Timestamp valid_until = 1;
 
   // The current status of the request to set the power of the electrical
   // component.

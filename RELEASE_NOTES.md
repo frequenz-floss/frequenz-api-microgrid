@@ -28,6 +28,7 @@
 - The response messages for the `SetElectricalComponentPowerActive` and
 `SetElectricalComponentPowerReactive` RPCs have been changed to return a stream of responses instead of a single response. This allows the server to provide ongoing status updates for the request, which is useful when the electrical component cannot immediately set its output power to the requested value.
 - The RPC `AddComponentBounds` has been renamed to `AugmentElectricalComponentBounds`.
+- `SetElectricalComponentPowerActive` and `SetElectricalComponentPowerReactive` RPCs ave been replaced by a new RPC `SetElectricalComponentPower`. The new RPC allows setting either the active or reactive power of an electrical component, depending on the value of the `power_type` field in the request message.
 
 ## New Features
 
