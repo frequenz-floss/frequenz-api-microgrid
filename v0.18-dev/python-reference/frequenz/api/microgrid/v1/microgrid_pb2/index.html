@@ -1360,18 +1360,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.ends" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.destination_component_ids" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;ends
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;destination_component_ids
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.starts" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.source_component_ids" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;starts
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;source_component_ids
     </span>
   </a>
   
@@ -2479,18 +2479,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.ends" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.destination_component_ids" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;ends
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;destination_component_ids
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.starts" class="md-nav__link">
+  <a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.source_component_ids" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;starts
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;source_component_ids
     </span>
   </a>
   
@@ -3810,23 +3810,24 @@ Contains filtering parameters for listing connections.</p>
 
 
 
-<h6 id="frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.ends" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">ends</span>
+<h6 id="frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.destination_component_ids" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">destination_component_ids</span>
 
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
-<a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.ends" class="headerlink" title="Permanent link">¤</a></h6>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">ends</span><span class="p">:</span> <span class="n"><span title="google.protobuf.internal.containers.RepeatedScalarFieldContainer">RepeatedScalarFieldContainer</span></span><span class="p">[</span><span class="n"><span title="builtins.int">int</span></span><span class="p">]</span>
+<a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.destination_component_ids" class="headerlink" title="Permanent link">¤</a></h6>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">destination_component_ids</span><span class="p">:</span> <span class="n"><span title="google.protobuf.internal.containers.RepeatedScalarFieldContainer">RepeatedScalarFieldContainer</span></span><span class="p">[</span><span class="n"><span title="builtins.int">int</span></span><span class="p">]</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
 
-        <p>Only return connections that end at the specified electrical
-component ID(s).
-if empty, connections with any <code>end</code> will be returned.</p>
+        <p>Only return connections that end at the specified electrical component
+ID(s).
+If this list is empty, connections with any <code>destination_component_id</code>
+will be returned.</p>
 
     </div>
 
@@ -3836,23 +3837,24 @@ if empty, connections with any <code>end</code> will be returned.</p>
 
 
 
-<h6 id="frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.starts" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">starts</span>
+<h6 id="frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.source_component_ids" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">source_component_ids</span>
 
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
-<a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.starts" class="headerlink" title="Permanent link">¤</a></h6>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">starts</span><span class="p">:</span> <span class="n"><span title="google.protobuf.internal.containers.RepeatedScalarFieldContainer">RepeatedScalarFieldContainer</span></span><span class="p">[</span><span class="n"><span title="builtins.int">int</span></span><span class="p">]</span>
+<a href="#frequenz.api.microgrid.v1.microgrid_pb2.ListElectricalComponentConnectionsRequest.source_component_ids" class="headerlink" title="Permanent link">¤</a></h6>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">source_component_ids</span><span class="p">:</span> <span class="n"><span title="google.protobuf.internal.containers.RepeatedScalarFieldContainer">RepeatedScalarFieldContainer</span></span><span class="p">[</span><span class="n"><span title="builtins.int">int</span></span><span class="p">]</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
 
         <p>Only return connections that start from the specified electrical
 component ID(s).
-If empty, connections with any <code>start</code> will be returned.</p>
+If this list is empty, connections with any <code>source_component_id</code> will be
+returned.</p>
 
     </div>
 
@@ -5238,24 +5240,24 @@ indicating the ongoing status of the request.</p>
 <span class="normal"><a href="#__codelineno-0-93">93</a></span>
 <span class="normal"><a href="#__codelineno-0-94">94</a></span>
 <span class="normal"><a href="#__codelineno-0-95">95</a></span>
-<span class="normal"><a href="#__codelineno-0-96">96</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTELECTRICALCOMPONENTCONNECTIONSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1133</span>
-</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTELECTRICALCOMPONENTCONNECTIONSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1136</span>
-</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTELECTRICALCOMPONENTCONNECTIONSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1316</span>
-</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1319</span>
-</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1623</span>
-</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMREQUEST_COMPONENTTELEMETRYSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1528</span>
-</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMREQUEST_COMPONENTTELEMETRYSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1623</span>
-</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1626</span>
-</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1788</span>
-</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1791</span>
-</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2049</span>
-</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMREQUEST_SENSORTELEMETRYSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1957</span>
-</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMREQUEST_SENSORTELEMETRYSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2049</span>
-</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2051</span>
-</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2173</span>
-</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_AUGMENTELECTRICALCOMPONENTBOUNDSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2176</span>
-</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_AUGMENTELECTRICALCOMPONENTBOUNDSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2433</span>
-</span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_AUGMENTELECTRICALCOMPONENTBOUNDSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2435</span>
+<span class="normal"><a href="#__codelineno-0-96">96</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTELECTRICALCOMPONENTCONNECTIONSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1168</span>
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTELECTRICALCOMPONENTCONNECTIONSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1171</span>
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTELECTRICALCOMPONENTCONNECTIONSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1351</span>
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1354</span>
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1658</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMREQUEST_COMPONENTTELEMETRYSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1563</span>
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMREQUEST_COMPONENTTELEMETRYSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1658</span>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1661</span>
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEELECTRICALCOMPONENTTELEMETRYSTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">1823</span>
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1826</span>
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2084</span>
+</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMREQUEST_SENSORTELEMETRYSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1992</span>
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMREQUEST_SENSORTELEMETRYSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2084</span>
+</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2086</span>
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVESENSORTELEMETRYSTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2208</span>
+</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_AUGMENTELECTRICALCOMPONENTBOUNDSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2211</span>
+</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_AUGMENTELECTRICALCOMPONENTBOUNDSREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2468</span>
+</span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96"></a><span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_AUGMENTELECTRICALCOMPONENTBOUNDSRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2470</span>
 </span></code></pre></div></td></tr></table></div>
               </details>
 

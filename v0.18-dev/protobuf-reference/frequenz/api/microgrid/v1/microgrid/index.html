@@ -1892,16 +1892,16 @@ Contains filtering parameters for listing connections.</p>
 </thead>
 <tbody>
 <tr>
-<td>starts</td>
+<td>source_component_ids</td>
 <td><a href="#uint64">uint64</a></td>
 <td>repeated</td>
-<td>Only return connections that start from the specified electrical component ID(s). If empty, connections with any <code>start</code> will be returned.</td>
+<td>Only return connections that start from the specified electrical component ID(s). If this list is empty, connections with any <code>source_component_id</code> will be returned.</td>
 </tr>
 <tr>
-<td>ends</td>
+<td>destination_component_ids</td>
 <td><a href="#uint64">uint64</a></td>
 <td>repeated</td>
-<td>Only return connections that end at the specified electrical component ID(s). if empty, connections with any <code>end</code> will be returned.</td>
+<td>Only return connections that end at the specified electrical component ID(s). If this list is empty, connections with any <code>destination_component_id</code> will be returned.</td>
 </tr>
 </tbody>
 </table>
