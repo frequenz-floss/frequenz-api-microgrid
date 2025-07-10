@@ -1800,13 +1800,13 @@
 </tr>
 <tr>
 <td>target_metric</td>
-<td><a href="#frequenz-api-common-v1alpha7-metrics-Metric">frequenz.api.common.v1alpha7.metrics.Metric</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-metrics-Metric">frequenz.api.common.v1alpha8.metrics.Metric</a></td>
 <td></td>
 <td>The target metric whose bounds have to be set.</td>
 </tr>
 <tr>
 <td>bounds</td>
-<td><a href="#frequenz-api-common-v1alpha7-metrics-Bounds">frequenz.api.common.v1alpha7.metrics.Bounds</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-metrics-Bounds">frequenz.api.common.v1alpha8.metrics.Bounds</a></td>
 <td>repeated</td>
 <td>A list of bounds for the target metric. While incorporating these bounds, the API will ensure that overlapping pairs of bounds are merged into a single pair of bounds, and non-overlapping ones are kept separated.</td>
 </tr>
@@ -1854,7 +1854,7 @@
 <tbody>
 <tr>
 <td>microgrid</td>
-<td><a href="#frequenz-api-common-v1alpha7-microgrid-Microgrid">frequenz.api.common.v1alpha7.microgrid.Microgrid</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-Microgrid">frequenz.api.common.v1alpha8.microgrid.Microgrid</a></td>
 <td></td>
 <td>The information about the local microgrid.</td>
 </tr>
@@ -1875,13 +1875,13 @@ Contains filtering parameters for listing connections.</p>
 </thead>
 <tbody>
 <tr>
-<td>source_component_ids</td>
+<td>source_electrical_component_ids</td>
 <td><a href="#uint64">uint64</a></td>
 <td>repeated</td>
 <td>Only return connections that start from the specified electrical component ID(s). If this list is empty, connections with any <code>source_component_id</code> will be returned.</td>
 </tr>
 <tr>
-<td>destination_component_ids</td>
+<td>destination_electrical_component_ids</td>
 <td><a href="#uint64">uint64</a></td>
 <td>repeated</td>
 <td>Only return connections that end at the specified electrical component ID(s). If this list is empty, connections with any <code>destination_component_id</code> will be returned.</td>
@@ -1904,7 +1904,7 @@ Contains a list of connections.</p>
 <tbody>
 <tr>
 <td>electrical_component_connections</td>
-<td><a href="#frequenz-api-common-v1alpha7-microgrid-electrical_components-ElectricalComponentConnection">frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentConnection</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-electrical_components-ElectricalComponentConnection">frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentConnection</a></td>
 <td>repeated</td>
 <td>The list of connections.</td>
 </tr>
@@ -1932,7 +1932,7 @@ Contains filtering parameters for listing electrical components.</p>
 </tr>
 <tr>
 <td>electrical_component_categories</td>
-<td><a href="#frequenz-api-common-v1alpha7-microgrid-electrical_components-ElectricalComponentCategory">frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentCategory</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-electrical_components-ElectricalComponentCategory">frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentCategory</a></td>
 <td>repeated</td>
 <td>Return electrical components that have the specified categories only.</td>
 </tr>
@@ -1954,7 +1954,7 @@ Used as the return type in the RPC <code>ListElectricalComponents</code>.</p>
 <tbody>
 <tr>
 <td>electrical_components</td>
-<td><a href="#frequenz-api-common-v1alpha7-microgrid-electrical_components-ElectricalComponent">frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponent</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-electrical_components-ElectricalComponent">frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponent</a></td>
 <td>repeated</td>
 <td></td>
 </tr>
@@ -1998,7 +1998,7 @@ A message containing a list of sensors.</p>
 <tbody>
 <tr>
 <td>sensors</td>
-<td><a href="#frequenz-api-common-v1alpha7-microgrid-sensors-Sensor">frequenz.api.common.v1alpha7.microgrid.sensors.Sensor</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-sensors-Sensor">frequenz.api.common.v1alpha8.microgrid.sensors.Sensor</a></td>
 <td>repeated</td>
 <td></td>
 </tr>
@@ -2068,7 +2068,7 @@ A message containing a list of sensors.</p>
 <tbody>
 <tr>
 <td>metrics</td>
-<td><a href="#frequenz-api-common-v1alpha7-metrics-Metric">frequenz.api.common.v1alpha7.metrics.Metric</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-metrics-Metric">frequenz.api.common.v1alpha8.metrics.Metric</a></td>
 <td>repeated</td>
 <td>List of metrics to return. Only the specified metrics will be returned.</td>
 </tr>
@@ -2093,7 +2093,7 @@ represented using this message.</p>
 <tbody>
 <tr>
 <td>telemetry</td>
-<td><a href="#frequenz-api-common-v1alpha7-microgrid-electrical_components-ElectricalComponentTelemetry">frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentTelemetry</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-electrical_components-ElectricalComponentTelemetry">frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentTelemetry</a></td>
 <td></td>
 <td></td>
 </tr>
@@ -2142,7 +2142,7 @@ represented using this message.</p>
 <tbody>
 <tr>
 <td>metrics</td>
-<td><a href="#frequenz-api-common-v1alpha7-metrics-Metric">frequenz.api.common.v1alpha7.metrics.Metric</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-metrics-Metric">frequenz.api.common.v1alpha8.metrics.Metric</a></td>
 <td>repeated</td>
 <td>List of metrics to return. Only the specified metrics will be returned.</td>
 </tr>
@@ -2165,7 +2165,7 @@ represented using this message.</p>
 <tbody>
 <tr>
 <td>telemetry</td>
-<td><a href="#frequenz-api-common-v1alpha7-microgrid-sensors-SensorTelemetry">frequenz.api.common.v1alpha7.microgrid.sensors.SensorTelemetry</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-sensors-SensorTelemetry">frequenz.api.common.v1alpha8.microgrid.sensors.SensorTelemetry</a></td>
 <td></td>
 <td>The sensor data.</td>
 </tr>
