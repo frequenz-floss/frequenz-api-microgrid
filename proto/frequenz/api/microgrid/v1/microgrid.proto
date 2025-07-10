@@ -12,11 +12,11 @@ syntax = "proto3";
 
 package frequenz.api.microgrid.v1;
 
-import "frequenz/api/common/v1alpha7/metrics/bounds.proto";
-import "frequenz/api/common/v1alpha7/metrics/metrics.proto";
-import "frequenz/api/common/v1alpha7/microgrid/electrical_components/electrical_components.proto";
-import "frequenz/api/common/v1alpha7/microgrid/microgrid.proto";
-import "frequenz/api/common/v1alpha7/microgrid/sensors/sensors.proto";
+import "frequenz/api/common/v1alpha8/metrics/bounds.proto";
+import "frequenz/api/common/v1alpha8/metrics/metrics.proto";
+import "frequenz/api/common/v1alpha8/microgrid/electrical_components/electrical_components.proto";
+import "frequenz/api/common/v1alpha8/microgrid/microgrid.proto";
+import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -326,7 +326,7 @@ service Microgrid {
 // Information describing a microgrid.
 message GetMicrogridResponse {
   // The information about the local microgrid.
-  frequenz.api.common.v1alpha7.microgrid.Microgrid  microgrid= 1;
+  frequenz.api.common.v1alpha8.microgrid.Microgrid  microgrid= 1;
 }
 
 // Request parameters for the RPC `ListElectricalComponents`.
@@ -336,14 +336,14 @@ message ListElectricalComponentsRequest {
   repeated uint64 electrical_component_ids = 1;
 
   // Return electrical components that have the specified categories only.
-  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentCategory
+  repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentCategory
     electrical_component_categories = 2;
 }
 
 // A message containing a list of electrical components.
 // Used as the return type in the RPC `ListElectricalComponents`.
 message ListElectricalComponentsResponse {
-  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponent
+  repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponent
     electrical_components = 1;
 }
 
@@ -357,7 +357,7 @@ message ListSensorRequest {
 // Response message for the RPC `ListSensors`.
 // A message containing a list of sensors.
 message ListSensorsResponse {
-  repeated frequenz.api.common.v1alpha7.microgrid.sensors.Sensor sensors = 1;
+  repeated frequenz.api.common.v1alpha8.microgrid.sensors.Sensor sensors = 1;
 }
 
 // Request parameters for the RPC `ListElectricalComponentConnections`.
@@ -367,20 +367,20 @@ message ListElectricalComponentConnectionsRequest {
   // component ID(s).
   // If this list is empty, connections with any `source_component_id` will be
   // returned.
-  repeated uint64 source_component_ids = 1;
+  repeated uint64 source_electrical_component_ids = 1;
 
   // Only return connections that end at the specified electrical component
   // ID(s).
   // If this list is empty, connections with any `destination_component_id`
   // will be returned.
-  repeated uint64 destination_component_ids = 2;
+  repeated uint64 destination_electrical_component_ids = 2;
 }
 
 // Response message for the RPC `ListElectricalComponentConnections`.
 // Contains a list of connections.
 message ListElectricalComponentConnectionsResponse {
   // The list of connections.
-  repeated frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentConnection
+  repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentConnection
     electrical_component_connections = 1;
 };
 
@@ -398,7 +398,7 @@ message ReceiveElectricalComponentTelemetryStreamRequest {
     //     Components may not support all metrics. If a electrical component
     //     does not support a given metric, then the returned data stream will
     //     not contain that metric.
-    repeated frequenz.api.common.v1alpha7.metrics.Metric metrics = 1;
+    repeated frequenz.api.common.v1alpha8.metrics.Metric metrics = 1;
   }
 
   // The electrical component ID to subscribe to.
@@ -416,7 +416,7 @@ message ReceiveElectricalComponentTelemetryStreamRequest {
 // Electrical Components belonging to all categories and types can be
 // represented using this message.
 message ReceiveElectricalComponentTelemetryStreamResponse {
-  frequenz.api.common.v1alpha7.microgrid.electrical_components.ElectricalComponentTelemetry
+  frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentTelemetry
     telemetry = 1;
 }
 
@@ -434,7 +434,7 @@ message ReceiveSensorTelemetryStreamRequest {
     //     Sensors may not support all metrics. If a sensor does not support a
     //     given metric, then the returned data stream will not contain that
     //     metric.
-    repeated frequenz.api.common.v1alpha7.metrics.Metric metrics = 1;
+    repeated frequenz.api.common.v1alpha8.metrics.Metric metrics = 1;
   }
 
   // The sensor ID to subscribe to.
@@ -451,7 +451,7 @@ message ReceiveSensorTelemetryStreamRequest {
 // A data sample from a sensor in the microgrid.
 message ReceiveSensorTelemetryStreamResponse {
   // The sensor data.
-  frequenz.api.common.v1alpha7.microgrid.sensors.SensorTelemetry telemetry = 1;
+  frequenz.api.common.v1alpha8.microgrid.sensors.SensorTelemetry telemetry = 1;
 }
 
 // Request parameters for the RPC `AugmentElectricalComponentBounds`.
@@ -460,13 +460,13 @@ message AugmentElectricalComponentBoundsRequest {
   uint64 electrical_component_id = 1;
 
   // The target metric whose bounds have to be set.
-  frequenz.api.common.v1alpha7.metrics.Metric target_metric = 2;
+  frequenz.api.common.v1alpha8.metrics.Metric target_metric = 2;
 
   // A list of bounds for the target metric.
   // While incorporating these bounds, the API will ensure that overlapping
   // pairs of bounds are merged into a single pair of bounds, and
   // non-overlapping ones are kept separated.
-  repeated frequenz.api.common.v1alpha7.metrics.Bounds bounds = 3;
+  repeated frequenz.api.common.v1alpha8.metrics.Bounds bounds = 3;
 
   // The duration, in seconds, until which the request will stay in effect.
   // This duration has to be between 5 seconds and 15 minutes (including both
