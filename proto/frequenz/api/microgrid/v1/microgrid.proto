@@ -481,7 +481,7 @@ message AugmentElectricalComponentBoundsResponse {
   // After this timestamp, the electrical component bounds added by this request
   // will be removed. By default, this timestamp will be set to the current
   // time plus 60 seconds.
-  google.protobuf.Timestamp valid_until = 1;
+  google.protobuf.Timestamp valid_until_time = 1;
 }
 
 // The type of power requested for an electrical component.
