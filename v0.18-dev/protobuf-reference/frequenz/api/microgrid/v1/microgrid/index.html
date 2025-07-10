@@ -1832,7 +1832,7 @@
 </thead>
 <tbody>
 <tr>
-<td>valid_until</td>
+<td>valid_until_time</td>
 <td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
 <td></td>
 <td>The timestamp until which the added bounds will stay in effect. After this timestamp, the electrical component bounds added by this request will be removed. By default, this timestamp will be set to the current time plus 60 seconds.</td>
@@ -2221,14 +2221,14 @@ represented using this message.</p>
 </thead>
 <tbody>
 <tr>
-<td>valid_until</td>
+<td>valid_until_time</td>
 <td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
 <td></td>
 <td>The timestamp until which the given power command will stay in effect. After this timestamp, the electrical component will be set to its standby state, if the API receives no further power commands. By default, this timestamp will be set to the current time plus 60 seconds.</td>
 </tr>
 </tbody>
 </table>
-<p>When the request status is <code>REJECTED</code>, <code>FAILED</code>, or <code>OVERRIDDEN</code>, the <code>valid_until</code> timestamp will not be set, and the request will no longer remain in effect. |
+<p>When the request status is <code>REJECTED</code>, <code>FAILED</code>, or <code>OVERRIDDEN</code>, the <code>valid_until_time</code> timestamp will not be set, and the request will no longer remain in effect. |
 | status | <a href="#frequenz-api-microgrid-v1-SetElectricalComponentPowerRequestStatus">SetElectricalComponentPowerRequestStatus</a> |  | The current status of the request to set the power of the electrical component. |</p>
 <p><a name="frequenz-api-microgrid-v1-StartElectricalComponentRequest"></a></p>
 <h3 id="startelectricalcomponentrequest">StartElectricalComponentRequest<a class="headerlink" href="#startelectricalcomponentrequest" title="Permanent link">¤</a></h3>
