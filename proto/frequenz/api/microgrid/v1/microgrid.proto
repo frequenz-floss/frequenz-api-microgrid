@@ -481,7 +481,7 @@ message AugmentElectricalComponentBoundsResponse {
   // After this timestamp, the electrical component bounds added by this request
   // will be removed. By default, this timestamp will be set to the current
   // time plus 60 seconds.
-  google.protobuf.Timestamp valid_until = 1;
+  google.protobuf.Timestamp valid_until_time = 1;
 }
 
 // The type of power requested for an electrical component.
@@ -596,9 +596,9 @@ message SetElectricalComponentPowerResponse {
   // By default, this timestamp will be set to the current time plus 60 seconds.
   //
   // When the request status is `REJECTED`, `FAILED`, or `OVERRIDDEN`, the
-  // `valid_until` timestamp will not be set, and the request will no longer
-  // remain in effect.
-  google.protobuf.Timestamp valid_until = 1;
+  // `valid_until_time` timestamp will not be set, and the request will no
+  // longer remain in effect.
+  google.protobuf.Timestamp valid_until_time = 1;
 
   // The current status of the request to set the power of the electrical
   // component.
