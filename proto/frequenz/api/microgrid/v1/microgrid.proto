@@ -469,9 +469,9 @@ message AugmentElectricalComponentBoundsRequest {
   repeated frequenz.api.common.v1alpha7.metrics.Bounds bounds = 3;
 
   // The duration, in seconds, until which the request will stay in effect.
-  // This duration has to be between 10 seconds and 15 minutes (including both
+  // This duration has to be between 5 seconds and 15 minutes (including both
   // limits), otherwise the request will be rejected.
-  // If not provided, it defaults to 60s.
+  // If not provided, it defaults to 5s.
   optional uint64 request_lifetime = 4;
 }
 
