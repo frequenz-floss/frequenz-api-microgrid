@@ -9,9 +9,9 @@ import pytest
 def test_package_import() -> None:
     """Test that the package can be imported."""
     # pylint: disable=import-outside-toplevel
-    from frequenz.api.microgrid import v1
+    from frequenz.api.microgrid import v1alpha18
 
-    assert v1 is not None
+    assert v1alpha18 is not None
 
 
 @pytest.mark.filterwarnings(
@@ -21,11 +21,11 @@ def test_package_import() -> None:
 def test_package_import_microgrid() -> None:
     """Test that the package can be imported."""
     # pylint: disable=import-outside-toplevel
-    from frequenz.api.microgrid.v1 import microgrid_pb2
+    from frequenz.api.microgrid.v1alpha18 import microgrid_pb2
 
     assert microgrid_pb2 is not None
 
     # pylint: disable=import-outside-toplevel
-    from frequenz.api.microgrid.v1 import microgrid_pb2_grpc
+    from frequenz.api.microgrid.v1alpha18 import microgrid_pb2_grpc
 
     assert microgrid_pb2_grpc is not None
