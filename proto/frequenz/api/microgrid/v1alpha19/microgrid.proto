@@ -387,7 +387,7 @@ message ListElectricalComponentConnectionsResponse {
 // Request parameters for the RPC `ReceiveElectricalComponentTelemetryStream`.
 message ReceiveElectricalComponentTelemetryStreamRequest {
   // A message for specifying a filter to apply to the stream.
-  message ComponentTelemetryStreamFilter {
+  message ElectricalComponentTelemetryStreamFilter {
     // List of metrics to return. Only the specified metrics will be returned.
     //
     // !!! note
@@ -409,7 +409,7 @@ message ReceiveElectricalComponentTelemetryStreamRequest {
   // This field is optional. If this is not provided, then the stream will
   // return all metrics for the given electrical component. If this is provided,
   // then the stream will return only the metrics specified in the filter.
-  ComponentTelemetryStreamFilter filter = 2;
+  ElectricalComponentTelemetryStreamFilter filter = 2;
 }
 
 // A data sample from a electrical component in the microgrid.
