@@ -78,7 +78,7 @@ dev-mypy = [
 ]
 dev-noxfile = ["nox == 2025.5.1", "frequenz-repo-config[api] == 0.13.6"]
 dev-pylint = [
-  "pylint == 3.3.8",
+  "pylint == 4.0.2",
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
