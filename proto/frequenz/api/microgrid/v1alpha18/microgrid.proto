@@ -497,6 +497,44 @@ enum PowerType {
   POWER_TYPE_REACTIVE = 2;
 }
 
+// Enumerated power sources for an electrical component when issuing discharge
+// commands.
+//
+// This is needed only for discharge commands for hybrid inverters, which
+// typically have both PV and battery inputs added to them, and can use either
+// of those inputs as the power source.
+enum PowerSource {
+  // Default value.
+  //
+  // When used, the API service will automatically select
+  // `POWER_SOURCE_PV_PREFERRED` as the power source.
+  POWER_SOURCE_UNSPECIFIED = 0;
+
+  // When only the PV arrays should be used as the energy source.
+  // Commands will return an error if:
+  // - the requested power exceeds the limits of the PV arrays, or
+  // - the hybrid inverter does not have PV arrays added to it.
+  POWER_SOURCE_PV_ONLY = 1;
+
+  // When the PV arrays should be used as the preferred energy source,
+  // with any remaining power demand drawn from batteries.
+  // Commands will return an error if the requested power exceeds the limits of
+  // the PV arrays and batteries combined.
+  POWER_SOURCE_PV_PREFERRED = 2;
+
+  // When the batteries should be used as the preferred energy source,
+  // with any remaining power demand drawn from PV arrays where available.
+  // Commands will return an error if the requested power exceeds the limits of
+  // the batteries and PV arrays combined.
+  POWER_SOURCE_BATTERY_PREFERRED = 3;
+
+  // When only the batteries should be used as the energy source.
+  // Commands will return an error if:
+  // - the requested power exceeds the limits of the batteries, or
+  // - the hybrid inverter does not have batteries added to it.
+  POWER_SOURCE_BATTERY_ONLY = 4;
+}
+
 // Response codes for the `SetElectricalComponentPowerActive` and
 // `SetElectricalComponentPowerReactive` RPCs. These codes indicate the ongoing
 // status of the request to set the power of an electrical component.
@@ -561,6 +599,21 @@ message SetElectricalComponentPowerRequest {
 
   // The requested power type.
   PowerType power_type = 2;
+
+  // The power source for the electrical component.
+  //
+  // This field is used only if the following criteria are all met:
+  // - the requested power type is active power,
+  // - the requested power is negative, indicating discharge, and
+  // - the target electrical component is a hybrid inverter.
+  //
+  // If the above criteria are met, and this field is not specified and allowed
+  // to default, then the API service will use `POWER_SOURCE_PV_PREFERRED` as
+  // the power source.
+  //
+  // If the above criteria are not met, the API service will ignore this field
+  // and automatically select the power source.
+  PowerSource power_source = 5;
 
   // The requested power output.
   //
