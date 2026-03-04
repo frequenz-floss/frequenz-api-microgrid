@@ -1047,6 +1047,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#powersource" class="md-nav__link">
+    <span class="md-ellipsis">
+      PowerSource
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#powertype" class="md-nav__link">
     <span class="md-ellipsis">
       PowerType
@@ -2038,6 +2047,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#powersource" class="md-nav__link">
+    <span class="md-ellipsis">
+      PowerSource
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#powertype" class="md-nav__link">
     <span class="md-ellipsis">
       PowerType
@@ -2128,8 +2146,9 @@
 <p><a href="#frequenz-api-microgrid-v1alpha18-StopElectricalComponentRequest">StopElectricalComponentRequest</a></p>
 </li>
 <li>
-<p><a href="#frequenz-api-microgrid-v1alpha18-PowerType">PowerType</a></p>
+<p><a href="#frequenz-api-microgrid-v1alpha18-PowerSource">PowerSource</a></p>
 </li>
+<li><a href="#frequenz-api-microgrid-v1alpha18-PowerType">PowerType</a></li>
 <li>
 <p><a href="#frequenz-api-microgrid-v1alpha18-SetElectricalComponentPowerRequestStatus">SetElectricalComponentPowerRequestStatus</a></p>
 </li>
@@ -2585,13 +2604,17 @@ represented using this message.</p>
 <td>The requested power type.</td>
 </tr>
 <tr>
-<td>power</td>
-<td><a href="#float">float</a></td>
+<td>power_source</td>
+<td><a href="#frequenz-api-microgrid-v1alpha18-PowerSource">PowerSource</a></td>
 <td></td>
-<td>The requested power output.</td>
+<td>The power source for the electrical component.</td>
 </tr>
 </tbody>
 </table>
+<p>This field is used only if the following criteria are all met: - the requested power type is active power, - the requested power is negative, indicating discharge, and - the target electrical component is a hybrid inverter.</p>
+<p>If the above criteria are met, and this field is not specified and allowed to default, then the API service will use <code>POWER_SOURCE_PV_PREFERRED</code> as the power source.</p>
+<p>If the above criteria are not met, the API service will ignore this field and automatically select the power source. |
+| power | <a href="#float">float</a> |  | The requested power output.</p>
 <p>For Active power: - This value is in watts (W). - Negative values indicate discharge, i.e., supplying power towards the direction of the root node of the component graph. - Positive values indicate charge, i.e., consuming power from the direction of the root node of the component graph.</p>
 <p>For Reactive power: - This value is in volt-amperes reactive (VAR). - Negative values indicate capacitive reactive power, i.e., the current is leading the voltage when viewed from the perspective of the electrical component. - Positive values indicate inductive reactive power, i.e., the current is lagging the voltage when viewed from the perspective of the electrical component. |
 | request_lifetime | <a href="#uint64">uint64</a> | optional | The duration, in seconds, until which the request will stay in effect. This duration has to be between 10 seconds and 15 minutes (including both limits), otherwise the request will be rejected. If not provided, it defaults to 60s. |</p>
@@ -2660,6 +2683,34 @@ represented using this message.</p>
 </tr>
 </tbody>
 </table>
+<p><a name="frequenz-api-microgrid-v1alpha18-PowerSource"></a></p>
+<h3 id="powersource">PowerSource<a class="headerlink" href="#powersource" title="Permanent link">¤</a></h3>
+<p>Enumerated power sources for an electrical component when issuing discharge
+commands.</p>
+<p>This is needed only for discharge commands for hybrid inverters, which
+typically have both PV and battery inputs added to them, and can use either
+of those inputs as the power source.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Number</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POWER_SOURCE_UNSPECIFIED</td>
+<td>0</td>
+<td>Default value.</td>
+</tr>
+</tbody>
+</table>
+<p>When used, the API service will automatically select <code>POWER_SOURCE_PV_PREFERRED</code> as the power source. |
+| POWER_SOURCE_PV_ONLY | 1 | When only the PV arrays should be used as the energy source. Commands will return an error if: - the requested power exceeds the limits of the PV arrays, or - the hybrid inverter does not have PV arrays added to it. |
+| POWER_SOURCE_PV_PREFERRED | 2 | When the PV arrays should be used as the preferred energy source, with any remaining power demand drawn from batteries. Commands will return an error if the requested power exceeds the limits of the PV arrays and batteries combined. |
+| POWER_SOURCE_BATTERY_PREFERRED | 3 | When the batteries should be used as the preferred energy source, with any remaining power demand drawn from PV arrays where available. Commands will return an error if the requested power exceeds the limits of the batteries and PV arrays combined. |
+| POWER_SOURCE_BATTERY_ONLY | 4 | When only the batteries should be used as the energy source. Commands will return an error if: - the requested power exceeds the limits of the batteries, or - the hybrid inverter does not have batteries added to it. |</p>
 <p><a name="frequenz-api-microgrid-v1alpha18-PowerType"></a></p>
 <h3 id="powertype">PowerType<a class="headerlink" href="#powertype" title="Permanent link">¤</a></h3>
 <p>The type of power requested for an electrical component.</p>
