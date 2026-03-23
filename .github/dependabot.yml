@@ -35,13 +35,16 @@ updates:
         exclude-patterns:
           - "async-solipsism"
           - "frequenz-api-common"
-          - "frequenz-repo-config*"
+          - "frequenz-repo-config"
+          - "frequenz-repo-config[api]"
+          - "frequenz-repo-config[extra-lint-examples]"
           - "grpcio"
           - "grpcio-tools"
           - "markdown-callouts"
           - "mkdocs-gen-files"
           - "mkdocs-literate-nav"
           - "mkdocstrings*"
+          - "mkdocstrings[python]"
           - "protobuf"
           - "pydoclint"
           - "pytest-asyncio"
@@ -50,10 +53,13 @@ updates:
       # each if we don't group them.
       repo-config:
         patterns:
-          - "frequenz-repo-config*"
+          - "frequenz-repo-config"
+          - "frequenz-repo-config[api]"
+          - "frequenz-repo-config[extra-lint-examples]"
       mkdocstrings:
         patterns:
           - "mkdocstrings*"
+          - "mkdocstrings[python]"
       # We group grpcio and protobuf updates together, as they need special
       # handling on the pyproject.toml file because of the protobuf/grpcio
       # build/runtime cross-version guarantees
