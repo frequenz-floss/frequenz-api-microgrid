@@ -42,12 +42,12 @@ jobs:
     steps:
       - name: Generate token
         id: create-app-token
-        uses: actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859 # v3.0.0
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         with:
           app-id: ${{ secrets.FREQUENZ_AUTO_DEPENDABOT_APP_ID }}
           private-key: ${{ secrets.FREQUENZ_AUTO_DEPENDABOT_APP_PRIVATE_KEY }}
       - name: Migrate
-        uses: frequenz-floss/gh-action-dependabot-migrate@07dc7e74726498c50726a80cc2167a04d896508f # v1.0.0
+        uses: frequenz-floss/gh-action-dependabot-migrate@b389f72f9282346920150a67495efbae450ac07b # v1.1.0
         with:
           script-url-template: >-
             https://raw.githubusercontent.com/frequenz-floss/frequenz-repo-config-python/{version}/cookiecutter/migrate.py
