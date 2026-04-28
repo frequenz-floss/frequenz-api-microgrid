@@ -5,9 +5,11 @@ on: [pull_request_target]
 jobs:
   Label:
     permissions:
+      # Read the labeler configuration from the repository.
       contents: read
+      # Add labels to pull requests.
       pull-requests: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Labeler
         # XXX: !!! SECURITY WARNING !!!

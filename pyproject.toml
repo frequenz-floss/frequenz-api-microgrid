@@ -5,7 +5,7 @@
 requires = [
   "setuptools == 80.9.0",
   "setuptools_scm[toml] == 9.2.2",
-  "frequenz-repo-config[api] == 0.13.6",
+  "frequenz-repo-config[api] == 0.17.0",
   # We need to pin the protobuf, grpcio and  grpcio-tools dependencies to make
   # sure the code is generated using the minimum supported versions, as older
   # versions can't work with code that was generated with newer versions.
@@ -20,12 +20,12 @@ build-backend = "setuptools.build_meta"
 name = "frequenz-api-microgrid"
 description = "Frequenz gRPC API for monitoring and control of microgrids"
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 keywords = ["frequenz", "python", "api", "grpc", "protobuf", "rpc", "microgrid"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Topic :: Software Development :: Libraries",
@@ -52,6 +52,7 @@ email = "floss@frequenz.com"
 [project.optional-dependencies]
 dev-flake8 = [
   "flake8 == 7.3.0",
+  "flake8-datetimez == 20.10.0",
   "flake8-docstrings == 1.7.0",
   "flake8-pyproject == 1.2.4", # For reading the flake8 config from pyproject.toml
   "pydoclint == 0.8.3",
@@ -69,7 +70,7 @@ dev-mkdocs = [
   "mkdocs-material == 9.7.6",
   "mkdocstrings[python] == 0.30.1",
   "mkdocstrings-python == 1.18.2",
-  "frequenz-repo-config[api] == 0.13.6",
+  "frequenz-repo-config[api] == 0.17.0",
 ]
 dev-mypy = [
   "mypy == 1.19.1",
@@ -77,7 +78,7 @@ dev-mypy = [
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
-dev-noxfile = ["nox == 2025.10.16", "frequenz-repo-config[api] == 0.13.6"]
+dev-noxfile = ["nox == 2025.10.16", "frequenz-repo-config[api] == 0.17.0"]
 dev-pylint = [
   "pylint == 4.0.5",
   # For checking the noxfile, docs/ script, and tests
@@ -85,7 +86,7 @@ dev-pylint = [
 ]
 dev-pytest = [
   "pytest == 8.4.2",
-  "frequenz-repo-config[extra-lint-examples] == 0.13.6",
+  "frequenz-repo-config[extra-lint-examples] == 0.17.0",
 ]
 dev = [
   "frequenz-api-microgrid[dev-mkdocs,dev-flake8,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",

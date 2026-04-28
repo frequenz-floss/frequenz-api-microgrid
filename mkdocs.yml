@@ -9,7 +9,7 @@ copyright: "Copyright © 2023 Frequenz Energy-as-a-Service GmbH"
 repo_name: "frequenz-api-microgrid"
 repo_url: "https://github.com/frequenz-floss/frequenz-api-microgrid"
 edit_uri: "edit/v0.x.x/docs/"
-strict: true  # Treat warnings as errors
+strict: false  # We are having some grpc typing issues, so we need to disable this
 
 # Build directories
 theme:
@@ -99,8 +99,8 @@ plugins:
       default_handler: python
       handlers:
         python:
+          paths: ["py"]
           options:
-            paths: ["py"]
             docstring_section_style: spacy
             inherited_members: true
             merge_init_into_class: false
@@ -112,7 +112,7 @@ plugins:
             show_source: true
             show_symbol_type_toc: true
             signature_crossrefs: true
-          import:
+          inventories:
             # See https://mkdocstrings.github.io/python/usage/#import for details
             - https://docs.python.org/3/objects.inv
             - https://frequenz-floss.github.io/frequenz-api-common/v0.6/objects.inv
