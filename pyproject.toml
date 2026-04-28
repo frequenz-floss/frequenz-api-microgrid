@@ -61,6 +61,7 @@ dev-formatting = ["black == 26.3.1", "isort == 7.0.0"]
 dev-mkdocs = [
   "Markdown == 3.10.2",
   "black == 26.3.1",
+  "grpc-stubs == 1.53.0.6",  # Needed for propert typing in docs
   "mike == 2.1.3",
   "mkdocs-gen-files == 0.5.0",
   "mkdocs-literate-nav == 0.6.3",
