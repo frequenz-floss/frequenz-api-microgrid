@@ -37,7 +37,7 @@ dependencies = [
   "googleapis-common-protos >= 1.70.0, < 2",
   # We can't widen beyond 6 because of protobuf cross-version runtime guarantees
   # https://protobuf.dev/support/cross-version-runtime-guarantee/#major
-  "protobuf >= 6.31.1, < 8", # Do not widen beyond 8!
+  "protobuf >= 7.34.1, < 9", # Do not widen beyond 9!
   # We couldn't find any document with a spec about the cross-version runtime
   # guarantee for grpcio, so unless we find one in the future, we'll assume
   # major version jumps are not compatible
