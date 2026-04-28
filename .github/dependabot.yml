@@ -29,6 +29,11 @@ updates:
         exclude-patterns:
           # pydoclint has shipped breaking changes in patch updates often
           - "pydoclint"
+          # These need a migration script to fix dependabot missing updating
+          # the runtime dependencies
+          - "grpcio"
+          - "grpcio-tools"
+          - "protobuf"
       minor:
         update-types:
           - "minor"
@@ -63,10 +68,28 @@ updates:
       # We group grpcio and protobuf updates together, as they need special
       # handling on the pyproject.toml file because of the protobuf/grpcio
       # build/runtime cross-version guarantees
-      grpc:
+      # We group grpcio and protobuf updates together, as they need special
+      # handling on the pyproject.toml file because of the protobuf/grpcio
+      # build/runtime cross-version guarantees and wrong dependabot handling
+      # of build/runtime dependencies.
+      grpc-compatible:
+        update-types:
+          - "patch"
+          - "minor"
         patterns:
           - "grpcio"
           - "grpcio-tools"
+          - "protobuf"
+      # For major updates we split it up. It was observed in the past that
+      # grpcio releases lag behind protobuf releases, and they are not
+      # compatible with a major protobuf update for a while, so we shouldn't
+      # block the update of one with the other.
+      grpcio-major:
+        patterns:
+          - "grpcio"
+          - "grpcio-tools"
+      protobuf-major:
+        patterns:
           - "protobuf"
 
   - package-ecosystem: "github-actions"
