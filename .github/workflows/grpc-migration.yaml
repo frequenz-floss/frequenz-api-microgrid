@@ -1,0 +1,90 @@
+# Automatic grpc/protobuf build/runtime sync for Dependabot PRs
+#
+# The template's `pyproject.toml` pins `protobuf`, `grpcio` and `grpcio-tools`
+# in `[build-system].requires` as *exact* versions, and also declares
+# `protobuf` and `grpcio` in `[project].dependencies` with a `>= <build-pin>`
+# lower bound.  The lower bound must always match the exact pin, because the
+# protobuf cross-version runtime guarantee requires the runtime to be at
+# least the version used at generation time:
+#   https://protobuf.dev/support/cross-version-runtime-guarantee/
+#
+# Dependabot correctly bumps `[build-system].requires`, but it does not bump
+# the matching `>=` floor in `[project].dependencies`.  This workflow runs
+# after a Dependabot `grpc` group PR, rewrites the `>=` floor to match the
+# new build pins, and pushes the fix-up commit back onto the PR branch.
+#
+# The companion auto-dependabot workflow skips the `grpc` group so those PRs
+# are handled exclusively by this migration workflow.
+#
+# XXX: !!! SECURITY WARNING !!!
+# pull_request_target has write access to the repo, and can read secrets.
+# This is required because Dependabot PRs are treated as fork PRs: the
+# GITHUB_TOKEN is read-only and secrets are unavailable with a plain
+# pull_request trigger.  The action mitigates the risk by:
+#   - Never executing code from the PR (the migration script is embedded
+#     in this workflow file on the base branch, not taken from the PR).
+#   - Gating migration steps on github.actor == 'dependabot[bot]' AND the
+#     PR title.
+#   - Running checkout with persist-credentials: false and isolating
+#     push credentials from the migration script environment.
+# For more details read:
+# https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+
+name: gRPC Migration
+
+on:
+  merge_group:  # To allow using this as a required check for merging
+  pull_request_target:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  # Commit the sync-up to the PR branch.
+  contents: write
+  # Create and normalize migration state labels.
+  issues: write
+  # Read/update pull request metadata and comments.
+  pull-requests: write
+
+jobs:
+  grpc-migration:
+    name: Fix gRPC/protobuf runtime floors
+    # Skip if it was triggered by the merge queue. We only need the workflow to
+    # be executed to meet the "Required check" condition for merging, but we
+    # don't need to actually run the job, having the job present as Skipped is
+    # enough.
+    if: |
+      github.event_name == 'pull_request_target' &&
+      github.actor == 'dependabot[bot]' &&
+      (contains(github.event.pull_request.title, 'the grpc-compatible group') ||
+       contains(github.event.pull_request.title, 'the grpcio-major group') ||
+       contains(github.event.pull_request.title, 'the protobuf-major group'))
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Generate token
+        id: create-app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          app-id: ${{ secrets.FREQUENZ_AUTO_DEPENDABOT_APP_ID }}
+          private-key: ${{ secrets.FREQUENZ_AUTO_DEPENDABOT_APP_PRIVATE_KEY }}
+          # Push the sync-up commit to the PR branch.
+          permission-contents: write
+          # Create and normalize migration state labels.
+          permission-issues: write
+          # Read/update pull request metadata and labels.
+          permission-pull-requests: write
+      - name: Fetch Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@ffa630c65fa7e0ecfa0625b5ceda64399aea1b36  # v3.0.0
+      - name: Migrate
+        uses: frequenz-floss/gh-action-dependabot-migrate@b389f72f9282346920150a67495efbae450ac07b  # v1.1.0
+        env:
+          UPDATED_DEPENDENCIES_JSON: ${{ steps.dependabot-metadata.outputs.updated-dependencies-json }}
+        with:
+          script-url-template: >-
+            https://raw.githubusercontent.com/llucax/frequenz-repo-config-python/refs/heads/fix-grpc-group-long-lived/cookiecutter/scripts/dependabot-grpc-fixer.py
+          token: ${{ steps.create-app-token.outputs.token }}
+          sign-commits: "true"
+          auto-merged-label: "tool:auto-merged"
+          migrated-label: "tool:grpc:migration:executed"
+          intervention-pending-label: "tool:grpc:migration:intervention-pending"
+          intervention-done-label: "tool:grpc:migration:intervention-done"
