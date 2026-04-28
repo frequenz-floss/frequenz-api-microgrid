@@ -8,9 +8,9 @@ The `v1` API remains unchanged to ensure backward compatibility. All new feature
 
 -----
 
-## Stable `v1` API
+## Stable `v1` and `v1alpha18` APIs
 
-The `v1` API is stable and has **not** been changed in this release. Users currently on `v1` do not need to make any changes, beyond potentially updating python dependencies as described below.
+The `v1` and `v1alpha18` APIs are stable and have **not** been changed in this release. Users currently on these API versions do not need to make any changes, beyond potentially updating python dependencies.
 
 -----
 
