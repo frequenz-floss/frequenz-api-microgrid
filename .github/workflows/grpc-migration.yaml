@@ -76,7 +76,7 @@ jobs:
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98  # v3.1.0
       - name: Migrate
-        uses: frequenz-floss/gh-action-dependabot-migrate@b389f72f9282346920150a67495efbae450ac07b  # v1.1.0
+        uses: frequenz-floss/gh-action-dependabot-migrate@45994e185a9040449304a470e8f02d0e197873b4  # v1.1.1
         env:
           UPDATED_DEPENDENCIES_JSON: ${{ steps.dependabot-metadata.outputs.updated-dependencies-json }}
         with:
