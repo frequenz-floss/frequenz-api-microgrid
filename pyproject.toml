@@ -41,7 +41,7 @@ dependencies = [
   # We couldn't find any document with a spec about the cross-version runtime
   # guarantee for grpcio, so unless we find one in the future, we'll assume
   # major version jumps are not compatible
-  "grpcio >= 1.80.0, < 2", # Do not widen beyond 2!
+  "grpcio >= 1.81.0, < 2", # Do not widen beyond 2!
 ]
 dynamic = ["version"]
 
