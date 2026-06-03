@@ -101,12 +101,16 @@ Support = "https://github.com/frequenz-floss/frequenz-api-microgrid/discussions/
 [tool.black]
 line-length = 88
 target-version = ['py311']
+# Submodules may contain external code that doesn't follow our formatting rules.
+extend-exclude = '^/submodules/'
 include = '\.pyi?$'
 
 [tool.isort]
 profile = "black"
 line_length = 88
 src_paths = ["benchmarks", "examples", "src", "tests"]
+# Submodules may contain external code that doesn't follow our import sorting rules.
+skip_glob = ["submodules/*"]
 
 [tool.flake8]
 # We give some flexibility to go over 88, there are cases like long URLs or

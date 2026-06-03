@@ -95,14 +95,14 @@ pytest tests/test_*.py
 Or you can use `nox`:
 
 ```sh
-nox -R -s pytest -- test/test_*.py
+nox -R -s pytest -- tests/test_*.py
 ```
 
 The same appliest to `pylint` or `mypy` for example:
 
 ```sh
-nox -R -s pylint -- test/test_*.py
-nox -R -s mypy -- test/test_*.py
+nox -R -s pylint -- tests/test_*.py
+nox -R -s mypy -- tests/test_*.py
 ```
 
 ### Building the documentation

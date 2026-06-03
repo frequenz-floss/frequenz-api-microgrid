@@ -26,7 +26,8 @@ jobs:
       !contains(github.event.pull_request.title, 'the grpc-compatible group') &&
       !contains(github.event.pull_request.title, 'the grpcio-major group') &&
       !contains(github.event.pull_request.title, 'the protobuf-major group') &&
-      !contains(github.event.pull_request.title, 'Bump black from ')
+      !contains(github.event.pull_request.title, 'Bump black from ') &&
+      !contains(github.event.pull_request.title, 'Bump isort from ')
     runs-on: ubuntu-slim
     steps:
       - name: Generate GitHub App token
