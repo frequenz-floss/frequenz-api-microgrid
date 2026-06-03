@@ -5,7 +5,7 @@
 requires = [
   "setuptools == 82.0.1",
   "setuptools_scm[toml] == 10.0.5",
-  "frequenz-repo-config[api] == 0.17.0",
+  "frequenz-repo-config[api] == 0.18.0",
   # We need to pin the protobuf, grpcio and  grpcio-tools dependencies to make
   # sure the code is generated using the minimum supported versions, as older
   # versions can't work with code that was generated with newer versions.
@@ -70,7 +70,7 @@ dev-mkdocs = [
   "mkdocs-material == 9.7.6",
   "mkdocstrings[python] == 0.30.1",
   "mkdocstrings-python == 2.0.3",
-  "frequenz-repo-config[api] == 0.17.0",
+  "frequenz-repo-config[api] == 0.18.0",
 ]
 dev-mypy = [
   "mypy == 2.1.0",
@@ -78,7 +78,7 @@ dev-mypy = [
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
-dev-noxfile = ["nox == 2026.4.10", "frequenz-repo-config[api] == 0.17.0"]
+dev-noxfile = ["nox == 2026.4.10", "frequenz-repo-config[api] == 0.18.0"]
 dev-pylint = [
   "pylint == 4.0.5",
   # For checking the noxfile, docs/ script, and tests
@@ -86,7 +86,7 @@ dev-pylint = [
 ]
 dev-pytest = [
   "pytest == 9.0.3",
-  "frequenz-repo-config[extra-lint-examples] == 0.17.0",
+  "frequenz-repo-config[extra-lint-examples] == 0.18.0",
 ]
 dev = [
   "frequenz-api-microgrid[dev-mkdocs,dev-flake8,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",
@@ -101,12 +101,16 @@ Support = "https://github.com/frequenz-floss/frequenz-api-microgrid/discussions/
 [tool.black]
 line-length = 88
 target-version = ['py311']
+# Submodules may contain external code that doesn't follow our formatting rules.
+extend-exclude = '^/submodules/'
 include = '\.pyi?$'
 
 [tool.isort]
 profile = "black"
 line_length = 88
 src_paths = ["benchmarks", "examples", "src", "tests"]
+# Submodules may contain external code that doesn't follow our import sorting rules.
+skip_glob = ["submodules/*"]
 
 [tool.flake8]
 # We give some flexibility to go over 88, there are cases like long URLs or
