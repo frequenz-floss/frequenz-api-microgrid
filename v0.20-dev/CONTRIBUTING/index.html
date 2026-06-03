@@ -2016,11 +2016,11 @@ dependencies and run <code>pytest</code> manually.</p>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>pytest<span class="w"> </span>tests/test_*.py
 </span></code></pre></div>
 <p>Or you can use <code>nox</code>:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nox<span class="w"> </span>-R<span class="w"> </span>-s<span class="w"> </span>pytest<span class="w"> </span>--<span class="w"> </span>test/test_*.py
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nox<span class="w"> </span>-R<span class="w"> </span>-s<span class="w"> </span>pytest<span class="w"> </span>--<span class="w"> </span>tests/test_*.py
 </span></code></pre></div>
 <p>The same appliest to <code>pylint</code> or <code>mypy</code> for example:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nox<span class="w"> </span>-R<span class="w"> </span>-s<span class="w"> </span>pylint<span class="w"> </span>--<span class="w"> </span>test/test_*.py
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>nox<span class="w"> </span>-R<span class="w"> </span>-s<span class="w"> </span>mypy<span class="w"> </span>--<span class="w"> </span>test/test_*.py
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nox<span class="w"> </span>-R<span class="w"> </span>-s<span class="w"> </span>pylint<span class="w"> </span>--<span class="w"> </span>tests/test_*.py
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>nox<span class="w"> </span>-R<span class="w"> </span>-s<span class="w"> </span>mypy<span class="w"> </span>--<span class="w"> </span>tests/test_*.py
 </span></code></pre></div>
 <h3 id="building-the-documentation">Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permanent link">¤</a></h3>
 <p>To build the documentation, first install the dependencies (if you didn't
