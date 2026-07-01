@@ -4,7 +4,7 @@
 [build-system]
 requires = [
   "setuptools == 82.0.1",
-  "setuptools_scm[toml] == 10.0.5",
+  "setuptools_scm[toml] == 10.2.0",
   "frequenz-repo-config[api] == 0.18.0",
   # We need to pin the protobuf, grpcio and  grpcio-tools dependencies to make
   # sure the code is generated using the minimum supported versions, as older
@@ -85,7 +85,7 @@ dev-pylint = [
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
 dev-pytest = [
-  "pytest == 9.0.3",
+  "pytest == 9.1.1",
   "frequenz-repo-config[extra-lint-examples] == 0.18.0",
 ]
 dev = [
