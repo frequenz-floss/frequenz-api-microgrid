@@ -74,7 +74,7 @@ jobs:
           # Read/update pull request metadata and labels.
           permission-pull-requests: write
       - name: Migrate
-        uses: frequenz-floss/gh-action-dependabot-migrate@eb100d3cf732b4808a7776eee8f303521efd494b # v1.2.1
+        uses: frequenz-floss/gh-action-dependabot-migrate@e93e3b50930132717c9aabdd09413a6737d4b7ef # v1.3.0
         with:
           script-url-template: >- # v0.18.0
             https://raw.githubusercontent.com/frequenz-floss/frequenz-repo-config-python/529d30b554392e6d8b66e84e92c04ac9cd170da7/cookiecutter/scripts/dependabot-grpc-fixer.py
