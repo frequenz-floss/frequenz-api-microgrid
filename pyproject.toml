@@ -60,7 +60,7 @@ dev-flake8 = [
 ]
 dev-formatting = ["black == 26.5.1", "isort == 8.0.1"]
 dev-mkdocs = [
-  "Markdown == 3.10.2",
+  "Markdown == 3.10.3",
   "black == 26.5.1",
   "grpc-stubs == 1.53.0.6",  # Needed for propert typing in docs
   "mike == 2.1.3",
