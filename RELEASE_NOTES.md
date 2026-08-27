@@ -10,7 +10,9 @@
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+**In both v1alpha18 and v1alpha19:**
+
+- A new field named `bounds_token` has been added to the `AugmentElectricalComponentBoundsRequest` message. This field allows clients to specify a token that identifies their bounds contribution. If a client wants to overwrite a previously set bounds contribution, they can use the same token in a new request.
 
 ## Bug Fixes
 
