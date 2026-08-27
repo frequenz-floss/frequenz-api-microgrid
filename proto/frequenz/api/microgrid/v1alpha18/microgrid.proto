@@ -171,6 +171,18 @@ service Microgrid {
   rpc AugmentElectricalComponentBounds(AugmentElectricalComponentBoundsRequest)
     returns (AugmentElectricalComponentBoundsResponse);
 
+  // This RPC allows clients to remove bounds that were previously added using
+  // the `AugmentElectricalComponentBounds` RPC. Clients can specify the
+  // electrical component ID, metric, and token to identify the bounds to be
+  // cleared.
+  //
+  // If the specified bounds exist, they will be removed from the overall bounds
+  // for the given metric of the electrical component.
+  // If the specified bounds do not exist, the request will be treated as a
+  // no-op.
+  rpc ClearElectricalComponentBounds(ClearElectricalComponentBoundsRequest)
+    returns (google.protobuf.Empty);
+
   // Sets the active or reactive power output of a electrical component to a
   // specified target.
   // This RPC allows setting either active or reactive power in a single
@@ -516,6 +528,19 @@ message AugmentElectricalComponentBoundsResponse {
   // by this request will be removed immediately, and the `valid_until_time`
   // timestamp will not be relevant anymore.
   google.protobuf.Timestamp valid_until_time = 1;
+}
+
+// Request parameters for the RPC `ClearElectricalComponentBounds`.
+message ClearElectricalComponentBoundsRequest {
+  // The ID of the target electrical component.
+  uint64 electrical_component_id = 1;
+
+  // The target metric whose bounds have to be cleared.
+  frequenz.api.common.v1alpha8.metrics.Metric target_metric = 2;
+
+  // A client-generated token, used to track the bounds added by a previous
+  // request.
+  string bounds_token = 3;
 }
 
 // The type of power requested for an electrical component.
