@@ -1061,6 +1061,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#clearelectricalcomponentboundsrequest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ClearElectricalComponentBoundsRequest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#getmicrogridresponse" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2128,6 +2139,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#clearelectricalcomponentboundsrequest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ClearElectricalComponentBoundsRequest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#getmicrogridresponse" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2404,6 +2426,7 @@
 <li><a href="#frequenz-api-microgrid-v1alpha19-AckElectricalComponentErrorRequest">AckElectricalComponentErrorRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1alpha19-AugmentElectricalComponentBoundsRequest">AugmentElectricalComponentBoundsRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1alpha19-AugmentElectricalComponentBoundsResponse">AugmentElectricalComponentBoundsResponse</a></li>
+<li><a href="#frequenz-api-microgrid-v1alpha19-ClearElectricalComponentBoundsRequest">ClearElectricalComponentBoundsRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1alpha19-GetMicrogridResponse">GetMicrogridResponse</a></li>
 <li><a href="#frequenz-api-microgrid-v1alpha19-ListElectricalComponentConnectionsRequest">ListElectricalComponentConnectionsRequest</a></li>
 <li><a href="#frequenz-api-microgrid-v1alpha19-ListElectricalComponentConnectionsResponse">ListElectricalComponentConnectionsResponse</a></li>
@@ -2503,6 +2526,12 @@
 </tr>
 </tbody>
 </table>
+<p>Note that the bounds may also expire before this duration, if the client provides the same <code>bounds_token</code> in a subsequent request for the same electrical component and metric. |
+| bounds_token | <a href="#string">string</a> | optional | A client-generated token, used to track the bounds added by this request.</p>
+<p>It can be re-used in a subsequent request for the same electrical component and metric to immediately overwrite the bounds added by this request, and remove them from the overall bounds for the given metric.</p>
+<p>The service should allow the same token to be used for different electrical component IDs and metrics. This means that clients can expect that using the same token in a subsequent request for a different electrical component or metric will <em>not</em> overwrite the bounds added by this request.</p>
+<p>If there is no bound contribution currently active for the given token, electrical component ID, and metric, then the request will be treated as a new one.</p>
+<p>Clients are strongly recommended to incorporate randomness in the token to avoid collisions, e.g. by using a random 64-bit value. |</p>
 <p><a name="frequenz-api-microgrid-v1alpha19-AugmentElectricalComponentBoundsResponse"></a></p>
 <h3 id="augmentelectricalcomponentboundsresponse">AugmentElectricalComponentBoundsResponse<a class="headerlink" href="#augmentelectricalcomponentboundsresponse" title="Permanent link">¤</a></h3>
 <p>Response message for the RPC <code>AugmentElectricalComponentBounds</code>.</p>
@@ -2521,6 +2550,40 @@
 <td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
 <td></td>
 <td>The timestamp until which the added bounds will stay in effect. After this timestamp, the electrical component bounds added by this request will be removed. By default, this timestamp will be set to the current time plus 60 seconds.</td>
+</tr>
+</tbody>
+</table>
+<p>Note that if the client provides the same <code>bounds_token</code> in a subsequent request for the same electrical component and metric, then the bounds added by this request will be removed immediately, and the <code>valid_until_time</code> timestamp will not be relevant anymore. |</p>
+<p><a name="frequenz-api-microgrid-v1alpha19-ClearElectricalComponentBoundsRequest"></a></p>
+<h3 id="clearelectricalcomponentboundsrequest">ClearElectricalComponentBoundsRequest<a class="headerlink" href="#clearelectricalcomponentboundsrequest" title="Permanent link">¤</a></h3>
+<p>Request parameters for the RPC <code>ClearElectricalComponentBounds</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>electrical_component_id</td>
+<td><a href="#uint64">uint64</a></td>
+<td></td>
+<td>The ID of the target electrical component.</td>
+</tr>
+<tr>
+<td>target_metric</td>
+<td><a href="#frequenz-api-common-v1alpha8-metrics-Metric">frequenz.api.common.v1alpha8.metrics.Metric</a></td>
+<td></td>
+<td>The target metric whose bounds have to be cleared.</td>
+</tr>
+<tr>
+<td>bounds_token</td>
+<td><a href="#string">string</a></td>
+<td></td>
+<td>A client-generated token, used to track the bounds added by a previous request.</td>
 </tr>
 </tbody>
 </table>
@@ -3072,10 +3135,13 @@ indicating the ongoing status of the request.</p>
 | ReceiveSensorTelemetryStream | <a href="#frequenz-api-microgrid-v1alpha19-ReceiveSensorTelemetryStreamRequest">ReceiveSensorTelemetryStreamRequest</a> | <a href="#frequenz-api-microgrid-v1alpha19-ReceiveSensorTelemetryStreamResponse">ReceiveSensorTelemetryStreamResponse</a> stream | Returns a stream containing data from a sensor with a given ID. |
 | AugmentElectricalComponentBounds | <a href="#frequenz-api-microgrid-v1alpha19-AugmentElectricalComponentBoundsRequest">AugmentElectricalComponentBoundsRequest</a> | <a href="#frequenz-api-microgrid-v1alpha19-AugmentElectricalComponentBoundsResponse">AugmentElectricalComponentBoundsResponse</a> | Augments the overall bounds for a given metric of a given electrical component with the provided bounds. Returns the UTC time at which the provided bounds will expire and its effects will no longer be visible in the overall bounds for the given metric.</p>
 <p>The request parameters allows users to select a duration until which the bounds will stay in effect. If no duration is provided, then the bounds will be removed after a default duration of 5 seconds.</p>
+<p>The RPC offers two ways to retire bounds, both via its request body: - by providing a <code>request_lifetime</code> duration, after which the bounds will be automatically removed, or - by providing a <code>bounds_token</code>, which can be re-used in a subsequent request to immediately overwrite the bounds added by an older request.</p>
 <p>Inclusion bounds give the range that the system will try to keep the metric within. If the metric goes outside of these bounds, the system will try to bring it back within the bounds. If the bounds for a metric are [[<code>lower_1</code>, <code>upper_1</code>], [<code>lower_2</code>, <code>upper_2</code>]], then this metric&#39;s <code>value</code> needs to comply with the constraints <code>lower_1 &amp;lt;= value &amp;lt;= upper_1</code> OR <code>lower_2 &amp;lt;= value &amp;lt;= upper_2</code>.</p>
 <p>If multiple inclusion bounds have been provided for a metric, then the overlapping bounds are merged into a single bound, and non-overlapping bounds are kept separate. E.g. if the bounds are [[0, 10], [5, 15], [20, 30]], then the resulting bounds will be [[0, 15], [20, 30]].</p>
 <p>The following diagram illustrates how bounds are applied: <code>lower_1 upper_1 &amp;lt;----|========|--------|========|--------&amp;gt; lower_2 upper_2</code> The bounds in this example are <code>[[lower_1, upper_1], [lower_2, upper_2]]</code>. ---- values here are considered out of range. ==== values here are considered within range.</p>
 <p>Note that for power metrics, regardless of the bounds, 0W is always allowed. |
+| ClearElectricalComponentBounds | <a href="#frequenz-api-microgrid-v1alpha19-ClearElectricalComponentBoundsRequest">ClearElectricalComponentBoundsRequest</a> | <a href="#google-protobuf-Empty">.google.protobuf.Empty</a> | This RPC allows clients to remove bounds that were previously added using the <code>AugmentElectricalComponentBounds</code> RPC. Clients can specify the electrical component ID, metric, and token to identify the bounds to be cleared.</p>
+<p>If the specified bounds exist, they will be removed from the overall bounds for the given metric of the electrical component. If the specified bounds do not exist, the request will be treated as a no-op. |
 | SetElectricalComponentPower | <a href="#frequenz-api-microgrid-v1alpha19-SetElectricalComponentPowerRequest">SetElectricalComponentPowerRequest</a> | <a href="#frequenz-api-microgrid-v1alpha19-SetElectricalComponentPowerResponse">SetElectricalComponentPowerResponse</a> stream | Sets the active or reactive power output of a electrical component to a specified target. This RPC allows setting either active or reactive power in a single request. Setting both simultaneously is not supported; clients must issue separate requests for each power type.</p>
 <p>Clients are expected to provide the target power in the request parameters. The target power is specified in watts (W) for active power, and in volt-amperes reactive (VAR) for reactive power. The sign-convention for the target power is as follows:</p>
 <p>For active power: - Negative values (-) indicate discharge towards the grid. - Positive values (&#43;) indicate charge from the direction of the grid.</p>
