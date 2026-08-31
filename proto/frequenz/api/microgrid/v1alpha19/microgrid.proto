@@ -136,6 +136,12 @@ service Microgrid {
   // which the bounds will stay in effect. If no duration is provided, then the
   // bounds will be removed after a default duration of 5 seconds.
   //
+  // The RPC offers two ways to retire bounds, both via its request body:
+  // - by providing a `request_lifetime` duration, after which the bounds will
+  //   be automatically removed, or
+  // - by providing a `bounds_token`, which can be re-used in a subsequent
+  //   request to immediately overwrite the bounds added by an older request.
+  //
   // Inclusion bounds give the range that the system will try to keep the
   // metric within. If the metric goes outside of these bounds, the system will
   // try to bring it back within the bounds.
@@ -164,6 +170,18 @@ service Microgrid {
   // allowed.
   rpc AugmentElectricalComponentBounds(AugmentElectricalComponentBoundsRequest)
     returns (AugmentElectricalComponentBoundsResponse);
+
+  // This RPC allows clients to remove bounds that were previously added using
+  // the `AugmentElectricalComponentBounds` RPC. Clients can specify the
+  // electrical component ID, metric, and token to identify the bounds to be
+  // cleared.
+  //
+  // If the specified bounds exist, they will be removed from the overall bounds
+  // for the given metric of the electrical component.
+  // If the specified bounds do not exist, the request will be treated as a
+  // no-op.
+  rpc ClearElectricalComponentBounds(ClearElectricalComponentBoundsRequest)
+    returns (google.protobuf.Empty);
 
   // Sets the active or reactive power output of a electrical component to a
   // specified target.
@@ -472,7 +490,30 @@ message AugmentElectricalComponentBoundsRequest {
   // This duration has to be between 5 seconds and 15 minutes (including both
   // limits), otherwise the request will be rejected.
   // If not provided, it defaults to 5s.
+  //
+  // Note that the bounds may also expire before this duration, if the client
+  // provides the same `bounds_token` in a subsequent request for the same
+  // electrical component and metric.
   optional uint64 request_lifetime = 4;
+
+  // A client-generated token, used to track the bounds added by this request.
+  //
+  // It can be re-used in a subsequent request for the same electrical component
+  // and metric to immediately overwrite the bounds added by this request, and
+  // remove them from the overall bounds for the given metric.
+  //
+  // The service should allow the same token to be used for different electrical
+  // component IDs and metrics. This means that clients can expect that using
+  // the same token in a subsequent request for a different electrical component
+  // or metric will _not_ overwrite the bounds added by this request.
+  //
+  // If there is no bound contribution currently active for the given token,
+  // electrical component ID, and metric, then the request will be treated as a
+  // new one.
+  //
+  // Clients are strongly recommended to incorporate randomness in the token to
+  // avoid collisions, e.g. by using a random 64-bit value.
+  optional string bounds_token = 5;
 }
 
 // Response message for the RPC `AugmentElectricalComponentBounds`.
@@ -481,7 +522,25 @@ message AugmentElectricalComponentBoundsResponse {
   // After this timestamp, the electrical component bounds added by this request
   // will be removed. By default, this timestamp will be set to the current
   // time plus 60 seconds.
+  //
+  // Note that if the client provides the same `bounds_token` in a subsequent
+  // request for the same electrical component and metric, then the bounds added
+  // by this request will be removed immediately, and the `valid_until_time`
+  // timestamp will not be relevant anymore.
   google.protobuf.Timestamp valid_until_time = 1;
+}
+
+// Request parameters for the RPC `ClearElectricalComponentBounds`.
+message ClearElectricalComponentBoundsRequest {
+  // The ID of the target electrical component.
+  uint64 electrical_component_id = 1;
+
+  // The target metric whose bounds have to be cleared.
+  frequenz.api.common.v1alpha8.metrics.Metric target_metric = 2;
+
+  // A client-generated token, used to track the bounds added by a previous
+  // request.
+  string bounds_token = 3;
 }
 
 // The type of power requested for an electrical component.
