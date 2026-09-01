@@ -69,18 +69,18 @@ dev-mkdocs = [
   "mkdocs-macros-plugin == 1.5.0",
   "mkdocs-material == 9.7.7",
   "mkdocstrings[python] == 0.30.1",
-  "mkdocstrings-python == 2.0.5",
+  "mkdocstrings-python == 2.0.7",
   "frequenz-repo-config[api] == 0.18.0",
 ]
 dev-mypy = [
-  "mypy == 2.3.0",
+  "mypy == 2.3.1",
   "grpc-stubs == 1.53.0.6",
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
 dev-noxfile = ["nox == 2026.7.11", "frequenz-repo-config[api] == 0.18.0"]
 dev-pylint = [
-  "pylint == 4.0.6",
+  "pylint == 4.0.7",
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
