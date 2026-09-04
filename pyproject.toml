@@ -3,9 +3,9 @@
 
 [build-system]
 requires = [
-  "setuptools == 82.0.1",
+  "setuptools == 84.0.0",
   "setuptools_scm[toml] == 10.2.1",
-  "frequenz-repo-config[api] == 0.18.0",
+  "frequenz-repo-config[api] == 0.19.0",
   # We need to pin the protobuf, grpcio and  grpcio-tools dependencies to make
   # sure the code is generated using the minimum supported versions, as older
   # versions can't work with code that was generated with newer versions.
@@ -70,7 +70,7 @@ dev-mkdocs = [
   "mkdocs-material == 9.7.7",
   "mkdocstrings[python] == 0.30.1",
   "mkdocstrings-python == 2.0.7",
-  "frequenz-repo-config[api] == 0.18.0",
+  "frequenz-repo-config[api] == 0.19.0",
 ]
 dev-mypy = [
   "mypy == 2.3.1",
@@ -78,7 +78,7 @@ dev-mypy = [
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
-dev-noxfile = ["nox == 2026.8.17", "frequenz-repo-config[api] == 0.18.0"]
+dev-noxfile = ["nox == 2026.8.17", "frequenz-repo-config[api] == 0.19.0"]
 dev-pylint = [
   "pylint == 4.0.7",
   # For checking the noxfile, docs/ script, and tests
@@ -86,7 +86,7 @@ dev-pylint = [
 ]
 dev-pytest = [
   "pytest == 9.1.1",
-  "frequenz-repo-config[extra-lint-examples] == 0.18.0",
+  "frequenz-repo-config[extra-lint-examples] == 0.19.0",
 ]
 dev = [
   "frequenz-api-microgrid[dev-mkdocs,dev-flake8,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",
@@ -159,7 +159,6 @@ disable = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-vv"
 filterwarnings = [
   "error",
   "once::DeprecationWarning",
@@ -171,6 +170,7 @@ filterwarnings = [
 testpaths = ["pytests"]
 
 [tool.mypy]
+enable_error_code = ["exhaustive-match"]
 explicit_package_bases = true
 namespace_packages = true
 # This option disables mypy cache, and it is sometimes useful to enable it if
