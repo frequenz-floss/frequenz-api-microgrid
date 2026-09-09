@@ -3,9 +3,9 @@
 
 [build-system]
 requires = [
-  "setuptools == 82.0.1",
+  "setuptools == 84.0.0",
   "setuptools_scm[toml] == 10.2.1",
-  "frequenz-repo-config[api] == 0.18.0",
+  "frequenz-repo-config[api] == 0.19.0",
   # We need to pin the protobuf, grpcio and  grpcio-tools dependencies to make
   # sure the code is generated using the minimum supported versions, as older
   # versions can't work with code that was generated with newer versions.
@@ -52,7 +52,7 @@ email = "floss@frequenz.com"
 [project.optional-dependencies]
 dev-flake8 = [
   "flake8 == 7.3.0",
-  "flake8-datetimez == 20.10.0",
+  "flake8-datetimez == 26.8.1",
   "flake8-docstrings == 1.7.0",
   "flake8-pyproject == 1.2.4", # For reading the flake8 config from pyproject.toml
   "pydoclint == 0.9.1",
@@ -69,16 +69,16 @@ dev-mkdocs = [
   "mkdocs-macros-plugin == 1.5.0",
   "mkdocs-material == 9.7.7",
   "mkdocstrings[python] == 0.30.1",
-  "mkdocstrings-python == 2.0.5",
-  "frequenz-repo-config[api] == 0.18.0",
+  "mkdocstrings-python == 2.0.7",
+  "frequenz-repo-config[api] == 0.19.0",
 ]
 dev-mypy = [
-  "mypy == 2.3.0",
+  "mypy == 2.3.1",
   "grpc-stubs == 1.53.0.6",
   # For checking the noxfile, docs/ script, and tests
   "frequenz-api-microgrid[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
-dev-noxfile = ["nox == 2026.7.11", "frequenz-repo-config[api] == 0.18.0"]
+dev-noxfile = ["nox == 2026.8.17", "frequenz-repo-config[api] == 0.19.0"]
 dev-pylint = [
   "pylint == 4.0.8",
   # For checking the noxfile, docs/ script, and tests
@@ -86,7 +86,7 @@ dev-pylint = [
 ]
 dev-pytest = [
   "pytest == 9.1.1",
-  "frequenz-repo-config[extra-lint-examples] == 0.18.0",
+  "frequenz-repo-config[extra-lint-examples] == 0.19.0",
 ]
 dev = [
   "frequenz-api-microgrid[dev-mkdocs,dev-flake8,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",
@@ -159,7 +159,6 @@ disable = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-vv"
 filterwarnings = [
   "error",
   "once::DeprecationWarning",
@@ -171,6 +170,7 @@ filterwarnings = [
 testpaths = ["pytests"]
 
 [tool.mypy]
+enable_error_code = ["exhaustive-match"]
 explicit_package_bases = true
 namespace_packages = true
 # This option disables mypy cache, and it is sometimes useful to enable it if
