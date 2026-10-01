@@ -10,7 +10,7 @@
 
 ## New Features
 
-<!-- Here goes the main new features and examples or instructions on how to use them -->
+The `frequenz-api-common` submodule has been updated from v0.8.4 to v0.8.12. See the release notes for that submodule here: https://github.com/frequenz-floss/frequenz-api-common/releases
 
 ## Bug Fixes
 
