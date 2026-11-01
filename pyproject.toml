@@ -11,8 +11,8 @@ requires = [
   # versions can't work with code that was generated with newer versions.
   # https://protobuf.dev/support/cross-version-runtime-guarantee/#backwards
   "protobuf == 7.36.2",
-  "grpcio-tools == 1.84.0",
-  "grpcio == 1.84.0",
+  "grpcio-tools == 1.85.0",
+  "grpcio == 1.85.0",
 ]
 build-backend = "setuptools.build_meta"
 
