@@ -16,6 +16,7 @@ import "frequenz/api/common/v1alpha8/metrics/bounds.proto";
 import "frequenz/api/common/v1alpha8/metrics/metrics.proto";
 import "frequenz/api/common/v1alpha8/microgrid/electrical_components/electrical_components.proto";
 import "frequenz/api/common/v1alpha8/microgrid/microgrid.proto";
+import "frequenz/api/common/v1alpha8/microgrid/pools/power.proto";
 import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
 
 import "google/api/annotations.proto";
@@ -339,6 +340,108 @@ service Microgrid {
       get : "/v1/components/{electrical_component_id}/errorAck"
     };
   }
+
+  // Proposes a power for a pool of electrical components, or withdraws a
+  // pool's proposal.
+  //
+  // A pool is a set of electrical components of the same category, such as
+  // batteries, that a client controls together. The service arbitrates the
+  // proposals of all pools by priority, and sets the power of the components
+  // itself, so that clients don't send setpoints to single components.
+  //
+  // For batteries, the service serves the proposals for the same batteries
+  // from the highest priority down. The preferred power and the bounds of a
+  // proposal are relative to the power of the proposals served before it, so
+  // the powers of all proposals add up to a total.
+  //
+  // Below, the rest total is the total at which the service sets the
+  // components it controls to 0 W. It is the `uncontrolled_power` of the
+  // pool's `PoolPowerReport`, or 0 W while that is unset.
+  //
+  // The bounds of a proposal limit the sum of its own power and the powers of
+  // all proposals served after it. Bounds wholly outside the bounds that are
+  // left are moved to the nearest edge of those, which fixes the power of
+  // every proposal served after it. A preferred power is clamped, not
+  // rejected, into the bounds that are left once its own bounds are applied.
+  // When no proposal has a preferred power, the total is the power nearest to
+  // the rest total within the bounds that are left.
+  //
+  // The total is then moved to the nearest power that the components can
+  // take, with a tie going to the lower power. The search stays within the
+  // totals that the bounds left to the first proposal served that prefers a
+  // power other than 0 W allow, once its own bounds are applied.
+  //
+  // If proposals have preferred powers but all of them are 0 W, the search
+  // covers every power the components can take. If no proposal has a
+  // preferred power, it covers the bounds that are left.
+  //
+  // A total equal to the rest total stays there, even in a gap between the
+  // ranges the components can take. Any other total is moved only into those
+  // ranges. If the nearest power is on the other side of the rest total, or
+  // there is none, the total is the rest total. So the total can end up
+  // outside the bounds of the proposals.
+  //
+  // A battery's power is set through its inverters. In the reports, a
+  // battery's setpoints are its share of the power of its inverter-battery
+  // group, divided equally among the group's batteries that the service sets.
+  //
+  // A proposal stays in effect for its request lifetime, and the client renews
+  // it by sending it again. A proposal with neither `preferred_power` nor a
+  // bound withdraws the pool's proposal for its `power_type` at once. A
+  // withdrawal for a pool without a proposal in effect does nothing, unless it
+  // is rejected as described below. Once no proposal is left for a set of
+  // components, the service returns them to their default state.
+  //
+  // The request is rejected with `INVALID_ARGUMENT` if:
+  // - `pool_id` is empty, or has a proposal in effect, for any `power_type`,
+  //   with other components or another priority;
+  // - it has no electrical component IDs, unknown ones, or components of more
+  //   than one category;
+  // - it has components that the service can only set together with
+  //   components it leaves out, such as only one of two batteries behind the
+  //   same inverter;
+  // - `preferred_power` or a bound isn't a finite number, or the lower bound
+  //   is above the upper bound;
+  // - `request_lifetime` is 0.
+  //
+  // The request is rejected with `UNIMPLEMENTED` if the service doesn't
+  // support its `power_type` or the category of its components yet, or if its
+  // set of components overlaps a different set: that of another pool whose
+  // proposal is in effect, of an open report stream, or of components the
+  // service is still returning to their default state.
+  rpc ProposePoolPower(ProposePoolPowerRequest)
+    returns (ProposePoolPowerResponse) {
+    option (google.api.http) = {
+      post : "/v1/pools/{pool_id}/power"
+      body : "*"
+    };
+  }
+
+  // Streams reports on how the service sets the power of a pool's electrical
+  // components, as seen from a priority.
+  //
+  // The reports cover the listed components, with the proposals of every pool
+  // on them. A report is sent when anything in it but its `origin_time`
+  // changes. The first report is sent as soon as the service has one, and the
+  // stream stays open while no proposal is in effect.
+  //
+  // The request is rejected with `INVALID_ARGUMENT` if:
+  // - it has no electrical component IDs, unknown ones, or components of more
+  //   than one category;
+  // - it has components that the service can only set together with
+  //   components it leaves out.
+  //
+  // The request is rejected with `UNIMPLEMENTED` if the service doesn't
+  // support its `power_type` or the category of its components yet, or if its
+  // set of components overlaps a different set: that of a pool whose proposal
+  // is in effect, of another open report stream, or of components the service
+  // is still returning to their default state.
+  rpc ReceivePoolPowerReportStream(ReceivePoolPowerReportStreamRequest)
+    returns (stream ReceivePoolPowerReportStreamResponse) {
+    option (google.api.http) = {
+      get : "/v1/pools/power/reports"
+    };
+  }
 }
 
 // Information describing a microgrid.
@@ -545,8 +648,8 @@ message ClearElectricalComponentBoundsRequest {
 
 // The type of power requested for an electrical component.
 enum PowerType {
-  // Default value. Users are discouraged from using this value. Using this will
-  // result in an error.
+  // Default value. `SetElectricalComponentPower` rejects it, and the pool RPCs
+  // read it as active power.
   POWER_TYPE_UNSPECIFIED = 0;
 
   // The requested power is active power.
@@ -686,4 +789,96 @@ message StopElectricalComponentRequest {
 message AckElectricalComponentErrorRequest {
   // The electrical component ID to acknowledge the error for.
   uint64 electrical_component_id = 1;
+}
+
+// Request parameters for the RPC `ProposePoolPower`.
+message ProposePoolPowerRequest {
+  // The ID of the pool, chosen by the client.
+  //
+  // While a proposal of the pool is in effect, the pool must be sent with the
+  // same set of `electrical_component_ids` and the same `priority`. A pool has
+  // at most one proposal for each `power_type`. Clients are strongly
+  // recommended to use a random UUID, so that two pools never share an ID.
+  string pool_id = 1;
+
+  // The electrical components of the pool, all of the same category. The list
+  // must not be empty.
+  //
+  // The service accounts for the power of every listed component. The power of
+  // the components it can't control, because they are unhealthy or because of
+  // their operational mode, is subtracted from the target of the controlled
+  // components, and reported as `PoolPowerReport.uncontrolled_power`, unless it
+  // flows through a component the service sets. To leave components out of the
+  // pool, don't list them.
+  repeated uint64 electrical_component_ids = 2;
+
+  // The priority of the pool. A larger number is a higher priority, and
+  // proposals with a higher priority are served first. Proposals with the same
+  // priority are served in an order the service picks.
+  int32 priority = 3;
+
+  // Whether the proposal is for active or reactive power.
+  //
+  // `POWER_TYPE_UNSPECIFIED` means active power. Reactive power is not
+  // supported yet.
+  PowerType power_type = 4;
+
+  // The power the pool would like, on top of the power the proposals served
+  // before it on the same components got, in watts (W) for active power. For
+  // the first proposal served with a preferred power, it is the total power of
+  // the components, including `uncontrolled_power`. It follows the passive sign
+  // convention: positive values consume power, e.g. charge batteries, and
+  // negative values produce power, e.g. discharge batteries.
+  optional float preferred_power = 5;
+
+  // The bounds for the sum of the power of this pool and the powers of every
+  // pool served after it on the same components, in the same unit as
+  // `preferred_power`. Like `preferred_power`, they are relative to the power
+  // the proposals served before this one got. If none of those has a
+  // preferred power, they apply to the total power of the components,
+  // including `uncontrolled_power`.
+  optional frequenz.api.common.v1alpha8.metrics.Bounds bounds = 6;
+
+  // How long the proposal stays in effect, in seconds, unless it is sent
+  // again.
+  //
+  // If not provided, it defaults to 60 seconds. The service may shorten a
+  // longer lifetime to the longest one it allows, and the response says when
+  // the proposal expires.
+  optional uint64 request_lifetime = 7;
+}
+
+// Response to the RPC `ProposePoolPower`.
+message ProposePoolPowerResponse {
+  // When the proposal stops being in effect, unless it is sent again. Unset for
+  // a withdrawal.
+  google.protobuf.Timestamp valid_until_time = 1;
+}
+
+// Request parameters for the RPC `ReceivePoolPowerReportStream`.
+message ReceivePoolPowerReportStreamRequest {
+  // The electrical components of the pool. The list must not be empty.
+  repeated uint64 electrical_component_ids = 1;
+
+  // The priority from which the reports are seen: their bounds are those left
+  // for a proposal at this priority.
+  int32 priority = 2;
+
+  // Whether the reports are about active or reactive power.
+  //
+  // `POWER_TYPE_UNSPECIFIED` means active power.
+  PowerType power_type = 3;
+
+  // Whether the reports list what the service did with each component, in
+  // `PoolPowerReport.components`.
+  //
+  // If false, `components` is empty, and the service doesn't send a report
+  // just because a component's entry changed.
+  bool include_components = 4;
+}
+
+// Response to the RPC `ReceivePoolPowerReportStream`.
+message ReceivePoolPowerReportStreamResponse {
+  // The latest report.
+  frequenz.api.common.v1alpha8.microgrid.pools.PoolPowerReport report = 1;
 }
