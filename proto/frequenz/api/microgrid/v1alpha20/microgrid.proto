@@ -14,12 +14,15 @@ package frequenz.api.microgrid.v1alpha20;
 
 import "frequenz/api/common/v1alpha8/metrics/bounds.proto";
 import "frequenz/api/common/v1alpha8/metrics/metrics.proto";
+import "frequenz/api/common/v1alpha8/metrics/resampling.proto";
 import "frequenz/api/common/v1alpha8/microgrid/electrical_components/electrical_components.proto";
 import "frequenz/api/common/v1alpha8/microgrid/microgrid.proto";
 import "frequenz/api/common/v1alpha8/microgrid/pools/power.proto";
 import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
+import "frequenz/api/common/v1alpha8/microgrid/telemetry/aggregate_expression.proto";
 
 import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -440,6 +443,40 @@ service Microgrid {
     returns (stream ReceivePoolPowerReportStreamResponse) {
     option (google.api.http) = {
       get : "/v1/pools/power/reports"
+    };
+  }
+
+  // Streams a value computed from the telemetry of several electrical
+  // components, resampled by the service.
+  //
+  // The value is described by an expression: aggregates the service knows how
+  // to compute, such as the active power of a set of batteries, single
+  // metrics of single components, and formulas, combined with operators. All
+  // operands of a value are taken from the same resampling interval. A
+  // response is sent for every resampling interval, also when its value is
+  // missing.
+  //
+  // The request is rejected with `INVALID_ARGUMENT` if:
+  // - the expression or one of its operands is unset, or an operand list is
+  //   empty;
+  // - the expression reads no metric, or its operands have metrics of
+  //   different units;
+  // - a metric is unspecified, or a constant or a factor isn't a finite
+  //   number;
+  // - the group of a named aggregate, or its category or inverter type, is
+  //   unset or unspecified, the group has no aggregate the service can
+  //   compute, or it lists components of another category or type;
+  // - an electrical component ID is unknown;
+  // - an electrical component metric or a formula names a component that
+  //   doesn't measure the metric, or doesn't measure it at the given
+  //   connection, or, with no connection given, measures it at more than one
+  //   connection and has no sample of it without a connection;
+  // - a formula doesn't parse.
+  rpc ReceiveAggregatedTelemetryStream(ReceiveAggregatedTelemetryStreamRequest)
+    returns (stream ReceiveAggregatedTelemetryStreamResponse) {
+    option (google.api.http) = {
+      post : "/v1/telemetry/aggregated"
+      body : "*"
     };
   }
 }
@@ -881,4 +918,35 @@ message ReceivePoolPowerReportStreamRequest {
 message ReceivePoolPowerReportStreamResponse {
   // The latest report.
   frequenz.api.common.v1alpha8.microgrid.pools.PoolPowerReport report = 1;
+}
+
+// Request parameters for the RPC `ReceiveAggregatedTelemetryStream`.
+message ReceiveAggregatedTelemetryStreamRequest {
+  // What to compute.
+  frequenz.api.common.v1alpha8.microgrid.telemetry.AggregateExpression
+    expression = 1;
+
+  // The length of the resampling interval.
+  //
+  // If not provided, the service's default is used. The service may move an
+  // interval that is too short or too long to the nearest one it allows.
+  optional google.protobuf.Duration resampling_interval = 2;
+
+  // How the samples of each component within one resampling interval are
+  // combined, before the expression is computed.
+  //
+  // `RESAMPLING_FUNCTION_UNSPECIFIED` uses the service's default for the
+  // metric, which is the average for power.
+  frequenz.api.common.v1alpha8.metrics.ResamplingFunction
+    resampling_function = 3;
+}
+
+// Response to the RPC `ReceiveAggregatedTelemetryStream`.
+message ReceiveAggregatedTelemetryStreamResponse {
+  // The end of the resampling interval the value belongs to.
+  google.protobuf.Timestamp sample_time = 1;
+
+  // The value, in the base unit of the expression's metric, e.g. watts (W) for
+  // active power. Unset if it is missing for this interval.
+  optional float value = 2;
 }
