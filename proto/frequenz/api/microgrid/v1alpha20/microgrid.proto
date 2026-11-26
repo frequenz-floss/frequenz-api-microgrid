@@ -1,0 +1,952 @@
+// protolint:disable MAX_LINE_LENGTH
+
+// Frequenz Microgrid API
+//
+// Copyright:
+// Copyright 2022 Frequenz Energy-as-a-Service GmbH
+//
+// License:
+// MIT
+
+syntax = "proto3";
+
+package frequenz.api.microgrid.v1alpha20;
+
+import "frequenz/api/common/v1alpha8/metrics/bounds.proto";
+import "frequenz/api/common/v1alpha8/metrics/metrics.proto";
+import "frequenz/api/common/v1alpha8/metrics/resampling.proto";
+import "frequenz/api/common/v1alpha8/microgrid/electrical_components/electrical_components.proto";
+import "frequenz/api/common/v1alpha8/microgrid/microgrid.proto";
+import "frequenz/api/common/v1alpha8/microgrid/pools/power.proto";
+import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
+import "frequenz/api/common/v1alpha8/microgrid/telemetry/aggregate_expression.proto";
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// The Frequenz Microgrid API
+service Microgrid {
+  // Returns information about the local microgrid.
+  // This information that describes the overall microgrid, as opposed to its
+  // electrical components or sensors, e.g., the microgrid ID, location.
+  rpc GetMicrogrid(google.protobuf.Empty)
+    returns (GetMicrogridResponse) {
+    option (google.api.http) = {
+      get : "/v1/metadata"
+    };
+  }
+
+  // List electrical components in the local microgrid, optionally filtered by a
+  // given list of electrical component IDs and their categories.
+  //
+  // Electrical components are a part of a microgrid's electrical infrastructure
+  // are can be connected to each other to form an electrical circuit, which can
+  // then be represented as a graph.
+  //
+  // If provided, the filters for electrical component IDs and categories have
+  // an `AND` relationship with one another, meaning that they are applied
+  // serially, but the elements within a single filter list have an `OR`
+  // relationship with each other.
+  // E.g., if `ids` = [1, 2, 3], and `categories` = [
+  //  `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_INVERTER`,
+  //  `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_BATTERY`],
+  // then the results will consist of elements that
+  // have the IDs 1, OR 2, OR 3,
+  // AND
+  // are of the categories
+  // `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_INVERTER` OR
+  // `ElectricalComponentCategory::ELECTRICAL_COMPONENT_CATEGORY_BATTERY`.
+  //
+  // If a filter list is empty, then that filter is not applied.
+  rpc ListElectricalComponents(ListElectricalComponentsRequest)
+    returns (ListElectricalComponentsResponse) {
+    option (google.api.http) = {
+      get : "/v1/components"
+    };
+  }
+
+  // Returns a list of sensors in the local microgrid, optionally filtered by a
+  // given list of sensor IDs.
+  //
+  // Sensors measure physical metrics in the microgrid's surroundings, and are
+  // not classified as electrical components.
+  //
+  // If provided, the filters for sensor IDs and categories have an `AND`
+  // relationship with one another, meaning that they are applied serially,
+  // but the elements within a single filter list have an `OR` relationship with
+  // each other.
+  // E.g., if `ids` = [1, 2, 3],
+  // then the results will consist of elements that
+  // have the IDs 1, OR 2, OR 3,
+  //
+  // If a filter list is empty, then that filter is not applied.
+  rpc ListSensors(ListSensorRequest) returns (ListSensorsResponse) {
+    option (google.api.http) = {
+      get : "/v1/sensors"
+    };
+  }
+
+  // Electrical components are a part of a microgrid's electrical infrastructure
+  // are can be connected to each other to form an electrical circuit, which can
+  // then be represented as a graph.
+  //
+  // This RPC return a list of the connections between two electrical
+  // components, denoted by `(start, end)`. The direction of a connection is
+  // always away from the grid endpoint, i.e. aligned with the direction of
+  // positive current according to the passive sign convention:
+  // https://en.wikipedia.org/wiki/Passive_sign_convention
+  //
+  // The request may be filtered by `start`/`end` electrical component(s) of
+  // individual connections.  If provided, the `start` and `end` filters have an
+  // `AND` relationship between each other, meaning that they are applied
+  // serially, but an `OR` relationship with other elements in the same list.
+  // For example, if `start` = `[1, 2, 3]`, and `end` = `[4, 5, 6]`, then the
+  // result should have all the connections where
+  // * each `start` electrical component ID is either `1`, `2`, OR `3`,
+  //  AND
+  // * each `end` electrical component ID is either `4`, `5`, OR `6`.
+  rpc ListElectricalComponentConnections(ListElectricalComponentConnectionsRequest)
+    returns (ListElectricalComponentConnectionsResponse) {
+    option (google.api.http) = {
+      get : "/v1/connections"
+    };
+  }
+
+  // Returns a stream containing data from a electrical component with a given ID.
+  rpc ReceiveElectricalComponentTelemetryStream(ReceiveElectricalComponentTelemetryStreamRequest)
+    returns (stream ReceiveElectricalComponentTelemetryStreamResponse) {
+    option (google.api.http) = {
+      get : "/v1/components/{electrical_component_id}/data"
+    };
+  }
+
+  // Returns a stream containing data from a sensor with a given ID.
+  rpc ReceiveSensorTelemetryStream(ReceiveSensorTelemetryStreamRequest)
+    returns (stream ReceiveSensorTelemetryStreamResponse) {
+    option (google.api.http) = {
+      get : "/v1/sensors/{sensor_id}/data"
+    };
+  }
+
+  // Augments the overall bounds for a given metric of a given electrical
+  // component with the provided bounds.
+  // Returns the UTC time at which the provided bounds will expire and its
+  // effects will no longer be visible in the overall bounds for the
+  // given metric.
+  //
+  // The request parameters allows users to select a duration until
+  // which the bounds will stay in effect. If no duration is provided, then the
+  // bounds will be removed after a default duration of 5 seconds.
+  //
+  // The RPC offers two ways to retire bounds, both via its request body:
+  // - by providing a `request_lifetime` duration, after which the bounds will
+  //   be automatically removed, or
+  // - by providing a `bounds_token`, which can be re-used in a subsequent
+  //   request to immediately overwrite the bounds added by an older request.
+  //
+  // Inclusion bounds give the range that the system will try to keep the
+  // metric within. If the metric goes outside of these bounds, the system will
+  // try to bring it back within the bounds.
+  // If the bounds for a metric are [[`lower_1`, `upper_1`],
+  // [`lower_2`, `upper_2`]], then this metric's `value` needs to comply with
+  // the constraints
+  // `lower_1 <= value <= upper_1` OR `lower_2 <= value <= upper_2`.
+  //
+  // If multiple inclusion bounds have been provided for a metric, then the
+  // overlapping bounds are merged into a single bound, and non-overlapping
+  // bounds are kept separate.
+  // E.g. if the bounds are [[0, 10], [5, 15], [20, 30]], then the resulting
+  // bounds will be [[0, 15], [20, 30]].
+  //
+  // The following diagram illustrates how bounds are applied:
+  // ```
+  //   lower_1  upper_1
+  // <----|========|--------|========|-------->
+  //                     lower_2  upper_2
+  // ```
+  // The bounds in this example are `[[lower_1, upper_1], [lower_2, upper_2]]`.
+  // ---- values here are considered out of range.
+  // ==== values here are considered within range.
+  //
+  // Note that for power metrics, regardless of the bounds, 0W is always
+  // allowed.
+  rpc AugmentElectricalComponentBounds(AugmentElectricalComponentBoundsRequest)
+    returns (AugmentElectricalComponentBoundsResponse);
+
+  // This RPC allows clients to remove bounds that were previously added using
+  // the `AugmentElectricalComponentBounds` RPC. Clients can specify the
+  // electrical component ID, metric, and token to identify the bounds to be
+  // cleared.
+  //
+  // If the specified bounds exist, they will be removed from the overall bounds
+  // for the given metric of the electrical component.
+  // If the specified bounds do not exist, the request will be treated as a
+  // no-op.
+  rpc ClearElectricalComponentBounds(ClearElectricalComponentBoundsRequest)
+    returns (google.protobuf.Empty);
+
+  // Sets the active or reactive power output of a electrical component to a
+  // specified target.
+  // This RPC allows setting either active or reactive power in a single
+  // request. Setting both simultaneously is not supported; clients must issue
+  // separate requests for each power type.
+  //
+  // Clients are expected to provide the target power in the request parameters.
+  // The target power is specified in watts (W) for active power, and in
+  // volt-amperes reactive (VAR) for reactive power. The sign-convention for the
+  // target power is as follows:
+  //
+  // For active power:
+  // - Negative values (-) indicate discharge towards the grid.
+  // - Positive values (+) indicate charge from the direction of the grid.
+  //
+  // For reactive power:
+  // - Negative values (-) indicate capacitive reactive power, where the
+  //   current leads the voltage.
+  // - Positive values (+) indicate inductive reactive power, where the
+  //   current lags the voltage.
+  //
+  // Note that the target electrical component may have a resolution of more
+  // than 1 W or 1 VAr. E.g., an inverter may have a resolution of 88 W.
+  // In such cases, the target power's magnitude will be floored to the nearest
+  // multiple of the resolution.
+  //
+  // The server provides a stream of responses in return. Each response will
+  // contain the current status of the request.
+  // **Initial response:** The initial response will be sent immediately after
+  // the request is received, and will indicate whether the request was accepted
+  // or rejected. If the request was accepted, this response will also contain
+  // the timestamp until which the given power command will stay in effect,
+  // after which the electrical component will be returned to its default state.
+  // **Subsequent response:** After the initial response, the server will send
+  // another response in the stream, which will be the final response. It will
+  // indicate whether the request was successful, failed, or overridden by
+  // another request. If the request was successful, it will also contain the
+  // timestamp until which the given power command will stay in effect, after
+  // which the electrical component will be returned to its default state.
+  //
+  // This command is supported for the following electrical component
+  // categories, provided the specific model also supports it:
+  // - `ELECTRICAL_COMPONENT_CATEGORY_CAPACITOR_BANK`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_CHP`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_ELECTROLYZER`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_EV_CHARGER`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_INVERTER`
+  // - `ELECTRICAL_COMPONENT_CATEGORY_WIND_TURBINE`
+  rpc SetElectricalComponentPower(SetElectricalComponentPowerRequest)
+    returns (stream SetElectricalComponentPowerResponse) {
+    option (google.api.http) = {
+      get : "/v1/components/{electrical_component_id}/setPower/{power}"
+    };
+  }
+
+  // Starts the electrical component, and brings it into a state where it is
+  // immediately operational.
+  //
+  // Performs the following sequence of actions for the following electrical
+  // component categories:
+  //
+  // * Inverter:
+  //  * closes DC relays, if the feature is available
+  //  * closes AC relays
+  //  * sets power output to 0
+  //
+  // * Battery: Checks if DC relays are open, then
+  //  * closes DC relays
+  //
+  // * Relays:
+  //  * closes relays
+  //
+  // * Precharge Modules:
+  //  * starts the precharge process, and eventually closes the DC relays.
+  //
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
+  //
+  // If a feature required to perform an action is missing, then that action is
+  // skipped.
+  rpc StartElectricalComponent(StartElectricalComponentRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{electrical_component_id}/start"
+    };
+  }
+
+  // Sets the given electrical component into a standby state, from which it can
+  // take a few minutes to return to an operational state. A transition to an
+  // operational state can be triggered by calling the
+  // `StartElectricalComponent` RPC, or the `SetElectricalComponentPowerActive`
+  // RPC.
+  //
+  // Performs the following sequence actions for the following electrical
+  // component categories:
+  //
+  // * Inverter: Checks if AC and DC relays are closed, then
+  //  * sets power to 0, and
+  //  * opens AC relays
+  //
+  // If any of the checks mentioned above fails, then the method call returns an
+  // error.
+  //
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
+  rpc PutElectricalComponentInStandby(PutElectricalComponentInStandbyRequest)
+    returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{electrical_component_id}/standby"
+    };
+  }
+
+  // Stops the electrical component completely, potentially disengaging its
+  // power electronics controller(s).
+  //
+  // Performs the following sequence actions for the following electrical
+  // component categories:
+  //
+  // * Inverter:
+  //  * Brings electrical component to the cold-standby state
+  //  * opens DC relays
+  //
+  // * Battery: Checks if the power output is 0, then
+  //  * opens DC relays
+  //
+  // * Relays:
+  //  * opens relays
+  //
+  // * Precharge Modules:
+  //  * opens the DC relays.
+  //
+  // If any of the checks mentioned above fails, then the method call returns an
+  // error.
+  //
+  // If any of the above mentioned actions for a given electrical component has
+  // already been performed, then this method call effectively skips that
+  // action.
+  //
+  // If a feature required to perform an action is missing, then that action is
+  // skipped.
+  rpc StopElectricalComponent(StopElectricalComponentRequest)
+    returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{electrical_component_id}/stop"
+    };
+  }
+
+  // Acknowledges any recoverable error reported by the electrical component,
+  // and brings it back to the stopped or cold-standby state.
+  rpc AckElectricalComponentError(AckElectricalComponentErrorRequest)
+    returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get : "/v1/components/{electrical_component_id}/errorAck"
+    };
+  }
+
+  // Proposes a power for a pool of electrical components, or withdraws a
+  // pool's proposal.
+  //
+  // A pool is a set of electrical components of the same category, such as
+  // batteries, that a client controls together. The service arbitrates the
+  // proposals of all pools by priority, and sets the power of the components
+  // itself, so that clients don't send setpoints to single components.
+  //
+  // For batteries, the service serves the proposals for the same batteries
+  // from the highest priority down. The preferred power and the bounds of a
+  // proposal are relative to the power of the proposals served before it, so
+  // the powers of all proposals add up to a total.
+  //
+  // Below, the rest total is the total at which the service sets the
+  // components it controls to 0 W. It is the `uncontrolled_power` of the
+  // pool's `PoolPowerReport`, or 0 W while that is unset.
+  //
+  // The bounds of a proposal limit the sum of its own power and the powers of
+  // all proposals served after it. Bounds wholly outside the bounds that are
+  // left are moved to the nearest edge of those, which fixes the power of
+  // every proposal served after it. A preferred power is clamped, not
+  // rejected, into the bounds that are left once its own bounds are applied.
+  // When no proposal has a preferred power, the total is the power nearest to
+  // the rest total within the bounds that are left.
+  //
+  // The total is then moved to the nearest power that the components can
+  // take, with a tie going to the lower power. The search stays within the
+  // totals that the bounds left to the first proposal served that prefers a
+  // power other than 0 W allow, once its own bounds are applied.
+  //
+  // If proposals have preferred powers but all of them are 0 W, the search
+  // covers every power the components can take. If no proposal has a
+  // preferred power, it covers the bounds that are left.
+  //
+  // A total equal to the rest total stays there, even in a gap between the
+  // ranges the components can take. Any other total is moved only into those
+  // ranges. If the nearest power is on the other side of the rest total, or
+  // there is none, the total is the rest total. So the total can end up
+  // outside the bounds of the proposals.
+  //
+  // A battery's power is set through its inverters. In the reports, a
+  // battery's setpoints are its share of the power of its inverter-battery
+  // group, divided equally among the group's batteries that the service sets.
+  //
+  // A proposal stays in effect for its request lifetime, and the client renews
+  // it by sending it again. A proposal with neither `preferred_power` nor a
+  // bound withdraws the pool's proposal for its `power_type` at once. A
+  // withdrawal for a pool without a proposal in effect does nothing, unless it
+  // is rejected as described below. Once no proposal is left for a set of
+  // components, the service returns them to their default state.
+  //
+  // The request is rejected with `INVALID_ARGUMENT` if:
+  // - `pool_id` is empty, or has a proposal in effect, for any `power_type`,
+  //   with other components or another priority;
+  // - it has no electrical component IDs, unknown ones, or components of more
+  //   than one category;
+  // - it has components that the service can only set together with
+  //   components it leaves out, such as only one of two batteries behind the
+  //   same inverter;
+  // - `preferred_power` or a bound isn't a finite number, or the lower bound
+  //   is above the upper bound;
+  // - `request_lifetime` is 0.
+  //
+  // The request is rejected with `UNIMPLEMENTED` if the service doesn't
+  // support its `power_type` or the category of its components yet, or if its
+  // set of components overlaps a different set: that of another pool whose
+  // proposal is in effect, of an open report stream, or of components the
+  // service is still returning to their default state.
+  rpc ProposePoolPower(ProposePoolPowerRequest)
+    returns (ProposePoolPowerResponse) {
+    option (google.api.http) = {
+      post : "/v1/pools/{pool_id}/power"
+      body : "*"
+    };
+  }
+
+  // Streams reports on how the service sets the power of a pool's electrical
+  // components, as seen from a priority.
+  //
+  // The reports cover the listed components, with the proposals of every pool
+  // on them. A report is sent when anything in it but its `origin_time`
+  // changes. The first report is sent as soon as the service has one, and the
+  // stream stays open while no proposal is in effect.
+  //
+  // The request is rejected with `INVALID_ARGUMENT` if:
+  // - it has no electrical component IDs, unknown ones, or components of more
+  //   than one category;
+  // - it has components that the service can only set together with
+  //   components it leaves out.
+  //
+  // The request is rejected with `UNIMPLEMENTED` if the service doesn't
+  // support its `power_type` or the category of its components yet, or if its
+  // set of components overlaps a different set: that of a pool whose proposal
+  // is in effect, of another open report stream, or of components the service
+  // is still returning to their default state.
+  rpc ReceivePoolPowerReportStream(ReceivePoolPowerReportStreamRequest)
+    returns (stream ReceivePoolPowerReportStreamResponse) {
+    option (google.api.http) = {
+      get : "/v1/pools/power/reports"
+    };
+  }
+
+  // Streams a value computed from the telemetry of several electrical
+  // components, resampled by the service.
+  //
+  // The value is described by an expression: aggregates the service knows how
+  // to compute, such as the active power of a set of batteries, single
+  // metrics of single components, and formulas, combined with operators. All
+  // operands of a value are taken from the same resampling interval. A
+  // response is sent for every resampling interval, also when its value is
+  // missing.
+  //
+  // The request is rejected with `INVALID_ARGUMENT` if:
+  // - the expression or one of its operands is unset, or an operand list is
+  //   empty;
+  // - the expression reads no metric, or its operands have metrics of
+  //   different units;
+  // - a metric is unspecified, or a constant or a factor isn't a finite
+  //   number;
+  // - the group of a named aggregate, or its category or inverter type, is
+  //   unset or unspecified, the group has no aggregate the service can
+  //   compute, or it lists components of another category or type;
+  // - an electrical component ID is unknown;
+  // - an electrical component metric or a formula names a component that
+  //   doesn't measure the metric, or doesn't measure it at the given
+  //   connection, or, with no connection given, measures it at more than one
+  //   connection and has no sample of it without a connection;
+  // - a formula doesn't parse.
+  rpc ReceiveAggregatedTelemetryStream(ReceiveAggregatedTelemetryStreamRequest)
+    returns (stream ReceiveAggregatedTelemetryStreamResponse) {
+    option (google.api.http) = {
+      post : "/v1/telemetry/aggregated"
+      body : "*"
+    };
+  }
+}
+
+// Information describing a microgrid.
+message GetMicrogridResponse {
+  // The information about the local microgrid.
+  frequenz.api.common.v1alpha8.microgrid.Microgrid  microgrid= 1;
+}
+
+// Request parameters for the RPC `ListElectricalComponents`.
+// Contains filtering parameters for listing electrical components.
+message ListElectricalComponentsRequest {
+  // Return electrical components that have the specified IDs only.
+  repeated uint64 electrical_component_ids = 1;
+
+  // Return electrical components that have the specified categories only.
+  repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentCategory
+    electrical_component_categories = 2;
+}
+
+// A message containing a list of electrical components.
+// Used as the return type in the RPC `ListElectricalComponents`.
+message ListElectricalComponentsResponse {
+  repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponent
+    electrical_components = 1;
+}
+
+// Request parameters for the RPC `ListSensors`.
+// Contains filtering parameters for listing sensors.
+message ListSensorRequest {
+  // Return sensors that have the specified IDs only.
+  repeated uint64 sensor_ids = 1;
+}
+
+// Response message for the RPC `ListSensors`.
+// A message containing a list of sensors.
+message ListSensorsResponse {
+  repeated frequenz.api.common.v1alpha8.microgrid.sensors.Sensor sensors = 1;
+}
+
+// Request parameters for the RPC `ListElectricalComponentConnections`.
+// Contains filtering parameters for listing connections.
+message ListElectricalComponentConnectionsRequest {
+  // Only return connections that start from the specified electrical
+  // component ID(s).
+  // If this list is empty, connections with any `source_component_id` will be
+  // returned.
+  repeated uint64 source_electrical_component_ids = 1;
+
+  // Only return connections that end at the specified electrical component
+  // ID(s).
+  // If this list is empty, connections with any `destination_component_id`
+  // will be returned.
+  repeated uint64 destination_electrical_component_ids = 2;
+}
+
+// Response message for the RPC `ListElectricalComponentConnections`.
+// Contains a list of connections.
+message ListElectricalComponentConnectionsResponse {
+  // The list of connections.
+  repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentConnection
+    electrical_component_connections = 1;
+};
+
+// Request parameters for the RPC `ReceiveElectricalComponentTelemetryStream`.
+message ReceiveElectricalComponentTelemetryStreamRequest {
+  // A message for specifying a filter to apply to the stream.
+  message ElectricalComponentTelemetryStreamFilter {
+    // List of metrics to return. Only the specified metrics will be returned.
+    //
+    // !!! note
+    //     At least one metric must be specified. If no metric is specified,
+    //     then the stream will return an error.
+    //
+    // !!! note
+    //     Components may not support all metrics. If a electrical component
+    //     does not support a given metric, then the returned data stream will
+    //     not contain that metric.
+    repeated frequenz.api.common.v1alpha8.metrics.Metric metrics = 1;
+  }
+
+  // The electrical component ID to subscribe to.
+  uint64 electrical_component_id = 1;
+
+  // The filter to apply to the stream.
+  //
+  // This field is optional. If this is not provided, then the stream will
+  // return all metrics for the given electrical component. If this is provided,
+  // then the stream will return only the metrics specified in the filter.
+  ElectricalComponentTelemetryStreamFilter filter = 2;
+}
+
+// A data sample from a electrical component in the microgrid.
+// Electrical Components belonging to all categories and types can be
+// represented using this message.
+message ReceiveElectricalComponentTelemetryStreamResponse {
+  frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentTelemetry
+    telemetry = 1;
+}
+
+// Request parameters for the RPC `ReceiveSensorTelemetryStream`.
+message ReceiveSensorTelemetryStreamRequest {
+  // A message for specifying a filter to apply to the stream.
+  message SensorTelemetryStreamFilter {
+    // List of metrics to return. Only the specified metrics will be returned.
+    //
+    // !!! note
+    //     At least one metric must be specified. If no metric is specified,
+    //     then the stream will return an error.
+    //
+    // !!! note
+    //     Sensors may not support all metrics. If a sensor does not support a
+    //     given metric, then the returned data stream will not contain that
+    //     metric.
+    repeated frequenz.api.common.v1alpha8.metrics.Metric metrics = 1;
+  }
+
+  // The sensor ID to subscribe to.
+  uint64 sensor_id = 1;
+
+  // The filter to apply to the stream.
+  //
+  // This field is optional. If this is not provided, then the stream will
+  // return all metrics for the given sensor. If this is provided, then the
+  // stream will return only the metrics specified in the filter.
+  SensorTelemetryStreamFilter filter = 2;
+}
+
+// A data sample from a sensor in the microgrid.
+message ReceiveSensorTelemetryStreamResponse {
+  // The sensor data.
+  frequenz.api.common.v1alpha8.microgrid.sensors.SensorTelemetry telemetry = 1;
+}
+
+// Request parameters for the RPC `AugmentElectricalComponentBounds`.
+message AugmentElectricalComponentBoundsRequest {
+  // The ID of the target electrical component.
+  uint64 electrical_component_id = 1;
+
+  // The target metric whose bounds have to be set.
+  frequenz.api.common.v1alpha8.metrics.Metric target_metric = 2;
+
+  // A list of bounds for the target metric.
+  // While incorporating these bounds, the API will ensure that overlapping
+  // pairs of bounds are merged into a single pair of bounds, and
+  // non-overlapping ones are kept separated.
+  repeated frequenz.api.common.v1alpha8.metrics.Bounds bounds = 3;
+
+  // The duration, in seconds, until which the request will stay in effect.
+  // This duration has to be between 5 seconds and 15 minutes (including both
+  // limits), otherwise the request will be rejected.
+  // If not provided, it defaults to 5s.
+  //
+  // Note that the bounds may also expire before this duration, if the client
+  // provides the same `bounds_token` in a subsequent request for the same
+  // electrical component and metric.
+  optional uint64 request_lifetime = 4;
+
+  // A client-generated token, used to track the bounds added by this request.
+  //
+  // It can be re-used in a subsequent request for the same electrical component
+  // and metric to immediately overwrite the bounds added by this request, and
+  // remove them from the overall bounds for the given metric.
+  //
+  // The service should allow the same token to be used for different electrical
+  // component IDs and metrics. This means that clients can expect that using
+  // the same token in a subsequent request for a different electrical component
+  // or metric will _not_ overwrite the bounds added by this request.
+  //
+  // If there is no bound contribution currently active for the given token,
+  // electrical component ID, and metric, then the request will be treated as a
+  // new one.
+  //
+  // Clients are strongly recommended to incorporate randomness in the token to
+  // avoid collisions, e.g. by using a random 64-bit value.
+  optional string bounds_token = 5;
+}
+
+// Response message for the RPC `AugmentElectricalComponentBounds`.
+message AugmentElectricalComponentBoundsResponse {
+  // The timestamp until which the added bounds will stay in effect.
+  // After this timestamp, the electrical component bounds added by this request
+  // will be removed. By default, this timestamp will be set to the current
+  // time plus 60 seconds.
+  //
+  // Note that if the client provides the same `bounds_token` in a subsequent
+  // request for the same electrical component and metric, then the bounds added
+  // by this request will be removed immediately, and the `valid_until_time`
+  // timestamp will not be relevant anymore.
+  google.protobuf.Timestamp valid_until_time = 1;
+}
+
+// Request parameters for the RPC `ClearElectricalComponentBounds`.
+message ClearElectricalComponentBoundsRequest {
+  // The ID of the target electrical component.
+  uint64 electrical_component_id = 1;
+
+  // The target metric whose bounds have to be cleared.
+  frequenz.api.common.v1alpha8.metrics.Metric target_metric = 2;
+
+  // A client-generated token, used to track the bounds added by a previous
+  // request.
+  string bounds_token = 3;
+}
+
+// The type of power requested for an electrical component.
+enum PowerType {
+  // Default value. `SetElectricalComponentPower` rejects it, and the pool RPCs
+  // read it as active power.
+  POWER_TYPE_UNSPECIFIED = 0;
+
+  // The requested power is active power.
+  POWER_TYPE_ACTIVE = 1;
+
+  // The requested power is reactive power.
+  POWER_TYPE_REACTIVE = 2;
+}
+
+// Response codes for the `SetElectricalComponentPowerActive` and
+// `SetElectricalComponentPowerReactive` RPCs. These codes indicate the ongoing
+// status of the request to set the power of an electrical component.
+//
+// Often, electrical components are not able to immediately set their output
+// power to the requested value. This can happen due to several reasons,
+// including, but not limited to:
+// - having to ramp up or down the power output from the current output.
+// - having to wait for the electrical component to reach a stable state before
+//   applying the new power set-point.
+// - communication latency between the API service and the electrical
+//   component.
+//
+// In such cases, an initial response is sent to the client, indicating that the
+// request has been accepted, and it is followed by a stream of responses
+// indicating the ongoing status of the request.
+enum SetElectricalComponentPowerRequestStatus {
+  // Default value. Users are discouraged from using this value.
+  SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_UNSPECIFIED = 0;
+
+  // The request has been accepted, and the target power set-point will be
+  // applied to the electrical component.
+  //
+  // Once the API service has received a request to set the power of an
+  // electrical component, it will validate the input parameters immediately.
+  // If the parameters are valid, the service will return this code
+  // immediately, and then proceed to apply the power set-point to the
+  // electrical component.
+  SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_ACCEPTED = 1;
+
+  // The request has been rejected because of invalid input parameters.
+  //
+  // Once the API service has received a request to set the power of an
+  // electrical component, it will validate the input parameters immediately.
+  // If the parameters are invalid, the service will return this code
+  // immediately, and will not apply the power set-point to the
+  // electrical component.
+  SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_REJECTED = 2;
+
+  // The request has failed midway, and the electrical component is not
+  // at the desired power level.
+  //
+  // This code indicates that the request to set the power of an electrical
+  // component has been accepted, but the service encountered an error while
+  // applying the power set-point to the electrical component.
+  SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_FAILED = 3;
+
+  // The request has been successfully processed.
+  SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_SUCCESS = 4;
+
+  // The request has been overridden by another request.
+  //
+  // This could happen if a new request to set the power of an electrical
+  // component arrives while the previous request is still being processed.
+  SET_ELECTRICAL_COMPONENT_POWER_REQUEST_STATUS_OVERRIDDEN = 5;
+}
+
+// Request parameters for the RPC `SetElectricalComponentPower`.
+message SetElectricalComponentPowerRequest {
+  // The ID of the electrical component to set the output power of.
+  uint64 electrical_component_id = 1;
+
+  // The requested power type.
+  PowerType power_type = 2;
+
+  // The requested power output.
+  //
+  // For Active power:
+  // - This value is in watts (W).
+  // - Negative values indicate discharge, i.e., supplying power towards the
+  //   direction of the root node of the component graph.
+  // - Positive values indicate charge, i.e., consuming power from the
+  //   direction of the root node of the component graph.
+  //
+  // For Reactive power:
+  // - This value is in volt-amperes reactive (VAR).
+  // - Negative values indicate capacitive reactive power, i.e., the current
+  //   is leading the voltage when viewed from the perspective of the
+  //   electrical component.
+  // - Positive values indicate inductive reactive power, i.e., the current
+  //   is lagging the voltage when viewed from the perspective of the
+  //   electrical component.
+  float power = 3;
+
+  // The duration, in seconds, until which the request will stay in effect.
+  // This duration has to be between 10 seconds and 15 minutes (including both
+  // limits), otherwise the request will be rejected.
+  // If not provided, it defaults to 60s.
+  optional uint64 request_lifetime = 4;
+}
+
+// Response message for the RPC `SetElectricalComponentPower`.
+message SetElectricalComponentPowerResponse {
+  // The timestamp until which the given power command will stay in effect.
+  // After this timestamp, the electrical component will be set to its standby
+  // state, if the API receives no further power commands.
+  // By default, this timestamp will be set to the current time plus 60 seconds.
+  //
+  // When the request status is `REJECTED`, `FAILED`, or `OVERRIDDEN`, the
+  // `valid_until_time` timestamp will not be set, and the request will no
+  // longer remain in effect.
+  google.protobuf.Timestamp valid_until_time = 1;
+
+  // The current status of the request to set the power of the electrical
+  // component.
+  SetElectricalComponentPowerRequestStatus status = 2;
+}
+
+// Request parameters for the RPC `StartElectricalComponent`.
+message StartElectricalComponentRequest {
+  // The electrical component ID to start.
+  uint64 electrical_component_id = 1;
+}
+
+// Request parameters for the RPC `PutElectricalComponentInStandby`.
+message PutElectricalComponentInStandbyRequest {
+  // The electrical component ID to set to standby.
+  uint64 electrical_component_id = 1;
+}
+
+// Request parameters for the RPC `StopElectricalComponent`.
+message StopElectricalComponentRequest {
+  // The electrical component ID to stop.
+  uint64 electrical_component_id = 1;
+}
+
+// Request parameters for the RPC `AckElectricalComponentError`.
+message AckElectricalComponentErrorRequest {
+  // The electrical component ID to acknowledge the error for.
+  uint64 electrical_component_id = 1;
+}
+
+// Request parameters for the RPC `ProposePoolPower`.
+message ProposePoolPowerRequest {
+  // The ID of the pool, chosen by the client.
+  //
+  // While a proposal of the pool is in effect, the pool must be sent with the
+  // same set of `electrical_component_ids` and the same `priority`. A pool has
+  // at most one proposal for each `power_type`. Clients are strongly
+  // recommended to use a random UUID, so that two pools never share an ID.
+  string pool_id = 1;
+
+  // The electrical components of the pool, all of the same category. The list
+  // must not be empty.
+  //
+  // The service accounts for the power of every listed component. The power of
+  // the components it can't control, because they are unhealthy or because of
+  // their operational mode, is subtracted from the target of the controlled
+  // components, and reported as `PoolPowerReport.uncontrolled_power`, unless it
+  // flows through a component the service sets. To leave components out of the
+  // pool, don't list them.
+  repeated uint64 electrical_component_ids = 2;
+
+  // The priority of the pool. A larger number is a higher priority, and
+  // proposals with a higher priority are served first. Proposals with the same
+  // priority are served in an order the service picks.
+  int32 priority = 3;
+
+  // Whether the proposal is for active or reactive power.
+  //
+  // `POWER_TYPE_UNSPECIFIED` means active power. Reactive power is not
+  // supported yet.
+  PowerType power_type = 4;
+
+  // The power the pool would like, on top of the power the proposals served
+  // before it on the same components got, in watts (W) for active power. For
+  // the first proposal served with a preferred power, it is the total power of
+  // the components, including `uncontrolled_power`. It follows the passive sign
+  // convention: positive values consume power, e.g. charge batteries, and
+  // negative values produce power, e.g. discharge batteries.
+  optional float preferred_power = 5;
+
+  // The bounds for the sum of the power of this pool and the powers of every
+  // pool served after it on the same components, in the same unit as
+  // `preferred_power`. Like `preferred_power`, they are relative to the power
+  // the proposals served before this one got. If none of those has a
+  // preferred power, they apply to the total power of the components,
+  // including `uncontrolled_power`.
+  optional frequenz.api.common.v1alpha8.metrics.Bounds bounds = 6;
+
+  // How long the proposal stays in effect, in seconds, unless it is sent
+  // again.
+  //
+  // If not provided, it defaults to 60 seconds. The service may shorten a
+  // longer lifetime to the longest one it allows, and the response says when
+  // the proposal expires.
+  optional uint64 request_lifetime = 7;
+}
+
+// Response to the RPC `ProposePoolPower`.
+message ProposePoolPowerResponse {
+  // When the proposal stops being in effect, unless it is sent again. Unset for
+  // a withdrawal.
+  google.protobuf.Timestamp valid_until_time = 1;
+}
+
+// Request parameters for the RPC `ReceivePoolPowerReportStream`.
+message ReceivePoolPowerReportStreamRequest {
+  // The electrical components of the pool. The list must not be empty.
+  repeated uint64 electrical_component_ids = 1;
+
+  // The priority from which the reports are seen: their bounds are those left
+  // for a proposal at this priority.
+  int32 priority = 2;
+
+  // Whether the reports are about active or reactive power.
+  //
+  // `POWER_TYPE_UNSPECIFIED` means active power.
+  PowerType power_type = 3;
+
+  // Whether the reports list what the service did with each component, in
+  // `PoolPowerReport.components`.
+  //
+  // If false, `components` is empty, and the service doesn't send a report
+  // just because a component's entry changed.
+  bool include_components = 4;
+}
+
+// Response to the RPC `ReceivePoolPowerReportStream`.
+message ReceivePoolPowerReportStreamResponse {
+  // The latest report.
+  frequenz.api.common.v1alpha8.microgrid.pools.PoolPowerReport report = 1;
+}
+
+// Request parameters for the RPC `ReceiveAggregatedTelemetryStream`.
+message ReceiveAggregatedTelemetryStreamRequest {
+  // What to compute.
+  frequenz.api.common.v1alpha8.microgrid.telemetry.AggregateExpression
+    expression = 1;
+
+  // The length of the resampling interval.
+  //
+  // If not provided, the service's default is used. The service may move an
+  // interval that is too short or too long to the nearest one it allows.
+  optional google.protobuf.Duration resampling_interval = 2;
+
+  // How the samples of each component within one resampling interval are
+  // combined, before the expression is computed.
+  //
+  // `RESAMPLING_FUNCTION_UNSPECIFIED` uses the service's default for the
+  // metric, which is the average for power.
+  frequenz.api.common.v1alpha8.metrics.ResamplingFunction
+    resampling_function = 3;
+}
+
+// Response to the RPC `ReceiveAggregatedTelemetryStream`.
+message ReceiveAggregatedTelemetryStreamResponse {
+  // The end of the resampling interval the value belongs to.
+  google.protobuf.Timestamp sample_time = 1;
+
+  // The value, in the base unit of the expression's metric, e.g. watts (W) for
+  // active power. Unset if it is missing for this interval.
+  optional float value = 2;
+}
